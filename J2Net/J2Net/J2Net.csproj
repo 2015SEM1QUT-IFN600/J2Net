@@ -45,9 +45,61 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Grammar\comments.g4.cs">
+      <DependentUpon>comments.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\identifiers.g4.cs">
+      <DependentUpon>identifiers.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\integerLiterals.g4.cs">
+      <DependentUpon>integerLiterals.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\Java.g4.lexer.cs">
+      <DependentUpon>Java.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\Java.g4.parser.cs">
+      <DependentUpon>Java.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\keywords.g4.cs">
+      <DependentUpon>keywords.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\operators.g4.cs">
+      <DependentUpon>operators.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\separators.g4.cs">
+      <DependentUpon>separators.g4</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Antlr4 Include="Grammar\Java.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\comments.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\identifiers.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\keywords.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\integerLiterals.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\operators.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\separators.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
