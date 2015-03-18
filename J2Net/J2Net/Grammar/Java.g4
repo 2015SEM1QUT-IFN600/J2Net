@@ -1,19 +1,21 @@
 grammar Java;
 
-import comments
-import identifiers
-import keywords
-import integerLiterals
+import 
+		comments, 
+		identifiers, 
+		keywords, 
+		integerLiterals, 
+		separators, 
+		operators;
 /*
-import floatingPointLiterals
-import booleanLiterals
-import characterLiterals
-import stringLiterals
-import escapeSequences
-import nullLiterals
+		floatingPointLiterals,
+		booleanLiterals,
+		characterLiterals,
+		stringLiterals,
+		escapeSequences,
+		nullLiterals,
 */
-import separators
-import operators
+
 
 /*
  * Parser Rules
