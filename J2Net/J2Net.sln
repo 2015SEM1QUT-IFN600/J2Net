@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J2Net", "J2Net\J2Net.csproj", "{E41BA1F3-7281-4CC5-B0AC-319CEA9F3B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{3AAB78E5-92D2-49A6-A8AB-5556AE52304E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{88993BC6-30DC-4306-82BA-4EE807B54219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{E41BA1F3-7281-4CC5-B0AC-319CEA9F3B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E41BA1F3-7281-4CC5-B0AC-319CEA9F3B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E41BA1F3-7281-4CC5-B0AC-319CEA9F3B03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AAB78E5-92D2-49A6-A8AB-5556AE52304E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AAB78E5-92D2-49A6-A8AB-5556AE52304E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AAB78E5-92D2-49A6-A8AB-5556AE52304E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AAB78E5-92D2-49A6-A8AB-5556AE52304E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88993BC6-30DC-4306-82BA-4EE807B54219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88993BC6-30DC-4306-82BA-4EE807B54219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88993BC6-30DC-4306-82BA-4EE807B54219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88993BC6-30DC-4306-82BA-4EE807B54219}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

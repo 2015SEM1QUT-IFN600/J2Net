@@ -5,16 +5,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E41BA1F3-7281-4CC5-B0AC-319CEA9F3B03}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{88993BC6-30DC-4306-82BA-4EE807B54219}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>J2Net</RootNamespace>
-    <AssemblyName>J2Net</AssemblyName>
+    <RootNamespace>CLI</RootNamespace>
+    <AssemblyName>CLI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>e2671687</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>659dba88</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -44,65 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Grammar\comments.g4.cs">
-      <DependentUpon>comments.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\identifiers.g4.cs">
-      <DependentUpon>identifiers.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\integerLiterals.g4.cs">
-      <DependentUpon>integerLiterals.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\Java.g4.lexer.cs">
-      <DependentUpon>Java.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\Java.g4.parser.cs">
-      <DependentUpon>Java.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\keywords.g4.cs">
-      <DependentUpon>keywords.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\operators.g4.cs">
-      <DependentUpon>operators.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\separators.g4.cs">
-      <DependentUpon>separators.g4</DependentUpon>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Antlr4 Include="Grammar\Java.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\comments.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\identifiers.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\keywords.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\integerLiterals.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\operators.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\separators.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\J2Net\J2Net.csproj">
+      <Project>{e41ba1f3-7281-4cc5-b0ac-319cea9f3b03}</Project>
+      <Name>J2Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
