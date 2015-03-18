@@ -1,6 +1,10 @@
 lexer grammar comments;
 
 // at least one rule must be present for compilation
-REPLACETHISRULE
-	:	' ' -> channel(HIDDEN)
-	;
+COMMENT
+    :   '/*' .*? '*/' -> skip
+    ;
+
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> skip
+    ;
