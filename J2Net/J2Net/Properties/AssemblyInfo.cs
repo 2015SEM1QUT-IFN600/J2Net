@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -34,3 +35,11 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+// ANTLR4 generates code from the G4 files as CLSCompliant(false) which implies that code 
+// written for ANTLR should be Cross-Language Interoperable. This makes sense as enabling CLS
+// enforces common type system accross all languages for the CLR. 
+// See https://msdn.microsoft.com/en-us/library/730f1wy3(v=vs.90).aspx for more information
+// 
+// Enableing CLS to take advantage of the benefits of CLR. 
+[assembly: CLSCompliant(true)]
