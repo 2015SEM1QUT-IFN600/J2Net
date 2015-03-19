@@ -4,7 +4,7 @@ import
 		comments,	//Eric
 		identifiers, //Aaron
 		keywords,	//Dori
-		integerLiterals, //Matt
+		literals, //Matt
 		separators, //Mana
 		operators;	//Monte
 

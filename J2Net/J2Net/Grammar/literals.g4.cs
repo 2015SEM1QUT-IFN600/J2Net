@@ -1,6 +1,6 @@
 ﻿namespace J2Net.Grammar
 {
-    partial class integerLiterals
+    partial class literals
     {
     }
 }

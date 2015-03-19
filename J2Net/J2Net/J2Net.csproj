@@ -51,9 +51,6 @@
     <Compile Include="Grammar\identifiers.g4.cs">
       <DependentUpon>identifiers.g4</DependentUpon>
     </Compile>
-    <Compile Include="Grammar\integerLiterals.g4.cs">
-      <DependentUpon>integerLiterals.g4</DependentUpon>
-    </Compile>
     <Compile Include="Grammar\Java.g4.lexer.cs">
       <DependentUpon>Java.g4</DependentUpon>
     </Compile>
@@ -62,6 +59,9 @@
     </Compile>
     <Compile Include="Grammar\keywords.g4.cs">
       <DependentUpon>keywords.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Grammar\literals.g4.cs">
+      <DependentUpon>literals.g4</DependentUpon>
     </Compile>
     <Compile Include="Grammar\operators.g4.cs">
       <DependentUpon>operators.g4</DependentUpon>
@@ -88,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
-    <Antlr4 Include="Grammar\integerLiterals.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
     <Antlr4 Include="Grammar\operators.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
@@ -102,6 +98,10 @@
     </Antlr4>
   </ItemGroup>
   <ItemGroup>
+    <Antlr4 Include="Grammar\literals.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
