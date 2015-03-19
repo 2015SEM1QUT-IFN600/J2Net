@@ -14,9 +14,31 @@ namespace CLI
     {
         static void Main(string[] args)
         {
-            StreamReader inputStream = new StreamReader(Console.OpenStandardInput());   //stream reader to read input
-            AntlrInputStream input = new AntlrInputStream(inputStream.ReadToEnd());     //pass the string (read input) into an Antlr stream
-            JavaLexer lexer = new JavaLexer(input);                                   //lexer is created with Antlr stream
+
+            //User enter file name
+            Console.WriteLine("Please input full file name with extension.");
+            String fileName = Console.ReadLine();
+
+            //Check to see if file exist
+            if (!File.Exists(fileName))
+            {
+                Console.WriteLine(fileName + " can't be found. Program terminated.");
+                Console.WriteLine("Press any key to end the program");
+                do
+                {
+                    if (Console.KeyAvailable)
+                    {
+                        Environment.Exit(0);
+                    }
+                } while (!Console.KeyAvailable);
+            }
+
+
+            //Antlr4 Build Pipeline
+            //StreamReader inputStream = new StreamReader(Console.OpenStandardInput());   //stream reader to read input
+            StreamReader inputStream = new StreamReader(fileName);                        //read file into stream
+            AntlrInputStream input = new AntlrInputStream(inputStream.ReadToEnd());       //pass the string (read input) into an Antlr stream
+            JavaLexer lexer = new JavaLexer(input);                                       //lexer is created with Antlr stream
             //CommonTokenStream tokens = new CommonTokenStream(lexer);                    //created lexer is saved in CommonToken
 
             //Reading in token by token instead of dealing with a large stream
