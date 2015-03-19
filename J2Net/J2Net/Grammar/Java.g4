@@ -1,20 +1,12 @@
 grammar Java;
 
 import 
-		comments, 
-		identifiers, 
-		keywords, 
-		integerLiterals, 
-		separators, 
-		operators;
-/*
-		floatingPointLiterals,
-		booleanLiterals,
-		characterLiterals,
-		stringLiterals,
-		escapeSequences,
-		nullLiterals,
-*/
+		comments,	//Eric
+		identifiers, //Aaron
+		keywords,	//Dori
+		integerLiterals, //Matt
+		separators, //Mana
+		operators;	//Monte
 
 
 /*
