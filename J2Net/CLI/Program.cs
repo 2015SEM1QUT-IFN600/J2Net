@@ -27,7 +27,7 @@ namespace CLI
                 {
                     break;
                 }
-                Console.WriteLine(tokens.Line + " :: " + tokens.Text);
+                Console.WriteLine(tokens.Type + " :: " + tokens.Text);
 
             }
 

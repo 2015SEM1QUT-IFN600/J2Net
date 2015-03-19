@@ -69,6 +69,9 @@
     <Compile Include="Grammar\separators.g4.cs">
       <DependentUpon>separators.g4</DependentUpon>
     </Compile>
+    <Compile Include="Grammar\whitespace.g4.cs">
+      <DependentUpon>whitespace.g4</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +102,10 @@
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Grammar\literals.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\whitespace.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>

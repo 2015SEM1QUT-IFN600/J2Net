@@ -6,7 +6,8 @@ import
 		keywords,	//Dori
 		literals, //Matt
 		separators, //Mana
-		operators;	//Monte
+		operators,	//Monte
+		whitespace; //Eric
 
 
 /*
@@ -21,6 +22,3 @@ compileUnit
  * Lexer Rules
  */
 
-WS
-	:	' ' -> channel(HIDDEN)
-	;
