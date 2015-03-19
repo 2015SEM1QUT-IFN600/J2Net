@@ -54,7 +54,3 @@ XOR_ASSIGN : '^=';
 MOD_ASSIGN : '%=';
 LSHIFT_ASSIGN : '<<=';
 RSHIFT_ASSIGN : '>>=';
-
-WS
-	:	' ' -> channel(HIDDEN)
-	;
