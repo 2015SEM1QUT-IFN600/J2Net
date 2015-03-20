@@ -1,6 +1,17 @@
 lexer grammar identifiers;
 
-// at least one rule must be present for compilation
-REPLACETHISRULE
-	:	' ' -> channel(HIDDEN)
+// §3.8 Identifiers
+
+identifiers			
+	:	Letters		LettersOrDigits*
+	;
+
+fragment 
+Letters
+	:	[a-zA-Z_]
+	;
+
+fragment
+LettersOrDigits
+	:	[a-zA-Z0-9_]
 	;
