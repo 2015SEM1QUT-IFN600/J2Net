@@ -154,3 +154,63 @@ BinaryDigitOrUnderscore
 	:BinaryDigit
 	|'_'
 	;
+
+//Floating point
+
+FloatingPointLiteral
+	:DecimalFloatingPointLiteral
+	|HexadecimalFloatingPointLiteral
+	;
+
+fragment
+DecimalFloatingPointLiteral
+	:Digits '.' Digits? ExponentPart? FloatTypeSuffix?
+	|'.' Digits ExponentPart? FloatTypeSuffix?
+	|Digits ExponentPart FloatTypeSuffix?
+	|Digits ExponentPart? FloatTypeSuffix
+	;
+
+fragment
+ExponentPart
+	:ExponentIndicator SignedInteger
+	;
+
+fragment
+ExponentIndicator
+	:[e E]
+	;
+
+fragment
+SignedInteger
+	:Sign? Digits
+
+fragment
+Sign
+	:[+ -]
+	;
+
+fragment
+FloatTypeSuffix
+	:[f F d D]
+	;
+
+fragment
+HexadecimalFloatingPointLiteral
+	:HexSignificand BinaryExponent FloatTypeSuffix?
+	;
+
+fragment
+HexSignificand
+	:HexNumeral '.'?
+	|'0' 'x' HexDigits? '.' HexDigits
+	|'0' 'X' HexDigits? '.' HexDigits
+	;
+
+fragment
+BinaryExponent
+	:BinaryExponentIndicator SignedInteger
+	;
+
+fragment
+BinaryExponentIndicator:
+	:[p P]	;
