@@ -103,3 +103,54 @@ HexDigitOrUnderscore
 	:HexDigit
 	|'_'
 	;
+
+fragment
+OctalNumeral
+	:'0' OctalDigits
+	|'0' Underscores OctalDigits
+	;
+
+fragment
+OctalDigits
+	:OctalDigit
+	|OctalDigit OctalDigitsAndUnderscores? OctalDigit
+	;
+
+fragment
+OctalDigit
+	:[0-7]
+	;
+
+fragment
+OctalDigitsAndUnderscores
+	:OctalDigitOrUnderscore OctalDigitOrUnderscore+
+	;
+
+fragment
+OctalDigitOrUnderscore
+	:OctalDigit	|'_'	;fragmentBinaryNumeral
+	:'0' 'b' BinaryDigits
+	|'0' 'B' BinaryDigits
+	;
+
+fragment
+BinaryDigits
+	:BinaryDigit
+	|BinaryDigit BinaryDigitsAndUnderscores? BinaryDigit
+	;
+
+fragment
+BinaryDigit
+	:[01]
+	;
+
+fragment
+BinaryDigitsAndUnderscores
+	:BinaryDigitOrUnderscore BinaryDigitOrUnderscore+
+	;
+
+fragment
+BinaryDigitOrUnderscore
+	:BinaryDigit
+	|'_'
+	;
