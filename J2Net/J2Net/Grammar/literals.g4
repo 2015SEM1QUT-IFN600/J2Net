@@ -213,4 +213,38 @@ BinaryExponent
 
 fragment
 BinaryExponentIndicator:
-	:[p P]	;
+	:[p P]	;BooleanLiteral	:'true'	|'false'	;//Character Literals
+CharacterLiteral
+	:'\'' SingleCharacter '\''
+	|'\'' EscapeSequence '\''
+	;
+
+fragment
+SingleCharacter
+	:~['\\]	;//String LiteralsStringLiteral
+	:'"' StringCharacter+ '"'
+	;
+
+fragment
+StringCharacter
+	:~["\\]
+	|EscapeSequence	;//Escape SequencefragmentEscapeSequence:
+	:'\\' [btnfr"'\\]
+	|OctalEscape
+	;
+
+fragment
+OctalEscape
+	:'\' OctalDigit
+	|'\' OctalDigit OctalDigit
+	|'\' ZeroToThree OctalDigit OctalDigit
+	;
+
+fragment
+OctalDigit
+	:[0-7]
+	;
+
+fragment
+ZeroToThree
+	:[0-3]	;//Null LiteralNullLiteral	:'null'	;
