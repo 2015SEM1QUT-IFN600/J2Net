@@ -37,7 +37,7 @@ IntegerTypeSuffix
 	;
 
 fragment
-DecimalNumeral:
+DecimalNumeral
 	:'0'
 	|NonZeroDigit Digits?
 	|NonZeroDigit Underscores Digits
@@ -183,6 +183,7 @@ ExponentIndicator
 fragment
 SignedInteger
 	:Sign? Digits
+	;
 
 fragment
 Sign
@@ -212,8 +213,8 @@ BinaryExponent
 	;
 
 fragment
-BinaryExponentIndicator:
-	:[p P]	;BooleanLiteral	:'true'	|'false'	;//Character Literals
+BinaryExponentIndicator
+	:[p P]	;	//Boolean LiteralsBooleanLiteral	:'true'	|'false'	;//Character Literals
 CharacterLiteral
 	:'\'' SingleCharacter '\''
 	|'\'' EscapeSequence '\''
