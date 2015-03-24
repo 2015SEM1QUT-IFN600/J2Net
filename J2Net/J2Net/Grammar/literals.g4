@@ -1,8 +1,5 @@
 lexer grammar literals;
 
-WS
-	:	' ' -> channel(HIDDEN)
-	;
 
 IntegerLiteral
 	:DecimalIntegerLiteral
@@ -128,7 +125,12 @@ OctalDigitsAndUnderscores
 
 fragment
 OctalDigitOrUnderscore
-	:OctalDigit	|'_'	;fragmentBinaryNumeral
+	:OctalDigit
+	|'_'
+	;
+
+fragment
+BinaryNumeral
 	:'0' 'b' BinaryDigits
 	|'0' 'B' BinaryDigits
 	;
@@ -214,7 +216,15 @@ BinaryExponent
 
 fragment
 BinaryExponentIndicator
-	:[p P]	;	//Boolean LiteralsBooleanLiteral	:'true'	|'false'	;//Character Literals
+	:[p P]
+	;
+
+BooleanLiteral
+	:'true'
+	|'false'
+	;
+
+//Character Literals
 CharacterLiteral
 	:'\'' SingleCharacter '\''
 	|'\'' EscapeSequence '\''
@@ -222,30 +232,37 @@ CharacterLiteral
 
 fragment
 SingleCharacter
-	:~['\\]	;//String LiteralsStringLiteral
+	:~['\\]
+	;
+//String Literals
+StringLiteral
 	:'"' StringCharacter+ '"'
 	;
-
 fragment
 StringCharacter
 	:~["\\]
-	|EscapeSequence	;//Escape SequencefragmentEscapeSequence:
+	|EscapeSequence
+	;
+//Escape Sequence
+fragment
+EscapeSequence
 	:'\\' [btnfr"'\\]
 	|OctalEscape
 	;
 
 fragment
 OctalEscape
-	:'\' OctalDigit
-	|'\' OctalDigit OctalDigit
-	|'\' ZeroToThree OctalDigit OctalDigit
-	;
-
-fragment
-OctalDigit
-	:[0-7]
+	:'\\' OctalDigit
+	|'\\' OctalDigit OctalDigit
+	|'\\' ZeroToThree OctalDigit OctalDigit
 	;
 
 fragment
 ZeroToThree
-	:[0-3]	;//Null LiteralNullLiteral	:'null'	;
+	:[0-3]
+	;
+
+//Null Literal
+NullLiteral
+	:'null'
+	;
