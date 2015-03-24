@@ -2,7 +2,7 @@ lexer grammar identifiers;
 
 // §3.8 Identifiers
 
-identifiers			
+Identifiers			
 	:	Letters		LettersOrDigits*
 	;
 

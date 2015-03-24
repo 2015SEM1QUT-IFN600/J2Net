@@ -37,7 +37,7 @@ IntegerTypeSuffix
 	;
 
 fragment
-DecimalNumeral:
+DecimalNumeral
 	:'0'
 	|NonZeroDigit Digits?
 	|NonZeroDigit Underscores Digits
@@ -183,6 +183,7 @@ ExponentIndicator
 fragment
 SignedInteger
 	:Sign? Digits
+	;
 
 fragment
 Sign
@@ -212,8 +213,13 @@ BinaryExponent
 	;
 
 fragment
-BinaryExponentIndicator:
-	:[p P]	;BooleanLiteral	:'true'	|'false'	;//Character Literals
+BinaryExponentIndicator
+	:[p P]	;BooleanLiteral
+	:'true'
+	|'false'
+	;
+
+//Character Literals
 CharacterLiteral
 	:'\'' SingleCharacter '\''
 	|'\'' EscapeSequence '\''
@@ -221,30 +227,40 @@ CharacterLiteral
 
 fragment
 SingleCharacter
-	:~['\\]	;//String LiteralsStringLiteral
+	:~['\\]
+	;
+
+//String Literals
+StringLiteral
 	:'"' StringCharacter+ '"'
 	;
 
 fragment
 StringCharacter
 	:~["\\]
-	|EscapeSequence	;//Escape SequencefragmentEscapeSequence:
+	|EscapeSequence
+	;
+
+//Escape Sequence
+fragment
+EscapeSequence
 	:'\\' [btnfr"'\\]
 	|OctalEscape
 	;
 
 fragment
 OctalEscape
-	:'\' OctalDigit
-	|'\' OctalDigit OctalDigit
-	|'\' ZeroToThree OctalDigit OctalDigit
-	;
-
-fragment
-OctalDigit
-	:[0-7]
+	:'\\' OctalDigit
+	|'\\' OctalDigit OctalDigit
+	|'\\' ZeroToThree OctalDigit OctalDigit
 	;
 
 fragment
 ZeroToThree
-	:[0-3]	;//Null LiteralNullLiteral	:'null'	;
+	:[0-3]
+	;
+
+//Null Literal
+NullLiteral
+	:'null'
+	;
