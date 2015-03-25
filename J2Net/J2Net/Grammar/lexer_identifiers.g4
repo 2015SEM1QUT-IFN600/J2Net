@@ -8,10 +8,10 @@ Identifiers
 
 fragment 
 Letters
-	:	[a-zA-Z_]
+	:	[a-zA-Z$_]
 	;
 
 fragment
 LettersOrDigits
-	:	[a-zA-Z0-9_]
+	:	[a-zA-Z0-9$_]
 	;
