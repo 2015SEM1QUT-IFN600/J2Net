@@ -1,4 +1,4 @@
-lexer grammar operators;
+lexer grammar lexer_operators;
 
 /*The operators are in order of precedence eg. Left to Right, Right to Left, BOMDAS etc.*/
 

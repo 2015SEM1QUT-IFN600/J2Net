@@ -1,4 +1,4 @@
-lexer grammar separators;
+lexer grammar lexer_separators;
 
 // at least one rule must be present for compilation
 //REPLACETHISRULE

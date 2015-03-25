@@ -1,4 +1,4 @@
-lexer grammar comments;
+lexer grammar lexer_comments;
 
 // at least one rule must be present for compilation
 COMMENT

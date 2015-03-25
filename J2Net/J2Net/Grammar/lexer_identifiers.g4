@@ -1,4 +1,4 @@
-lexer grammar identifiers;
+lexer grammar lexer_identifiers;
 
 // §3.8 Identifiers
 

@@ -1,4 +1,4 @@
-lexer grammar literals;
+lexer grammar lexer_literals;
 
 
 IntegerLiteral

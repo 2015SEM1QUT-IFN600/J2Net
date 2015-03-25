@@ -1,4 +1,4 @@
-lexer grammar keywords;
+lexer grammar lexer_keywords;
 
 // at least one rule must be present for compilation
 

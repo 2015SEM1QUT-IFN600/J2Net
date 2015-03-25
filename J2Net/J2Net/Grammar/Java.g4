@@ -1,13 +1,13 @@
 grammar Java;
 
 import 
-		comments,	//Eric
-		identifiers, //Aaron
-		keywords,	//Dori
-		literals, //Matt
-		separators, //Mana
-		operators,	//Monte
-		whitespace; //Eric
+		lexer_comments,	//Eric
+		lexer_identifiers, //Aaron
+		lexer_keywords,	//Dori
+		lexer_literals, //Matt
+		lexer_separators, //Mana
+		lexer_operators,	//Monte
+		lexer_whitespace; //Eric
 
 
 /*
