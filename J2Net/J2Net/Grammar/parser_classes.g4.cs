@@ -1,6 +1,6 @@
 ﻿namespace J2Net.Grammar
 {
-    partial class parser_separators
+    partial class parser_classes
     {
     }
 }
