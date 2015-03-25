@@ -17,20 +17,14 @@ namespace CLI
 
             //User enter file name
             Console.WriteLine("Please input full file name with extension.");
-            String fileName = Console.ReadLine();
+            //String fileName = Console.ReadLine();
+             String fileName = Path.GetFullPath(".\\JavaCodeTestFiles\\CLSFractal.java");
 
             //Check to see if file exist
             if (!File.Exists(fileName))
             {
                 Console.WriteLine(fileName + " can't be found. Program terminated.");
-                Console.WriteLine("Press any key to end the program");
-                do
-                {
-                    if (Console.KeyAvailable)
-                    {
-                        Environment.Exit(0);
-                    }
-                } while (!Console.KeyAvailable);
+                Terminate();
             }
 
 
@@ -53,11 +47,20 @@ namespace CLI
 
             }
 
+            Terminate();
+
             /*J2NetParser parser = new J2NetParser(tokens);                             //pass saved token into parser
             IParseTree tree = parser.prog();                                            //rules to run the parser (prog rule). Output of parser is saved in IParseTree
             Console.WriteLine(tree.ToStringTree(parser));
             J2NetVisitor visitor = new J2NetVisitor();                                  //IparseTree evaluation being done in Visitor
             Console.WriteLine(visitor.Visit(tree));*/
+        }
+
+        private static void Terminate()
+        {
+            Console.WriteLine("Press any key to end the program");
+            Console.ReadKey();
+            Environment.Exit(0);
         }
     }
 }
