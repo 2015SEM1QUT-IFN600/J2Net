@@ -1,13 +1,21 @@
 grammar Java;
 
 import 
-		lexer_comments,	//Eric
-		lexer_identifiers, //Aaron
-		lexer_keywords,	//Dori
-		lexer_literals, //Matt
-		lexer_separators, //Mana
-		lexer_operators,	//Monte
-		lexer_whitespace; //Eric
+		lexer_comments,			//Eric
+		lexer_identifiers,		//Aaron
+		lexer_keywords,			//Dori
+		lexer_literals,			//Matt
+		lexer_separators,		//Mana
+		lexer_operators,		//Monte
+		lexer_whitespace,		//Eric
+
+		parser_comments,		//
+		parser_identifiers,		//
+		parser_keywords,		//
+		parser_literals,		//
+		parser_separators,		//
+		parser_operators,		//
+		parser_whitespace;		//
 
 
 /*
