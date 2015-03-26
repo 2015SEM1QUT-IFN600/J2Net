@@ -64,9 +64,6 @@
       <Name>J2Net</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="JavaCodeTestFiles\LexerTests.java" />
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

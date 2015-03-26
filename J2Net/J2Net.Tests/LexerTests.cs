@@ -9,33 +9,88 @@ namespace J2Net.Tests
     [TestClass]
     public class LexerTests
     {
-        JavaLexer lexer;
-
-        [ClassInitialize]
-        public void InitializeTestEnvironment()
+        // NOTE: Cannot test lexer rules which use the ->skip lexer command, 
+        //   for more details, see http://www.antlr.org/api/Java/org/antlr/v4/runtime/CommonTokenStream.html
+        
+        
+        /// <summary>
+        /// Assert that said javaCode equals expected tokenType
+        /// </summary>
+        /// <param name="javaCode"></param>
+        /// <param name="tokenType"></param>
+        private static void AssertToken(String javaCode, int tokenType)
         {
-            string fileName = Path.GetFullPath(Path.Combine(".\\JavaCodeTestFiles\\", this.GetType().Name, ".java"));
-
-            StreamReader inputStream = new StreamReader(fileName);                        //read file into stream
-            AntlrInputStream input = new AntlrInputStream(inputStream.ReadToEnd());       //pass the string (read input) into an Antlr stream
-            lexer = new JavaLexer(input);                                                //lexer is created with Antlr stream
-
-            //TODO: determine how tests will interact with tokens
-            // 1 option) use CommonTokenStream to create tokens here and then handle the stream in the unit tests
+            AntlrInputStream antlrStream = new AntlrInputStream(javaCode);
+            JavaLexer lexer = new JavaLexer(antlrStream);
+            CommonToken token = new CommonToken(lexer.NextToken());
+            Assert.AreEqual(tokenType, token.Type);
         }
 
         [TestMethod]
-        public void FoundWhitespace()
+        public void Lexer_Identifiers_letters()
         {
-            // 2 option) use CommonToken to loop through tokens, may look something like this
-            int SOME_EXPECTED_TOKEN_VALUE = 0;
-            CommonToken tokens;
-            do
-            {
-                tokens = new CommonToken(lexer.NextToken());
-                Assert.IsTrue(tokens.Type == SOME_EXPECTED_TOKEN_VALUE);
+            AssertToken("myVar", JavaLexer.Identifiers);
+        }
 
-            } while (!tokens.Type.Equals(JavaLexer.Eof));
+        [TestMethod]
+        public void Lexer_Keywords_if()
+        {
+            AssertToken("if", JavaLexer.IF);
+        }
+        
+        [TestMethod]
+        public void Lexer_Keywords_abstract()
+        {
+            AssertToken("abstract", JavaLexer.ABSTRACT);
+        }
+
+        [TestMethod]
+        public void Lexer_Keywords_void()
+        {
+            AssertToken("void", JavaLexer.VOID);
+        }
+
+        [TestMethod]
+        public void Lexer_Keywords_for()
+        {
+            AssertToken("for", JavaLexer.FOR);
+        }
+
+        [TestMethod]
+        public void Lexer_Keywords_while()
+        {
+            AssertToken("while", JavaLexer.WHILE);
+        }
+
+        [TestMethod]
+        public void Lexer_Literals_decimalLiteral()
+        {
+            AssertToken("42", JavaLexer.IntegerLiteral);
+        }
+
+        [TestMethod]
+        public void Lexer_Literals_hexLiteral()
+        {
+            AssertToken("0x90Af", JavaLexer.IntegerLiteral);
+        }
+
+        [TestMethod]
+        public void Lexer_Literals_octalLiteral()
+        {
+            AssertToken("08", JavaLexer.IntegerLiteral);
+        }
+
+        [TestMethod]
+        public void Lexer_Literals_binaryLiteral()
+        {
+            AssertToken("b01_10", JavaLexer.IntegerLiteral);
+        }
+
+        [TestMethod]
+        public void Lexer_Literals_decimalFloatingPointLiteral()
+        {
+            AssertToken("42f", JavaLexer.FloatingPointLiteral);
+            AssertToken("42F", JavaLexer.FloatingPointLiteral);
         }
     }
 }
