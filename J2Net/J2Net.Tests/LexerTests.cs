@@ -7,7 +7,7 @@ using J2Net.Grammar;
 namespace J2Net.Tests
 {
     [TestClass]
-    public class WhitespaceTests
+    public class LexerTests
     {
         JavaLexer lexer;
 
