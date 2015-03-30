@@ -83,7 +83,11 @@ namespace J2Net.Tests
         [TestMethod]
         public void Lexer_Literals_binaryLiteral()
         {
-            AssertToken("b01_10", JavaLexer.IntegerLiteral);
+            AssertToken("1bl", JavaLexer.IntegerLiteral); // what? 
+            AssertToken("1by", JavaLexer.IntegerLiteral); // what? 
+            AssertToken("1b", JavaLexer.IntegerLiteral);
+            AssertToken("01_10_00_11b", JavaLexer.IntegerLiteral);
+            AssertToken("01_10_00_11", JavaLexer.IntegerLiteral);
         }
 
         [TestMethod]
