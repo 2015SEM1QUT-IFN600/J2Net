@@ -9,7 +9,8 @@ import
 		lexer_whitespace,		//Eric
 		lexer_identifiers,		//Aaron
 
-		parser_types,			//jason
+		parser_literal,			//Eric
+		parser_types,			//jason (completed by Eric)
 		parser_names,			//CT
 		parser_packages,		//Mana
 		parser_classes,			//Dori

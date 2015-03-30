@@ -81,6 +81,9 @@
     <Compile Include="Grammar\parser_interfaces.g4.cs">
       <DependentUpon>parser_interfaces.g4</DependentUpon>
     </Compile>
+    <Compile Include="Grammar\parser_literal.g4.cs">
+      <DependentUpon>parser_literal.g4</DependentUpon>
+    </Compile>
     <Compile Include="Grammar\parser_names.g4.cs">
       <DependentUpon>parser_names.g4</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
     <Antlr4 Include="Grammar\parser_expressions.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\parser_literal.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
