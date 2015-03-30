@@ -9,33 +9,27 @@ packageName			//From 6.5
 	|	PackageName DOT Identifier
 	;
 
-//Reference to undefined rule:Identifier is occurred as following:
-/*
-TypeName			//From 6.5
+typeName			//From 6.5
 	:	Identifier
 	|	PackageOrTypeName DOT Identifier
 	;
 
-
-//*
-PackageOrTypeName	//From 6.5
+packageOrTypeName	//From 6.5
 	:	Identifier
 	|	PackageOrTypeName DOT Identifier
 	;
 
-
-ExpressionName		//From 6.5
+expressionName		//From 6.5
 	:	Identifier
 	|	AmbiguousName DOT Identifier
 	;
 
 
-MethodName			//From 6.5
+methodName			//From 6.5
 	:	Identifier
 	;
 
-AmbiguousName		//From 6.5
+ambiguousName		//From 6.5
 	:	Identifier
 	|	AmbiguousName DOT Identifier
 	;
-//*/
