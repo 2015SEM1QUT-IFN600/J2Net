@@ -7,24 +7,24 @@ interfaceDeclaration
 	;
 
 normalInterfaceDeclaration
-	: {interfaceModifier} interface identifier [typeParameters] [extendsInterfaces] interfaceBody
+	: '{'interfaceModifier'}' interface identifier (typeParameters)? (extendsInterfaces)? interfaceBody
 	;
 
 interfaceModifier
-	: annotation  
-	| public protected 
-	| private
-	| abstract 
-	| static 
-	| strictfp
+	: annotation 'public'
+	| annotation 'protected'
+	| annotation 'private'
+	| annotation 'abstract' 
+	| annotation 'static' 
+	| annotation 'strictfp'
 	;
 
 extendsInterfaces
-	: extends interfaceTypeList
+	: 'extends' interfaceTypeList
 	;
 
 interfaceBody
-	: { {interfaceMemberDeclaration} }
+	: '{' '{'interfaceMemberDeclaration'}' '}'
 	;
 
 interfaceMemberDeclaration
@@ -35,35 +35,33 @@ interfaceMemberDeclaration
 	;
 
 constantDeclaration
-	: {constantModifier} unannType variableDeclaratorList ;
+	: '{'constantModifier'}' unannType variableDeclaratorList;
 	;
 
 constantModifier
-	: annotation 
-	| public
-	| static 
-	| final
+	: annotation 'public'
+	| annotation 'static' 
+	| annotation 'final'
 	;
 
 interfaceMethodDeclaration
-	: {interfaceMethodModifier} methodHeader methodBody
+	: '{'interfaceMethodModifier'}' methodHeader methodBody
 	;
 
 interfaceMethodModifier
-	: annotation 
-	| public
-	| abstract 
-	| default 
-	| static 
-	| strictfp
+	: annotation 'public'
+	| annotation 'abstract' 
+	| annotation 'default' 
+	| annotation 'static' 
+	| annotation 'strictfp'
 	;
 
 annotationTypeDeclaration
-	: {interfaceModifier} @ interface identifier annotationTypeBody
+	: '{'interfaceModifier'}''@' interface identifier annotationTypeBody
 	;
 
 annotationTypeBody
-	: { {annotationTypeMemberDeclaration} }
+	: '{''{'annotationTypeMemberDeclaration'}''}'
 	;
 
 annotationTypeMemberDeclaration
@@ -74,12 +72,12 @@ annotationTypeMemberDeclaration
 	;
 
 annotationTypeElementDeclaration
-	: {annotationTypeElementModifier} unannType identifier ( ) [dims] [defaultValue] ;
+	: '{'annotationTypeElementModifier'}' unannType identifier '('')' ('dims')? (defaultValue)? ;
 	;
 
 annotationTypeElementModifier
-	: annotation public
-	| abstract
+	: annotation 'public'
+	| annotation 'abstract'
 	;
 
 defaultValue
@@ -93,15 +91,15 @@ annotation
 	;
 
 normalAnnotation
-	: @ typeName ( [elementValuePairList] )
+	: '@' typeName '(' (elementValuePairList)? ')'
 	;
 
 eElementValuePairList
-	: elementValuePair {, elementValuePair}
+	: elementValuePair (, elementValuePair)*
 	;
 
 elementValuePair
-	: identifier = elementValue
+	: identifier '=' elementValue
 	;
 
 elementValue
@@ -111,11 +109,11 @@ elementValue
 	;
 
 elementValueArrayInitializer
-	: { [elementValueList] [,] }
+	: '{' (elementValueList) '('(',')?')' '}'
 	;
 
 elementValueList
-	: elementValue {, elementValue}
+	: elementValue (, elementValue)*
 	;
 
 markerAnnotation
@@ -123,7 +121,7 @@ markerAnnotation
 	;
 
 singleElementAnnotation
-	: @ typeName ( elementValue )
+	: @ typeName '(' elementValue ')'
 	;
 
 compileUnit
