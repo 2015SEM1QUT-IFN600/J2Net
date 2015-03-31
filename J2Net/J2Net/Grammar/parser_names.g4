@@ -1,9 +1,5 @@
 parser grammar parser_names;
 
-compileUnit
-	:	EOF
-	;
-
 packageName			//From 6.5
 	:	Identifier
 	|	PackageName DOT Identifier
