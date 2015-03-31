@@ -31,11 +31,11 @@ interfaceMemberDeclaration
 	: constantDeclaration
 	| interfaceMethodDeclaration
 	| classDeclaration
-	| InterfaceDeclaration;
+	| InterfaceDeclaration
 	;
 
 constantDeclaration
-	: '{'constantModifier'}' unannType variableDeclaratorList;
+	: '{'constantModifier'}' unannType variableDeclaratorList
 	;
 
 constantModifier
@@ -68,11 +68,11 @@ annotationTypeMemberDeclaration
 	: annotationTypeElementDeclaration
 	| constantDeclaration
 	| classDeclaration
-	| interfaceDeclaration;
+	| interfaceDeclaration
 	;
 
 annotationTypeElementDeclaration
-	: '{'annotationTypeElementModifier'}' unannType identifier '('')' ('dims')? (defaultValue)? ;
+	: '{'annotationTypeElementModifier'}' unannType identifier '('')' ('dims')? (defaultValue)?
 	;
 
 annotationTypeElementModifier
@@ -95,7 +95,7 @@ normalAnnotation
 	;
 
 eElementValuePairList
-	: elementValuePair (, elementValuePair)*
+	: elementValuePair (',' elementValuePair)*
 	;
 
 elementValuePair
@@ -113,15 +113,15 @@ elementValueArrayInitializer
 	;
 
 elementValueList
-	: elementValue (, elementValue)*
+	: elementValue (',' elementValue)*
 	;
 
 markerAnnotation
-	: @ typeName
+	: '@' typeName
 	;
 
 singleElementAnnotation
-	: @ typeName '(' elementValue ')'
+	: '@' typeName '(' elementValue ')'
 	;
 
 compileUnit

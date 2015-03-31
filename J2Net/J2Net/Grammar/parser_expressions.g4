@@ -32,7 +32,7 @@ classInstanceCreationExpression
 	;
 
 unqualifiedClassInstanceCreationExpression
-	: 'new' (typeArguments)? classOrInterfaceTypeToInstantiate '(' (argumentList)? ')' (classBody)?
+	: 'new' (typeArguments)? classOrInterfaceTypeToInstantiate ( (argumentList)? )? (classBody)?
 	;
 
 classOrInterfaceTypeToInstantiate
@@ -65,7 +65,7 @@ methodInvocation
 	;
 
 argumentList
-	: expression (, expression)*
+	: expression (',' expression)*
 	;
 
 methodReference
@@ -74,7 +74,7 @@ methodReference
 	| primary '::' (typeArguments)? identifier
 	| 'super' '::' (typeArguments)? identifier
 	| typeName '.' 'super' '::' (typeArguments)? identifier
-	| classType '::' typeArguments)? 'new'
+	| classType '::' (typeArguments)? 'new'
 	| arrayType '::' 'new'
 	;
 
@@ -109,7 +109,7 @@ lambdaParameters
 	;
 
 inferredFormalParameterList
-	: identifier (, identifier)?
+	: identifier (',' identifier)?
 	;
 
 lambdaBody
@@ -138,7 +138,7 @@ assignmentOperator
 	| '/='  
 	| '%='  
 	| '+=' 
-	| -'=' 
+	| '-=' 
 	| '<<=' 
 	| '>>='  
 	| '>>>='  
