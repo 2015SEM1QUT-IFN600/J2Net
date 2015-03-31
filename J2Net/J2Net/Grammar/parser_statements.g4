@@ -23,8 +23,9 @@ localVariableDeclarationStatement
 	;
 
 localVariableDeclaration
-	: //(variableModifier)* unannType variableDeclarationList
-	;	//waiting for this to be construct
+	: //(variableModifier)* unannType 
+	| //variableDeclarationList
+	; //waiting for this to be construct
 
 statement
 	: statementWithoutTrailingSubstatement
@@ -74,33 +75,33 @@ expressionStatement
 	;
 
 statementExpression
-	: //assignment						//waiting for this to be construct
-	//| preIncrementExpression			//waiting for this to be construct
-	//| preDecrementExpression			//waiting for this to be construct
-	//| postIncrementExpression			//waiting for this to be construct
-	//| postDecrementExpression			//waiting for this to be construct
-	//| methodInvocation				//waiting for this to be construct
-	//| classInstanceCreationExpression	//waiting for this to be construct
+	: assignment						//waiting for this to be construct
+	| preIncrementExpression			//waiting for this to be construct
+	| preDecrementExpression			//waiting for this to be construct
+	| postIncrementExpression			//waiting for this to be construct
+	| postDecrementExpression			//waiting for this to be construct
+	| methodInvocation				//waiting for this to be construct
+	| classInstanceCreationExpression	//waiting for this to be construct
 	;
 
 ifThenStatement
-	: //'if' '(' expression ')' statement
+	: 'if' '(' expression ')' statement
 	;	//waiting for this to be construct
 
 ifThenElseStatement
-	: //'if' '(' expression ')' statement 'else' statement
+	: 'if' '(' expression ')' statement 'else' statement
 	;	//waiting for this to be construct
 
 ifThenElseStatementNoShortIf
-	: //'if' '(' expression ')' statementNoShortIf 'else' statementNoShortIf
+	: 'if' '(' expression ')' statementNoShortIf 'else' statementNoShortIf
 	;	//waiting for this to be construct
 
 assertStatement
-	: //'assert' expression (':' expression)? ';'
+	: 'assert' expression (':' expression)? ';'
 	;	//waiting for this to be construct
 
 switchStatement
-	: //switch '(' expression ')' switchBlock
+	: switch '(' expression ')' switchBlock
 	;	//waiting for this to be construct
 
 switchBlock
@@ -116,9 +117,9 @@ switchLabels
 	;
 
 switchLabel
-	//: 'case' constantExpression ':'
-	: 'case' eNumConstantname ':'
-	//| 'case' eNumConstantname ':'
+	: 'case' constantExpression ':'
+	| 'case' eNumConstantname ':'
+	| 'case' eNumConstantname ':'
 	| 'default' ':'
 	;
 
@@ -127,15 +128,15 @@ eNumConstantname
 	;
 
 whileStatement
-	: //'while' '(' expression ')' statement
+	: 'while' '(' expression ')' statement
 	;	//waiting for this to be construct
 
 whileStatementNoShortIf
-	: //'while' '(' expression ')' statementNoShortIf
+	: 'while' '(' expression ')' statementNoShortIf
 	;	//waiting for this to be construct
 
 doStatement
-	: //'do' statement 'while' '(' expression ')' ';'
+	: 'do' statement 'while' '(' expression ')' ';'
 	;	//waiting for this to be construct
 
 forStatement
@@ -149,11 +150,11 @@ forStatementNoShortIf
 	;
 
 basicForStatement
-	: //'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement
+	: 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement
 	;	//waiting for this to be construct
 
 basicForStatementNoShortIf
-	: //'for' '(' forInit? ';' expression? ';' forUpdate? ')' statementNoShortIf
+	: 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statementNoShortIf
 	;	//waiting for this to be construct
 
 forInit
@@ -170,13 +171,13 @@ statementExpressionList
 	;
 
 enhancedForStatement
-	:// 'for' '(' (variableModifier)* unannType variableDeclaratorId ':' expression ')'
-	//	statement
+	:'for' '(' (variableModifier)* unannType variableDeclaratorId ':' expression ')'
+	|	statement
 	;	//waiting for this to be construct
 
 enhancedForStatementNoShortIf
-	:// 'for' '('( variableModifier)* unannType variableDeclaratorId ':' expression ')'
-	//	statementNoShortIf
+	:'for' '('( variableModifier)* unannType variableDeclaratorId ':' expression ')'
+	|	statementNoShortIf
 	;	//waiting for this to be construct
 
 breakStatement
@@ -188,15 +189,15 @@ continueStatement
 	;
 
 returnStatement
-	:// 'return' expression? ';'
+	: 'return' expression? ';'
 	;	//waiting for this to be construct
 
 throwStatement
-	:// 'throw' expression ';'
+	:  'throw' expression ';'
 	;	//waiting for this to be construct
 
 synchronizedStatement
-	:// 'synchronized' '(' expression ')' block
+	: 'synchronized' '(' expression ')' block
 	;	//waiting for this to be construct
 
 tryStatement
@@ -214,11 +215,11 @@ catchClause
 	;
 
 catchFormalParameter
-	: //(variableModifier)* catchType variableDeclaratorId
+	: (variableModifier)* catchType variableDeclaratorId
 	;	//waiting for this to be construct
 
 catchType
-	: //unannClassType ('|' classType)*
+	: unannClassType ('|' classType)*
 	;
 
 finallyBlock
@@ -226,7 +227,8 @@ finallyBlock
 	;
 
 tryWithResourcesStatement
-	: 'try' resourceSpecification block (catches)? (finallyBlock)?
+	: 'try' resourceSpecification block (catches)? 
+	| (finallyBlock)?
 	;
 
 resourceSpecification
@@ -238,5 +240,10 @@ resourceList
 	;
 
 resource
-	:// (variableModifier)* unannType variableDeclaratorId '=' expression
-	;	//waiting for this to be construct
+	:  (variableModifier)* unannType 
+	|variableDeclaratorId '=' expression
+	; 	//waiting for this to be construct
+
+compileUnit
+	: EOF
+	;
