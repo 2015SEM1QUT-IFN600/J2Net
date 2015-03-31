@@ -8,33 +8,32 @@ classDeclaration
 	;
 
 normalClassDeclaration
-    	:   classModifier  CLASS //identifier // Depends on identifier being finished in chapter 3.8 (Lexical Structure)
+    	:   classModifier  CLASS Identifier // Depends on identifier being finished in chapter 3.8 (Lexical Structure)
         LBRACK typeParameters RBRACK LBRACK superclass RBRACK LBRACK superinterfaces RBRACK classBody
     	;
 
 classModifier
-    :    //annotation // Depends on annotation being finished in chapter 9.7 (Interfaces)
-    //|    
-		 PUBLIC
-    	|    PROTECTED
-    	|    PRIVATE
+    :    annotation // Depends on annotation being finished in chapter 9.7 (Interfaces)
+    |	 PUBLIC
+    |    PROTECTED
+    |    PRIVATE
 	|    ABSTRACT
-    	|    STATIC
-    	|    FINAL
+    |    STATIC
+    |    FINAL
 	|    STRICTFP
-    	;
+    ;
 
 typeParameters
     :   LT typeParameterList GT
     ;
 
 typeParameterList
-	:	//typeParameter LBRACE COMMA typeParameter RBRACE // Depends on typeParameter being finished in chapter 4.4 (Types, Values, and Variables)
+	:	typeParameter LBRACE COMMA typeParameter RBRACE // Depends on typeParameter being finished in chapter 4.4 (Types, Values, and Variables)
 	;
 
 
 superclass
-	:	//EXTENDS classType // Depends on classType being finished in chapter 4.3 (Types, Values, and Variables)
+	:	EXTENDS classType // Depends on classType being finished in chapter 4.3 (Types, Values, and Variables)
 	;
 
 superinterfaces
@@ -42,7 +41,7 @@ superinterfaces
 	;
 
 interfaceTypeList
-	:	//interfaceType LBRACE COMMA interfaceType RBRACE // Depends on interfaceType being finished in chapter 4.3 (Types, Values, and Variables)
+	:	interfaceType LBRACE COMMA interfaceType RBRACE // Depends on interfaceType being finished in chapter 4.3 (Types, Values, and Variables)
 	;
 
 classBody
@@ -60,33 +59,33 @@ classMemberDeclaration
 	:	fieldDeclaration
 	|	methodDeclaration
 	|	classDeclaration
-	//|	interfaceDeclaration // Depends on 9.1 (Interfaces)
+	|	interfaceDeclaration // Depends on 9.1 (Interfaces)
 	;
 
 instanceInitializer
-	:	//block // Depends on 14.2 (Blocks and Statements)
+	:	block // Depends on 14.2 (Blocks and Statements)
 	;
 
 staticInitializer
-	:	//STATIC block // Depends on 14.2 (Blocks and Statements)
+	:	STATIC block // Depends on 14.2 (Blocks and Statements)
 	;
 
 constructorDeclaration
 	:	LBRACE constructorModifier RBRACE constructorDeclarator LBRACK THROWS RBRACK constructorBody // throws?
 	;
 
-//throws
-//	:	THROWS exceptionTypeList
-//	;
+THROWS
+	:	THROWS exceptionTypeList
+	;
 
-//exceptionTypeList
-//	:	exceptionType LBRACE COMMA exceptionType RBRACE
-//	;
+exceptionTypeList
+	:	exceptionType LBRACE COMMA exceptionType RBRACE
+	;
 
-//exceptionType
-//	:	classType 
-//	|	typeVariable
-//	;
+exceptionType
+	:	classType 
+	|	typeVariable
+	;
 
 fieldDeclaration
 	:	LBRACE fieldModifier RBRACE unannType variableDeclaratorList
@@ -106,7 +105,7 @@ variableInitializer
 	;
 
 variableDeclaratorId
-	:	//identifier LBRACK dims RBRACK // Depends on 3.8 (Lexical Structure)
+	:	Identifier LBRACK dims RBRACK // Depends on 3.8 (Lexical Structure)
 	;
 
 methodDeclaration
@@ -114,9 +113,8 @@ methodDeclaration
 	;
 
 methodModifier
-	:	//annotation // Depends on 9.7
-	//|	
-		PUBLIC 
+	:	annotation // Depends on 9.7
+	|	PUBLIC 
 	|	PROTECTED 
 	|	PRIVATE
 	|	ABSTRACT
@@ -128,12 +126,12 @@ methodModifier
 	; 
 
 methodHeader
-	:	result methodDeclarator LBRACK THROWS RBRACK // throws?
-	//|	typeParameters LBRACE annotation RBRACE result methodDeclarator LBRACK THROWS RBRACK // Depends on 9.7
+	:	result methodDeclarator LBRACK THROWS RBRACK THROWS?
+	|	typeParameters LBRACE annotation RBRACE result methodDeclarator LBRACK THROWS RBRACK // Depends on 9.7
 	;
 
 methodDeclarator
-	:	//identifier LPAREN LBRACK formalParameterList RBRACK RPAREN LBRACK dims RBRACK // Depends on 4.3
+	:	Identifier LPAREN LBRACK formalParameterList RBRACK RPAREN LBRACK dims RBRACK // Depends on 4.3
 	;
 
 formalParameterList
@@ -143,13 +141,13 @@ formalParameterList
 	;
 
 lastFormalParameter
-	:	//LBRACE variableModifier RBRACE unannType LBRACE annotation RBRACE TRPDOT variableDeclaratorId // Depends on 9.7
+	:	LBRACE variableModifier RBRACE unannType LBRACE annotation RBRACE TRPDOT variableDeclaratorId // Depends on 9.7
 	|	formalParameter 
 	;
 
 variableModifier
-	:	//annotation // Depends on 9.7
-	//| FINAL
+	:	annotation // Depends on 9.7
+	| FINAL
 	;
 
 formalParameters
@@ -162,7 +160,7 @@ formalParameter
 	;
 
 receiverParameter
-	:	//LBRACE annotation RBRACE unannType LBRACK identifier DOT RBRACK THIS // Depends on 9.7 and 3.8
+	:	LBRACE annotation RBRACE unannType LBRACK Identifier DOT RBRACK THIS // Depends on 9.7 and 3.8
 	;
 
 result
@@ -171,13 +169,13 @@ result
 	;
 
 methodBody
-	:	//block // Depends on 14.2
+	:	block // Depends on 14.2
+	|	';'
 	;
 
 constructorModifier
-	:	//annotation // Depends on  9.7 (Interfaces)
-	//|	
-		PUBLIC 
+	:	annotation // Depends on  9.7 (Interfaces)
+	|	PUBLIC 
 	|	PROTECTED 
 	|	PRIVATE
 	;
@@ -187,7 +185,7 @@ constructorDeclarator
 	;
 
 simpleTypeName
-	:	//identifier // Depends on 3.8
+	:	Identifier // Depends on 3.8
 	;
 
 constructorBody
@@ -195,16 +193,15 @@ constructorBody
 	;
 
 explicitConstructorInvocation
-	:	//RBRACK typeArguments LBRACK THIS LPAREN LBRACK argumentList RBRACK RPAREN SEMI // Depends on 4.5.1 and 15.12
-	//|	RBRACK typeArguments LBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI 
-	//|	expressionName DOT LBRACK typeArguments RBRACK SUPER LPAREN LBrACK argumentList RBRACK RPAREN SEMI // Depends on 6.5
-	//|	primary DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACKET argumentList RBRACKET RPAREN SEMI // Depends on 15.8
+	:	RBRACK typeArguments LBRACK THIS LPAREN LBRACK argumentList RBRACK RPAREN SEMI // Depends on 4.5.1 and 15.12
+	|	RBRACK typeArguments LBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI 
+	|	expressionName DOT LBRACK typeArguments RBRACK SUPER LPAREN LBrACK argumentList RBRACK RPAREN SEMI // Depends on 6.5
+	|	primary DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACKET argumentList RBRACKET RPAREN SEMI // Depends on 15.8
 	;
 
 fieldModifier
-	:	//annotation // Depends on  9.7 (Interfaces)
-	//|	
-		PUBLIC 
+	:	annotation // Depends on  9.7 (Interfaces)
+	|	PUBLIC 
 	|	PROTECTED
 	|	PRIVATE
 	|	STATIC
@@ -219,9 +216,8 @@ unannType
 	;
 
 unannPrimitiveType
-	:	//numericType // Depends on 4.2
-	//|	
-		BOOLEAN
+	:	numericType // Depends on 4.2
+	|	BOOLEAN
 	;
 
 unannReferenceType
@@ -236,8 +232,8 @@ unannClassOrInterfaceType
 	;
 
 unannClassType
-	:	//identifier LBRACK typeArguments RBRACK // Depends in 3.8
-	//|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE identifier LBRACK typeArguments RBRACK // Dependencies...
+	:	Identifier LBRACK typeArguments RBRACK // Depends in 3.8
+	|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE Identifier LBRACK typeArguments RBRACK // Dependencies...
 	;
 
 unannInterfaceType
@@ -245,17 +241,17 @@ unannInterfaceType
 	;
 
 unannTypeVariable
-	:	//identifier // Depends on 3.8
+	:	Identifier // Depends on 3.8
 	;
 
 unannArrayType
-	:	//unannPrimitiveType dims // Depends on 4.3
-	//|	unannClassOrInterfaceType dims // Depends on 4.3
-	//|	unannTypeVariable dims // Depends on 4.3
+	:	unannPrimitiveType dims // Depends on 4.3
+	|	unannClassOrInterfaceType dims // Depends on 4.3
+	|	unannTypeVariable dims // Depends on 4.3
 	;
 
 enumDeclaration
-	:	LBRACE classModifier RBRACE ENUM //identifier LBRACK superinterfaces RBRACE enumBody // Depends on 3.8
+	:	LBRACE classModifier RBRACE ENUM Identifier LBRACK superinterfaces RBRACE enumBody // Depends on 3.8
 	;
 
 enumBody
@@ -271,11 +267,11 @@ enumBodyDeclarations
 	;
 
 enumConstant
-	:	//LBRACE enumConstantModifier RBRACE identifier LBRACK LPAREN LBRACK argumentList RBRACK RPAREN RBRACK LBRACK classBody RBRACK // Depends on 9.7 and 15.12
+	:	LBRACE enumConstantModifier RBRACE Identifier LBRACK LPAREN LBRACK argumentList RBRACK RPAREN RBRACK LBRACK classBody RBRACK // Depends on 9.7 and 15.12
 	;
 
 enumConstantModifier
-	:	//annotation // Depends on 9.7
+	:	annotation // Depends on 9.7
 	;
 
 compileUnit

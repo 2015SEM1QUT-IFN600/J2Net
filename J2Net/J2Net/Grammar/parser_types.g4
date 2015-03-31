@@ -10,8 +10,8 @@ type
 	;
 
 primitiveType
-	:// annotation* numericType
-	//| annotation* 'boolean'
+	: annotation* numericType
+	| annotation* 'boolean'
 	;	//waiting for this to be construct
 
 numericType
@@ -44,8 +44,8 @@ classOrInterfaceType
 	;
 
 classType
-	:// annotation* Identifier typeArguments?
-	//| classOrInterfaceType '.' annotation* Identifier typeArguments?
+	: annotation* Identifier typeArguments?
+	| classOrInterfaceType '.' annotation* Identifier typeArguments?
 	;	//waiting for this to be construct
 
 interfaceType
@@ -53,7 +53,7 @@ interfaceType
 	;
 
 typeVariable
-	:// annotation* Identifier
+	: annotation* Identifier
 	;	//waiting for this to be construct
 
 arrayType
@@ -63,17 +63,17 @@ arrayType
 	;
 
 dims
-	://annotation* '['']' (annotation* '['']')*
+	:annotation* '['']' (annotation* '['']')*
 	;	//waiting for this to be construct
 
 typeParameter
-	//:typeParameterModifier* Identifier typeBound?
-	:// typeParameterModifier+ Identifier typeBound?
+	:typeParameterModifier* Identifier typeBound?
+	//:// typeParameterModifier+ Identifier typeBound?
 	//| Identifier typeBound?
 	;	//waiting for this to be construct
 
 typeParameterModifier
-	:// annotation
+	: annotation
 	;	//waiting for this to be construct
 
 typeBound
@@ -99,10 +99,14 @@ typeArgument
 	;
 
 wildCard
-	:// annotation* '?' wildcardBounds?
+	: annotation* '?' wildcardBounds?
 	;
 
 wildcardBounds
 	: 'extends' referenceType
 	| 'super' referenceType
+	;
+
+compileUnit
+	:	EOF
 	;

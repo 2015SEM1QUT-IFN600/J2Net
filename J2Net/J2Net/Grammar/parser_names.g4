@@ -29,3 +29,7 @@ ambiguousName		//From 6.5
 	:	Identifier
 	|	AmbiguousName DOT Identifier
 	;
+
+compileUnit
+	:	EOF
+	;

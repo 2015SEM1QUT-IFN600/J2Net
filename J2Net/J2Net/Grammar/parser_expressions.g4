@@ -36,7 +36,7 @@ unqualifiedClassInstanceCreationExpression
 	;
 
 classOrInterfaceTypeToInstantiate
-	: (annotation)* identifier ('.' (annotation)* identifier)* (typeArgumentsOrDiamond)?
+	: (annotation)* Identifier ('.' (annotation)* Identifier)* (typeArgumentsOrDiamond)?
 	;
 
 typeArgumentsOrDiamond
@@ -45,9 +45,9 @@ typeArgumentsOrDiamond
 	;
 
 fieldAccess
-	: primary '.' identifier
-	| 'super' '.' identifier
-	| typeName '.' 'super' '.' identifier
+	: primary '.' Identifier
+	| 'super' '.' Identifier
+	| typeName '.' 'super' '.' Identifier
 	;
 
 arrayAccess
@@ -57,11 +57,11 @@ arrayAccess
 
 methodInvocation
 	: MethodName '(' (argumentList)? ')'
-	| typeName '.' (typeArguments)? identifier '(' (argumentList)? ')'
-	| expressionName '.' (typeArguments)? identifier '(' (argumentList)? ')'
-	| primary '.' (typeArguments)? identifier '(' (argumentList)? ')'
-	| 'super' '.' (typeArguments)? identifier '(' (argumentList)? ')'
-	| typeName '.' 'super' '.' (typeArguments)? identifier '(' (argumentList)? ')'
+	| typeName '.' (typeArguments)? Identifier '(' (argumentList)? ')'
+	| expressionName '.' (typeArguments)? Identifier '(' (argumentList)? ')'
+	| primary '.' (typeArguments)? Identifier '(' (argumentList)? ')'
+	| 'super' '.' (typeArguments)? Identifier '(' (argumentList)? ')'
+	| typeName '.' 'super' '.' (typeArguments)? Identifier '(' (argumentList)? ')'
 	;
 
 argumentList
@@ -69,11 +69,11 @@ argumentList
 	;
 
 methodReference
-	: expressionName '::' (typeArguments)? identifier
-	| referenceType '::' (typeArguments)? identifier
-	| primary '::' (typeArguments)? identifier
-	| 'super' '::' (typeArguments)? identifier
-	| typeName '.' 'super' '::' (typeArguments)? identifier
+	: expressionName '::' (typeArguments)? Identifier
+	| referenceType '::' (typeArguments)? Identifier
+	| primary '::' (typeArguments)? Identifier
+	| 'super' '::' (typeArguments)? Identifier
+	| typeName '.' 'super' '::' (typeArguments)? Identifier
 	| classType '::' (typeArguments)? 'new'
 	| arrayType '::' 'new'
 	;
@@ -103,13 +103,13 @@ lambdaExpression
 	;
 
 lambdaParameters
-	: identifier
+	: Identifier
 	| '(' (formalParameterList)? ')'
 	| '(' inferredFormalParameterList')'
 	;
 
 inferredFormalParameterList
-	: identifier (',' identifier)?
+	: Identifier (',' Identifier)?
 	;
 
 lambdaBody
@@ -203,7 +203,7 @@ shiftExpression
 additiveExpression
 	: multiplicativeExpression
 	| additiveExpression '+' multiplicativeExpression
-	| mdditiveExpression '-' multiplicativeExpression
+	| additiveExpression '-' multiplicativeExpression
 	;
 
 multiplicativeExpression
@@ -262,5 +262,5 @@ constantExpression
 	;
 
 compileUnit
-	: EOF
+	:	EOF
 	;

@@ -8,3 +8,7 @@ literal
 	|	StringLiteral
 	|	NullLiteral
 	;
+
+compileUnit
+	:	EOF
+	;

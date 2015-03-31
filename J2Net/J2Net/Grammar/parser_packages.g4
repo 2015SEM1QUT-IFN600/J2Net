@@ -5,7 +5,7 @@ compilationUnit
     ;
 
 packageDeclaration
-    :   annotation* 'package' identifier ('.' identifier)? ';'
+    :   annotation* 'package' Identifier ('.' Identifier)* ';'
     ;
 
 	
@@ -21,17 +21,24 @@ singleTypeImportDeclaration
     ;
 
 typeImportOnDemandDeclaration
-    :   'import' typeName ('.' '*')? ';'
+    :   'import' packageOrTypeName '.' '*' ';'
     ;
 
 singleStaticImportDeclaration
-    :   'import' 'static' typeName '.' identifier ';'
+    :   'import' 'static' typeName '.' Identifier ';'
     ;
 
 staticImportOnDemandDeclaration
-    :   'import' 'static' typeName ('.' '*')? ';'
+    :   'import' 'static' typeName '.' '*' ';'
     ;
 
+typeDeclaration
+	:	classDeclaration
+	|	interfaceDeclaration
+	|	';'
+	;
+
+/*
 typeDeclaration
     :   classOrInterfaceModifier* classDeclaration
     |   classOrInterfaceModifier* enumDeclaration
@@ -39,3 +46,7 @@ typeDeclaration
     |   classOrInterfaceModifier* annotationTypeDeclaration
     |   ';'
     ;
+*/
+compileUnit
+	:	EOF
+	;

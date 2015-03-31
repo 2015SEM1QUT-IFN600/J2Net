@@ -7,7 +7,7 @@ interfaceDeclaration
 	;
 
 normalInterfaceDeclaration
-	: '{'interfaceModifier'}' interface identifier (typeParameters)? (extendsInterfaces)? interfaceBody
+	: '{'interfaceModifier'}' 'interface' Identifier (typeParameters)? (extendsInterfaces)? interfaceBody
 	;
 
 interfaceModifier
@@ -31,7 +31,7 @@ interfaceMemberDeclaration
 	: constantDeclaration
 	| interfaceMethodDeclaration
 	| classDeclaration
-	| InterfaceDeclaration
+	| interfaceDeclaration
 	;
 
 constantDeclaration
@@ -57,7 +57,7 @@ interfaceMethodModifier
 	;
 
 annotationTypeDeclaration
-	: '{'interfaceModifier'}''@' interface identifier annotationTypeBody
+	: '{'interfaceModifier'}''@' 'interface' Identifier annotationTypeBody
 	;
 
 annotationTypeBody
@@ -72,7 +72,7 @@ annotationTypeMemberDeclaration
 	;
 
 annotationTypeElementDeclaration
-	: '{'annotationTypeElementModifier'}' unannType identifier '('')' ('dims')? (defaultValue)?
+	: '{'annotationTypeElementModifier'}' unannType Identifier '('')' ('dims')? (defaultValue)?
 	;
 
 annotationTypeElementModifier
@@ -81,7 +81,7 @@ annotationTypeElementModifier
 	;
 
 defaultValue
-	: default elementValue
+	: 'default' elementValue
 	;
 
 annotation
@@ -94,16 +94,16 @@ normalAnnotation
 	: '@' typeName '(' (elementValuePairList)? ')'
 	;
 
-eElementValuePairList
+elementValuePairList
 	: elementValuePair (',' elementValuePair)*
 	;
 
 elementValuePair
-	: identifier '=' elementValue
+	: Identifier '=' elementValue
 	;
 
 elementValue
-	: conditionalexpression
+	: conditionalExpression
 	| elementValueArrayInitializer
 	| annotation
 	;

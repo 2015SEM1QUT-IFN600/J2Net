@@ -14,7 +14,7 @@ blockStatements
 
 blockStatement
 	: localVariableDeclarationStatement
-	| //classDeclaration	//waiting for this to be construct
+	| classDeclaration	//waiting for this to be construct
 	| statement
 	;
 
@@ -23,7 +23,7 @@ localVariableDeclarationStatement
 	;
 
 localVariableDeclaration
-	: //(variableModifier)* unannType variableDeclarationList
+	: (variableModifier)* unannType variableDeclaratorList
 	; //waiting for this to be construct
 
 statement
@@ -100,7 +100,7 @@ assertStatement
 	;	//waiting for this to be construct
 
 switchStatement
-	: switch '(' expression ')' switchBlock
+	: 'switch' '(' expression ')' switchBlock
 	;	//waiting for this to be construct
 
 switchBlock
@@ -237,3 +237,7 @@ resourceList
 resource
 	:  (variableModifier)* unannType variableDeclaratorId '=' expression
 	; 	//waiting for this to be construct
+
+compileUnit
+	:	EOF
+	;
