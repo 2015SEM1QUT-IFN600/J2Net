@@ -1,8 +1,6 @@
 parser grammar parser_classes;
 
-compileUnit
-	:	EOF
-	;
+
 
 classDeclaration
 	:	normalClassDeclaration 
@@ -10,21 +8,21 @@ classDeclaration
 	;
 
 normalClassDeclaration
-    :   classModifier  CLASS //identifier // Depends on identifier being finished in chapter 3.8 (Lexical Structure)
+    	:   classModifier  CLASS //identifier // Depends on identifier being finished in chapter 3.8 (Lexical Structure)
         LBRACK typeParameters RBRACK LBRACK superclass RBRACK LBRACK superinterfaces RBRACK classBody
-    ;
+    	;
 
 classModifier
     :    //annotation // Depends on annotation being finished in chapter 9.7 (Interfaces)
     //|    
 		 PUBLIC
-    |    PROTECTED
-    |    PRIVATE
+    	|    PROTECTED
+    	|    PRIVATE
 	|    ABSTRACT
-    |    STATIC
-    |    FINAL
+    	|    STATIC
+    	|    FINAL
 	|    STRICTFP
-    ;
+    	;
 
 typeParameters
     :   LT typeParameterList GT
@@ -33,6 +31,7 @@ typeParameters
 typeParameterList
 	:	//typeParameter LBRACE COMMA typeParameter RBRACE // Depends on typeParameter being finished in chapter 4.4 (Types, Values, and Variables)
 	;
+
 
 superclass
 	:	//EXTENDS classType // Depends on classType being finished in chapter 4.3 (Types, Values, and Variables)
@@ -102,9 +101,8 @@ variableDeclarator
 	;
 
 variableInitializer
-	:	//expression // Depends on 15.2 (Expressions)
-	//|	
-		//arrayInitializer // Depends on 10.6 (Arrays)
+	:	expression // Depends on 15.2 (Expressions)
+	|	arrayInitializer // Depends on 10.6 (Arrays)
 	;
 
 variableDeclaratorId
@@ -151,8 +149,7 @@ lastFormalParameter
 
 variableModifier
 	:	//annotation // Depends on 9.7
-	//|	
-		FINAL
+	//| FINAL
 	;
 
 formalParameters
@@ -279,4 +276,8 @@ enumConstant
 
 enumConstantModifier
 	:	//annotation // Depends on 9.7
+	;
+
+compileUnit
+	:	EOF
 	;
