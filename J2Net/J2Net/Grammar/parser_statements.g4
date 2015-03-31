@@ -23,8 +23,7 @@ localVariableDeclarationStatement
 	;
 
 localVariableDeclaration
-	: //(variableModifier)* unannType 
-	| //variableDeclarationList
+	: //(variableModifier)* unannType variableDeclarationList
 	; //waiting for this to be construct
 
 statement
@@ -119,7 +118,6 @@ switchLabels
 switchLabel
 	: 'case' constantExpression ':'
 	| 'case' eNumConstantname ':'
-	| 'case' eNumConstantname ':'
 	| 'default' ':'
 	;
 
@@ -171,13 +169,11 @@ statementExpressionList
 	;
 
 enhancedForStatement
-	:'for' '(' (variableModifier)* unannType variableDeclaratorId ':' expression ')'
-	|	statement
+	:'for' '(' (variableModifier)* unannType variableDeclaratorId ':' expression ')' statement
 	;	//waiting for this to be construct
 
 enhancedForStatementNoShortIf
-	:'for' '('( variableModifier)* unannType variableDeclaratorId ':' expression ')'
-	|	statementNoShortIf
+	:'for' '('( variableModifier)* unannType variableDeclaratorId ':' expression ')' statementNoShortIf
 	;	//waiting for this to be construct
 
 breakStatement
@@ -193,7 +189,7 @@ returnStatement
 	;	//waiting for this to be construct
 
 throwStatement
-	:  'throw' expression ';'
+	: 'throw' expression ';'
 	;	//waiting for this to be construct
 
 synchronizedStatement
@@ -227,8 +223,7 @@ finallyBlock
 	;
 
 tryWithResourcesStatement
-	: 'try' resourceSpecification block (catches)? 
-	| (finallyBlock)?
+	: 'try' resourceSpecification block (catches)? (finallyBlock)?
 	;
 
 resourceSpecification
@@ -240,10 +235,5 @@ resourceList
 	;
 
 resource
-	:  (variableModifier)* unannType 
-	|variableDeclaratorId '=' expression
+	:  (variableModifier)* unannType variableDeclaratorId '=' expression
 	; 	//waiting for this to be construct
-
-compileUnit
-	: EOF
-	;
