@@ -19,9 +19,9 @@ primaryNoNewArray
 	;
 
 classLiteral
-	: typeName '('( )?')' '.' 'class'
-	| numericType '('( )?')' '.' 'class'
-	| 'boolean' '('( )?')' '.' 'class'
+	: typeName (( )?)* '.' 'class'
+	| numericType (( )?)* '.' 'class'
+	| 'boolean' (( )?) '.' 'class'
 	| 'void' '.' 'class'
 	;
 
@@ -32,16 +32,16 @@ classInstanceCreationExpression
 	;
 
 unqualifiedClassInstanceCreationExpression
-	: 'new' (typeArguments)? classOrInterfaceTypeToInstantiate ( (argumentList)? )? (classBody)?
+	: 'new' typeArguments? classOrInterfaceTypeToInstantiate '{' argumentList? '}' classBody?
 	;
 
 classOrInterfaceTypeToInstantiate
-	: (annotation)* Identifier ('.' (annotation)* Identifier)* (typeArgumentsOrDiamond)?
+	: annotation* Identifier ('.' annotation* Identifier)* typeArgumentsOrDiamond?
 	;
 
 typeArgumentsOrDiamond
 	: typeArguments
-	| '<>'
+	| '<' '>'
 	;
 
 fieldAccess
@@ -51,17 +51,17 @@ fieldAccess
 	;
 
 arrayAccess
-	: expressionName ( expression )?
-	| primaryNoNewArray ( expression )?
+	: expressionName expression?
+	| primaryNoNewArray expression?
 	;
 
 methodInvocation
-	: MethodName '(' (argumentList)? ')'
-	| typeName '.' (typeArguments)? Identifier '(' (argumentList)? ')'
-	| expressionName '.' (typeArguments)? Identifier '(' (argumentList)? ')'
-	| primary '.' (typeArguments)? Identifier '(' (argumentList)? ')'
-	| 'super' '.' (typeArguments)? Identifier '(' (argumentList)? ')'
-	| typeName '.' 'super' '.' (typeArguments)? Identifier '(' (argumentList)? ')'
+	: MethodName '(' argumentList? ')'
+	| typeName '.' typeArguments? Identifier '(' argumentList? ')'
+	| expressionName '.' typeArguments? Identifier '(' argumentList? ')'
+	| primary '.' typeArguments? Identifier '(' argumentList? ')'
+	| 'super' '.' typeArguments? Identifier '(' argumentList? ')'
+	| typeName '.' 'super' '.' typeArguments? Identifier '(' argumentList? ')'
 	;
 
 argumentList
@@ -69,28 +69,28 @@ argumentList
 	;
 
 methodReference
-	: expressionName '::' (typeArguments)? Identifier
-	| referenceType '::' (typeArguments)? Identifier
-	| primary '::' (typeArguments)? Identifier
-	| 'super' '::' (typeArguments)? Identifier
-	| typeName '.' 'super' '::' (typeArguments)? Identifier
-	| classType '::' (typeArguments)? 'new'
-	| arrayType '::' 'new'
+	: expressionName ':'':' typeArguments? Identifier
+	| referenceType ':'':' typeArguments? Identifier
+	| primary ':'':' typeArguments? Identifier
+	| 'super' ':'':' typeArguments? Identifier
+	| typeName '.' 'super' '::' typeArguments? Identifier
+	| classType ':'':' typeArguments? 'new'
+	| arrayType ':'':' 'new'
 	;
 
 arrayCreationExpression
-	: 'new' primitiveType dimExprs ('dims')?
-	| 'new' classOrInterfaceType dimExprs ('dims')?
-	| 'new' primitiveType 'dims' arrayInitializer
-	| 'new' classOrInterfaceType 'dims' arrayInitializer
+	: 'new' primitiveType dimExprs dims?
+	| 'new' classOrInterfaceType dimExprs dims?
+	| 'new' primitiveType dims arrayInitializer
+	| 'new' classOrInterfaceType dims arrayInitializer
 	;
 
 dimExprs
-	: dimExpr (dimExpr)*
+	: dimExpr dimExpr*
 	;
 
 dimExpr
-	: (annotation)* ( expression )?
+	: annotation* expression?
 	;
 
 expression
@@ -104,7 +104,7 @@ lambdaExpression
 
 lambdaParameters
 	: Identifier
-	| '(' (formalParameterList)? ')'
+	| '(' formalParameterList? ')'
 	| '(' inferredFormalParameterList')'
 	;
 
@@ -253,8 +253,8 @@ postDecrementExpression
 
 castExpression
 	: '(' primitiveType ')' unaryExpression
-	| '(' referenceType (additionalBound)* ')' unaryExpressionNotPlusMinus
-	| '(' referenceType (additionalBound)* ')' lambdaExpression
+	| '(' referenceType additionalBound* ')' unaryExpressionNotPlusMinus
+	| '(' referenceType additionalBound* ')' lambdaExpression
 	;
 
 constantExpression

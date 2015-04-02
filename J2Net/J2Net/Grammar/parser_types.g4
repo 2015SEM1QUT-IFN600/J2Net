@@ -1,8 +1,10 @@
 parser grammar parser_types;
 
-options {
-	tokenVocab = Java;
-}
+//options {
+//tokenVocab = Java;
+//}
+
+//Types, Values, and Variables
 
 type
 	: primitiveType
@@ -63,13 +65,13 @@ arrayType
 	;
 
 dims
-	:annotation* '['']' (annotation* '['']')*
+	: annotation* '['']' (annotation* '['']')*
 	;	//waiting for this to be construct
 
 typeParameter
-	:typeParameterModifier* Identifier typeBound?
-	//:// typeParameterModifier+ Identifier typeBound?
-	//| Identifier typeBound?
+	: typeParameterModifier* Identifier typeBound?
+	//: typeParameterModifier+ Identifier typeBound?
+	| Identifier typeBound?
 	;	//waiting for this to be construct
 
 typeParameterModifier
