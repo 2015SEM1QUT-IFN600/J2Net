@@ -30,6 +30,3 @@ ambiguousName		//From 6.5
 	|	AmbiguousName DOT Identifier
 	;
 
-compileUnit
-	:	EOF
-	;

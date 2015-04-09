@@ -9,6 +9,3 @@ literal
 	|	NullLiteral
 	;
 
-compileUnit
-	:	EOF
-	;

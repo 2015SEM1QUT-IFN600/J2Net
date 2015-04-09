@@ -124,6 +124,3 @@ singleElementAnnotation
 	: '@' typeName '(' elementValue ')'
 	;
 
-compileUnit
-	:	EOF
-	;

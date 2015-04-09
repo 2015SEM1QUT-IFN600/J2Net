@@ -1,8 +1,6 @@
 parser grammar parser_statements;
 
-options {
-	tokenVocab = Java;
-}
+
 
 block
 	: '{' blockStatements? '}'
@@ -238,6 +236,3 @@ resource
 	:  (variableModifier)* unannType variableDeclaratorId '=' expression
 	; 	//waiting for this to be construct
 
-compileUnit
-	:	EOF
-	;

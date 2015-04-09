@@ -261,6 +261,3 @@ constantExpression
 	: expression
 	;
 
-compileUnit
-	:	EOF
-	;

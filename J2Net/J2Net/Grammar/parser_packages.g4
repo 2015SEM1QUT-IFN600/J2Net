@@ -47,6 +47,3 @@ typeDeclaration
     |   ';'
     ;
 */
-compileUnit
-	:	EOF
-	;

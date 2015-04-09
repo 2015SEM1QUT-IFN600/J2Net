@@ -7,6 +7,3 @@ variableInitializerList
 	:	variableInitializer (',' variableInitializer)*
 	;
 
-compileUnit
-	:	EOF
-	;

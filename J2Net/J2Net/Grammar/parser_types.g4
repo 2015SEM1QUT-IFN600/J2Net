@@ -1,8 +1,6 @@
 parser grammar parser_types;
 
-//options {
-//tokenVocab = Java;
-//}
+
 
 //Types, Values, and Variables
 
@@ -109,6 +107,3 @@ wildcardBounds
 	| 'super' referenceType
 	;
 
-compileUnit
-	:	EOF
-	;

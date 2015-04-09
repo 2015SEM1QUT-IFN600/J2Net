@@ -1,7 +1,5 @@
 parser grammar parser_classes;
 
-
-
 classDeclaration
 	:	normalClassDeclaration 
 	|	enumDeclaration
@@ -274,6 +272,3 @@ enumConstantModifier
 	:	annotation // Depends on 9.7
 	;
 
-compileUnit
-	:	EOF
-	;
