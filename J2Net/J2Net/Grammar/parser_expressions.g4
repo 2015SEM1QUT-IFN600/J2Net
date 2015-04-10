@@ -1,9 +1,34 @@
 parser grammar parser_expressions;
 
-primary
-	: primaryNoNewArray
-	| arrayCreationExpression
-	;
+//import parser_statements;
+
+// TO BE OVERRIDDEN IN CHILD RULES //
+typeName : DOT;
+expressionName : DOT;
+classBody : DOT;
+formalParameterList : DOT;
+block : DOT;
+
+
+
+/************ EXPRESSION  ************/
+
+//BUG: the following sets of rules are mutally left-recursive [primary, classInstanceCreationExpression, fieldAccess, methodInvocation, methodReference, primaryNoNewArray, arrayAccess] and 
+//		[primaryNoNewArray, arrayAccess, primary, classInstanceCreationExpression, fieldAccess, methodInvocation, methodReference] and 
+//		[postfixExpression, postIncrementExpression, postDecrementExpression]
+//
+// worked around by commenting primary, arrayAccess, and postfixExpression
+//
+
+
+
+
+//BUG: mutual left-recursion -- see top of file
+primary : DOT;
+//primary
+//	: primaryNoNewArray
+//	| arrayCreationExpression
+//	;
 
 primaryNoNewArray
 	: literal
@@ -18,12 +43,14 @@ primaryNoNewArray
 	| methodReference
 	;
 
-classLiteral
-	: typeName (( )?)* '.' 'class'
-	| numericType (( )?)* '.' 'class'
-	| 'boolean' (( )?) '.' 'class'
-	| 'void' '.' 'class'
-	;
+//BUG: rule 'classLiteral' contains a closure with at least one alternative that can match an empty string
+classLiteral : DOT;
+//classLiteral
+//	: typeName (( )?)* '.' 'class'
+//	| numericType (( )?)* '.' 'class'
+//	| 'boolean' (( )?) '.' 'class'
+//	| 'void' '.' 'class'
+//	;
 
 classInstanceCreationExpression
 	: unqualifiedClassInstanceCreationExpression
@@ -50,10 +77,13 @@ fieldAccess
 	| typeName '.' 'super' '.' Identifier
 	;
 
-arrayAccess
-	: expressionName expression?
-	| primaryNoNewArray expression?
-	;
+
+//BUG: mutual left-recursion -- see top of file
+arrayAccess : DOT;
+//arrayAccess
+//	: expressionName expression?
+//	| primaryNoNewArray expression?
+//	;
 
 methodInvocation
 	: MethodName '(' argumentList? ')'
@@ -85,9 +115,11 @@ arrayCreationExpression
 	| 'new' classOrInterfaceType dims arrayInitializer
 	;
 
-dimExprs
-	: dimExpr dimExpr*
-	;
+//BUG: rule 'dimExprs' contains a closure with at least one alternative that can match an empty string
+dimExprs : DOT;
+//dimExprs
+//	: dimExpr dimExpr*
+//	;
 
 dimExpr
 	: annotation* expression?
@@ -153,65 +185,77 @@ conditionalExpression
 	| conditionalOrExpression '?' expression ':' lambdaExpression
 	;
 
-conditionalOrExpression
-	: conditionalAndExpression
-	| conditionalOrExpression '||' conditionalAndExpression
-	;
+//BUG: causes unknown build error. Each of the following calls itself in a forever loop
+conditionalOrExpression : DOT;
+conditionalAndExpression : DOT;
+inclusiveOrExpression : DOT;
+exclusiveOrExpression : DOT;
+andExpression : DOT;
+equalityExpression : DOT;
+relationalExpression : DOT;
+shiftExpression : DOT;
+additiveExpression : DOT;
+multiplicativeExpression : DOT;
 
-conditionalAndExpression
-	: inclusiveOrExpression
-	| conditionalAndExpression '&&' inclusiveOrExpression
-	;
+//conditionalOrExpression
+//	: conditionalAndExpression
+//	| conditionalOrExpression '||' conditionalAndExpression
+//	;
 
-inclusiveOrExpression
-	: exclusiveOrExpression
-	| inclusiveOrExpression '|' exclusiveOrExpression
-	;
+//conditionalAndExpression
+//	: inclusiveOrExpression
+//	| conditionalAndExpression '&&' inclusiveOrExpression
+//	;
 
-exclusiveOrExpression
-	: andExpression
-	| exclusiveOrExpression '^' andExpression
-	;
+//inclusiveOrExpression
+//	: exclusiveOrExpression
+//	| inclusiveOrExpression '|' exclusiveOrExpression
+//	;
 
-andExpression
-	: equalityExpression
-	| andExpression '&' equalityExpression
-	;
+//exclusiveOrExpression
+//	: andExpression
+//	| exclusiveOrExpression '^' andExpression
+//	;
 
-equalityExpression
-	: relationalExpression
-	| equalityExpression '==' relationalExpression
-	| equalityExpression '!=' relationalExpression
-	;
+//andExpression
+//	: equalityExpression
+//	| andExpression '&' equalityExpression
+//	;
 
-relationalExpression
-	: shiftExpression
-	| relationalExpression '<' shiftExpression
-	| relationalExpression '>' shiftExpression
-	| relationalExpression '<=' shiftExpression
-	| relationalExpression '>=' shiftExpression
-	| relationalExpression 'instanceof' referenceType
-	;
+//equalityExpression
+//	: relationalExpression
+//	| equalityExpression '==' relationalExpression
+//	| equalityExpression '!=' relationalExpression
+//	;
 
-shiftExpression
-	: additiveExpression
-	| shiftExpression '<<' additiveExpression
-	| shiftExpression '>>' additiveExpression
-	| shiftExpression '>>>' additiveExpression
-	;
+//relationalExpression
+//	: shiftExpression
+//	| relationalExpression '<' shiftExpression
+//	| relationalExpression '>' shiftExpression
+//	| relationalExpression '<=' shiftExpression
+//	| relationalExpression '>=' shiftExpression
+//	| relationalExpression 'instanceof' referenceType
+//	;
 
-additiveExpression
-	: multiplicativeExpression
-	| additiveExpression '+' multiplicativeExpression
-	| additiveExpression '-' multiplicativeExpression
-	;
+//shiftExpression
+//	: additiveExpression
+//	| shiftExpression '<<' additiveExpression
+//	| shiftExpression '>>' additiveExpression
+//	| shiftExpression '>>>' additiveExpression
+//	;
 
-multiplicativeExpression
-	: unaryExpression
-	| multiplicativeExpression '*' unaryExpression
-	| multiplicativeExpression '/' unaryExpression
-	| multiplicativeExpression '%' unaryExpression
-	;
+//additiveExpression
+//	: multiplicativeExpression
+//	| additiveExpression '+' multiplicativeExpression
+//	| additiveExpression '-' multiplicativeExpression
+//	;
+
+//multiplicativeExpression
+//	: unaryExpression
+//	| multiplicativeExpression '*' unaryExpression
+//	| multiplicativeExpression '/' unaryExpression
+//	| multiplicativeExpression '%' unaryExpression
+//	;
 
 unaryExpression
 	: preIncrementExpression
@@ -236,12 +280,14 @@ unaryExpressionNotPlusMinus
 	| castExpression
 	;
 
-postfixExpression
-	: primary
-	| expressionName
-	| postIncrementExpression
-	| postDecrementExpression
-	;
+//BUG: mutual left-recursion -- see top of file
+postfixExpression : DOT;
+//postfixExpression
+//	: primary
+//	| expressionName
+//	| postIncrementExpression
+//	| postDecrementExpression
+//	;
 
 postIncrementExpression
 	: postfixExpression '++'

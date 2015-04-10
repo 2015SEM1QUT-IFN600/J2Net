@@ -66,9 +66,6 @@
     <Compile Include="Grammar\operators.g4.cs">
       <DependentUpon>lexer_operators.g4</DependentUpon>
     </Compile>
-    <Compile Include="Grammar\parser_arrays.g4.cs">
-      <DependentUpon>parser_arrays.g4</DependentUpon>
-    </Compile>
     <Compile Include="Grammar\parser_classes.g4.cs">
       <DependentUpon>parser_classes.g4</DependentUpon>
     </Compile>
@@ -80,9 +77,6 @@
     </Compile>
     <Compile Include="Grammar\parser_interfaces.g4.cs">
       <DependentUpon>parser_interfaces.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_literal.g4.cs">
-      <DependentUpon>parser_literal.g4</DependentUpon>
     </Compile>
     <Compile Include="Grammar\parser_names.g4.cs">
       <DependentUpon>parser_names.g4</DependentUpon>
@@ -121,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
+    <Antlr4 Include="Grammar\lexer_literals.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
     <Antlr4 Include="Grammar\lexer_operators.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
@@ -129,17 +127,26 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
-  </ItemGroup>
-  <ItemGroup>
-    <Antlr4 Include="Grammar\lexer_literals.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
     <Antlr4 Include="Grammar\lexer_whitespace.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
-    <Antlr4 Include="Grammar\parser_types.g4">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="find.ps1" />
+    <Antlr4 Include="Grammar\parser_classes.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\parser_exceptions.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\parser_expressions.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Grammar\parser_interfaces.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
@@ -151,31 +158,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
-    <Antlr4 Include="Grammar\parser_classes.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_interfaces.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_arrays.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_exceptions.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
     <Antlr4 Include="Grammar\parser_statements.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>
-    <Antlr4 Include="Grammar\parser_expressions.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_literal.g4">
+    <Antlr4 Include="Grammar\parser_types.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
     </Antlr4>

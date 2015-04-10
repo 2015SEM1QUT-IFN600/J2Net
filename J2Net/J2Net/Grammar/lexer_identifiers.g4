@@ -2,11 +2,13 @@ lexer grammar lexer_identifiers;
 
 // §3.8 Identifiers
 
-Identifiers			
-	:	Letters		LettersOrDigits*
+//BUG: Are we missing an Identifier token? Many rules request for an Identifier token but none is found.
+
+Identifiers
+	:	Letters	LettersOrDigits*
 	;
 
-fragment 
+fragment
 Letters
 	:	[a-zA-Z$_]+
 	;

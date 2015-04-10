@@ -1,8 +1,37 @@
 parser grammar parser_types;
 
+import parser_expressions;
 
 
-//Types, Values, and Variables
+// TO BE OVERRIDDEN IN CHILD RULES //
+annotation : DOT;
+variableInitializer: DOT;
+
+
+/************ ARRAYS  ************/
+
+//BUG: rule 'arrayInitializer' contains a closure with at least one alternative that can match an empty string
+arrayInitializer : DOT; 
+//arrayInitializer
+//	:	 (variableInitializerList? ','?)*
+//	;
+
+variableInitializerList
+	:	variableInitializer (',' variableInitializer)*
+	;
+
+/************ LITERALS  ************/
+
+literal
+	:	IntegerLiteral
+	|	FloatingPointLiteral
+	|	BooleanLiteral
+	|	CharacterLiteral
+	|	StringLiteral
+	|	NullLiteral
+	;
+
+/************ TYPES  ************/
 
 type
 	: primitiveType
@@ -12,7 +41,7 @@ type
 primitiveType
 	: annotation* numericType
 	| annotation* 'boolean'
-	;	//waiting for this to be construct
+	;
 
 numericType
 	: integralType
@@ -38,15 +67,18 @@ referenceType
 	| arrayType
 	;
 
+
 classOrInterfaceType
 	: classType
 	| interfaceType
 	;
 
-classType
-	: annotation* Identifier typeArguments?
-	| classOrInterfaceType '.' annotation* Identifier typeArguments?
-	;	//waiting for this to be construct
+//BUG: The following sets of rules are mutually left-recursive [classOrInterfaceType, classType, interfaceType]
+classType : DOT;
+//classType
+//	: annotation* Identifier typeArguments?
+//	| classOrInterfaceType '.' annotation* Identifier typeArguments?
+//	;	//waiting for this to be construct
 
 interfaceType
 	: classType
@@ -54,7 +86,7 @@ interfaceType
 
 typeVariable
 	: annotation* Identifier
-	;	//waiting for this to be construct
+	;
 
 arrayType
 	: primitiveType dims
@@ -64,17 +96,16 @@ arrayType
 
 dims
 	: annotation* '['']' (annotation* '['']')*
-	;	//waiting for this to be construct
+	;
 
 typeParameter
 	: typeParameterModifier* Identifier typeBound?
-	//: typeParameterModifier+ Identifier typeBound?
 	| Identifier typeBound?
-	;	//waiting for this to be construct
+	;
 
 typeParameterModifier
 	: annotation
-	;	//waiting for this to be construct
+	;
 
 typeBound
 	: 'extends' typeVariable

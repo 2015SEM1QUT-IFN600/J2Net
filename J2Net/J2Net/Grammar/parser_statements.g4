@@ -1,6 +1,18 @@
 parser grammar parser_statements;
 
+// Statements and Expressions
+import parser_classes;
 
+// TO BE OVERRIDDEN IN CHILD RULES //
+classDeclaration : DOT;
+variableModifier : DOT;
+unannType : DOT;
+unannClassType : DOT;
+variableDeclaratorList : DOT;
+variableDeclaratorId : DOT;
+
+
+/************ STATEMENTS  ************/
 
 block
 	: '{' blockStatements? '}'
@@ -12,7 +24,7 @@ blockStatements
 
 blockStatement
 	: localVariableDeclarationStatement
-	| classDeclaration	//waiting for this to be construct
+	| classDeclaration
 	| statement
 	;
 
@@ -22,7 +34,7 @@ localVariableDeclarationStatement
 
 localVariableDeclaration
 	: (variableModifier)* unannType variableDeclaratorList
-	; //waiting for this to be construct
+	; 
 
 statement
 	: statementWithoutTrailingSubstatement
@@ -72,34 +84,34 @@ expressionStatement
 	;
 
 statementExpression
-	: assignment						//waiting for this to be construct
-	| preIncrementExpression			//waiting for this to be construct
-	| preDecrementExpression			//waiting for this to be construct
-	| postIncrementExpression			//waiting for this to be construct
-	| postDecrementExpression			//waiting for this to be construct
-	| methodInvocation				//waiting for this to be construct
-	| classInstanceCreationExpression	//waiting for this to be construct
+	: assignment						
+	| preIncrementExpression			
+	| preDecrementExpression			
+	| postIncrementExpression			
+	| postDecrementExpression			
+	| methodInvocation					
+	| classInstanceCreationExpression	
 	;
 
 ifThenStatement
 	: 'if' '(' expression ')' statement
-	;	//waiting for this to be construct
+	;	
 
 ifThenElseStatement
 	: 'if' '(' expression ')' statement 'else' statement
-	;	//waiting for this to be construct
+	;	
 
 ifThenElseStatementNoShortIf
 	: 'if' '(' expression ')' statementNoShortIf 'else' statementNoShortIf
-	;	//waiting for this to be construct
+	;	
 
 assertStatement
 	: 'assert' expression (':' expression)? ';'
-	;	//waiting for this to be construct
+	;	
 
 switchStatement
 	: 'switch' '(' expression ')' switchBlock
-	;	//waiting for this to be construct
+	;	
 
 switchBlock
 	: '{' (switchBlockStatementGroup)* (switchLabel)* '}'
@@ -125,15 +137,15 @@ eNumConstantname
 
 whileStatement
 	: 'while' '(' expression ')' statement
-	;	//waiting for this to be construct
+	;	
 
 whileStatementNoShortIf
 	: 'while' '(' expression ')' statementNoShortIf
-	;	//waiting for this to be construct
+	;	
 
 doStatement
 	: 'do' statement 'while' '(' expression ')' ';'
-	;	//waiting for this to be construct
+	;	
 
 forStatement
 	: basicForStatement
@@ -147,11 +159,11 @@ forStatementNoShortIf
 
 basicForStatement
 	: 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement
-	;	//waiting for this to be construct
+	;	
 
 basicForStatementNoShortIf
 	: 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statementNoShortIf
-	;	//waiting for this to be construct
+	;	
 
 forInit
 	: statementExpressionList
@@ -168,11 +180,11 @@ statementExpressionList
 
 enhancedForStatement
 	:'for' '(' (variableModifier)* unannType variableDeclaratorId ':' expression ')' statement
-	;	//waiting for this to be construct
+	;	
 
 enhancedForStatementNoShortIf
 	:'for' '('( variableModifier)* unannType variableDeclaratorId ':' expression ')' statementNoShortIf
-	;	//waiting for this to be construct
+	;	
 
 breakStatement
 	: 'break' Identifiers? ';'
@@ -184,15 +196,15 @@ continueStatement
 
 returnStatement
 	: 'return' expression? ';'
-	;	//waiting for this to be construct
+	;	
 
 throwStatement
 	: 'throw' expression ';'
-	;	//waiting for this to be construct
+	;	
 
 synchronizedStatement
 	: 'synchronized' '(' expression ')' block
-	;	//waiting for this to be construct
+	;	
 
 tryStatement
 	: 'try' block catches
@@ -210,7 +222,7 @@ catchClause
 
 catchFormalParameter
 	: (variableModifier)* catchType variableDeclaratorId
-	;	//waiting for this to be construct
+	;	
 
 catchType
 	: unannClassType ('|' classType)*
@@ -234,5 +246,4 @@ resourceList
 
 resource
 	:  (variableModifier)* unannType variableDeclaratorId '=' expression
-	; 	//waiting for this to be construct
-
+	; 	

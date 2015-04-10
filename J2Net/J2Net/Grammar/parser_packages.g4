@@ -1,14 +1,6 @@
 parser grammar parser_packages;
 
-compilationUnit
-    :   packageDeclaration? importDeclaration* typeDeclaration* EOF
-    ;
-
-packageDeclaration
-    :   annotation* 'package' Identifier ('.' Identifier)* ';'
-    ;
-
-	
+/************ NAMES  ************/
 importDeclaration
 	:	singleTypeImportDeclaration 
 	|	typeImportOnDemandDeclaration 
@@ -32,18 +24,17 @@ staticImportOnDemandDeclaration
     :   'import' 'static' typeName '.' '*' ';'
     ;
 
+compilationUnit
+    :   packageDeclaration? importDeclaration* typeDeclaration* EOF
+    ;
+
+packageDeclaration
+    :   annotation* 'package' Identifier ('.' Identifier)* ';'
+    ;
+
 typeDeclaration
 	:	classDeclaration
 	|	interfaceDeclaration
 	|	';'
 	;
 
-/*
-typeDeclaration
-    :   classOrInterfaceModifier* classDeclaration
-    |   classOrInterfaceModifier* enumDeclaration
-    |   classOrInterfaceModifier* interfaceDeclaration
-    |   classOrInterfaceModifier* annotationTypeDeclaration
-    |   ';'
-    ;
-*/
