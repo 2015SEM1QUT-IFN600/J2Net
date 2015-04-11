@@ -7,7 +7,6 @@ import parser_expressions;
 annotation : DOT;
 variableInitializer: DOT;
 
-
 /************ ARRAYS  ************/
 
 //BUG: rule 'arrayInitializer' contains a closure with at least one alternative that can match an empty string
