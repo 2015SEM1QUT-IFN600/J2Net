@@ -45,56 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Grammar\comments.g4.cs">
-      <DependentUpon>lexer_comments.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\identifiers.g4.cs">
-      <DependentUpon>lexer_identifiers.g4</DependentUpon>
-    </Compile>
     <Compile Include="Grammar\Java.g4.lexer.cs">
       <DependentUpon>Java.g4</DependentUpon>
     </Compile>
     <Compile Include="Grammar\Java.g4.parser.cs">
       <DependentUpon>Java.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\keywords.g4.cs">
-      <DependentUpon>lexer_keywords.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\literals.g4.cs">
-      <DependentUpon>lexer_literals.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\operators.g4.cs">
-      <DependentUpon>lexer_operators.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_classes.g4.cs">
-      <DependentUpon>parser_classes.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_exceptions.g4.cs">
-      <DependentUpon>parser_exceptions.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_expressions.g4.cs">
-      <DependentUpon>parser_expressions.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_interfaces.g4.cs">
-      <DependentUpon>parser_interfaces.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_names.g4.cs">
-      <DependentUpon>parser_names.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_packages.g4.cs">
-      <DependentUpon>parser_packages.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_statements.g4.cs">
-      <DependentUpon>parser_statements.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\parser_types.g4.cs">
-      <DependentUpon>parser_types.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\separators.g4.cs">
-      <DependentUpon>lexer_separators.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Grammar\whitespace.g4.cs">
-      <DependentUpon>lexer_whitespace.g4</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,38 +89,41 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="find.ps1" />
-    <Antlr4 Include="Grammar\parser_classes.g4">
+    <None Include="Grammar\parser_classes.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_exceptions.g4">
+      <Abstract>True</Abstract>
+    </None>
+    <None Include="Grammar\parser_expressions.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_expressions.g4">
+      <Abstract>True</Abstract>
+    </None>
+    <None Include="Grammar\parser_interfaces.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_interfaces.g4">
+      <Abstract>True</Abstract>
+    </None>
+    <None Include="Grammar\parser_names.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_names.g4">
+      <Abstract>True</Abstract>
+    </None>
+    <None Include="Grammar\parser_packages.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_packages.g4">
+      <Abstract>True</Abstract>
+    </None>
+    <None Include="Grammar\parser_statements.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_statements.g4">
+      <Abstract>True</Abstract>
+    </None>
+    <None Include="Grammar\parser_types.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Grammar\parser_types.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>J2Net.Grammar</CustomToolNamespace>
-    </Antlr4>
+      <Abstract>True</Abstract>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,6 @@
 parser grammar parser_expressions;
 
-//import parser_statements;
+import parser_statements;
 
 // TO BE OVERRIDDEN IN CHILD RULES //
 typeName : DOT;
