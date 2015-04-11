@@ -40,7 +40,7 @@ type
 
 primitiveType
 	: annotation* numericType
-	| annotation* 'boolean'
+	| annotation* BOOLEAN
 	;
 
 numericType
@@ -49,16 +49,16 @@ numericType
 	;
 
 integralType
-	: 'byte'
-	| 'short'
-	| 'int'
-	| 'long'
-	| 'char'
+	: BYTE
+	| SHORT
+	| INT
+	| LONG
+	| CHAR
 	;
 
 floatingPointType
-	: 'float'
-	| 'double'
+	: FLOAT
+	| DOUBLE
 	;
 
 referenceType
@@ -67,18 +67,44 @@ referenceType
 	| arrayType
 	;
 
+//Old way which cause LR
+//classOrInterfaceType
+//	: classType 
+//	| interfaceType
+//	;
 
 classOrInterfaceType
-	: classType
-	| interfaceType
+	: ( lfNo_classType
+	  | lfNo_interfaceType
+	  )
+	  ( lf_classType
+	  | lf_interfaceType
+	  )*
+	;
+
+lf_classType
+	: DOT annotation* Identifiers typeArguments?
+	;
+
+lfNo_classType
+	: annotation* Identifiers typeArguments?
+	;
+
+lf_interfaceType
+	: lf_classType
+	;
+
+lfNo_interfaceType
+	: lfNo_classType
 	;
 
 //BUG: The following sets of rules are mutually left-recursive [classOrInterfaceType, classType, interfaceType]
-classType : DOT;
-//classType
-//	: annotation* Identifiers typeArguments?
-//	| classOrInterfaceType '.' annotation* Identifiers typeArguments?
-//	;	//waiting for this to be construct
+//classType : DOT;
+//Bug fixed (Eric)
+classType
+	: annotation* Identifiers typeArguments?
+	| classOrInterfaceType DOT annotation* Identifiers typeArguments?
+	;
 
 interfaceType
 	: classType
@@ -95,7 +121,7 @@ arrayType
 	;
 
 dims
-	: annotation* '['']' (annotation* '['']')*
+	: annotation* LBRACK RBRACK (annotation* LBRACK RBRACK)*
 	;
 
 typeParameter
@@ -108,20 +134,20 @@ typeParameterModifier
 	;
 
 typeBound
-	: 'extends' typeVariable
-	| 'extends' classOrInterfaceType additionalBound*
+	: EXTENDS typeVariable
+	| EXTENDS classOrInterfaceType additionalBound*
 	;
 
 additionalBound
-	: '&' interfaceType
+	: BITAND interfaceType
 	;
 
 typeArguments
-	: '<' typeArgumentList '>'
+	: LT typeArgumentList GT
 	;
 
 typeArgumentList
-	: typeArgument (',' typeArgument)*
+	: typeArgument (COMMA typeArgument)*
 	;
 
 typeArgument
@@ -130,11 +156,11 @@ typeArgument
 	;
 
 wildCard
-	: annotation* '?' wildcardBounds?
+	: annotation* QUESTION wildcardBounds?
 	;
 
 wildcardBounds
-	: 'extends' referenceType
-	| 'super' referenceType
+	: EXTENDS referenceType
+	| SUPER referenceType
 	;
 
