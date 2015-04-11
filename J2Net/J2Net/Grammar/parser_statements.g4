@@ -15,11 +15,11 @@ import parser_classes;
 /************ STATEMENTS  ************/
 
 block
-	: '{' blockStatements? '}'
+	: LBRACE blockStatements? RBRACE
 	;
 
 blockStatements
-	: blockStatement '{'blockStatement'}'
+	: blockStatement LBRACE blockStatement RBRACE
 	;
 
 blockStatement
@@ -29,7 +29,7 @@ blockStatement
 	;
 
 localVariableDeclarationStatement
-	: localVariableDeclaration ';'
+	: localVariableDeclaration SEMI
 	;
 
 localVariableDeclaration
@@ -72,15 +72,15 @@ emptyStatement
 	;
 
 labeledStatement
-	: Identifiers ':' statement
+	: Identifiers COLON statement
 	;
 
 labeledStatementNoShortIf
-	: Identifiers ':' statementNoShortIf
+	: Identifiers COLON statementNoShortIf
 	;
 
 expressionStatement
-	: statementExpression ';'
+	: statementExpression SEMI
 	;
 
 statementExpression
@@ -94,27 +94,27 @@ statementExpression
 	;
 
 ifThenStatement
-	: 'if' '(' expression ')' statement
+	: IF LPAREN expression RPAREN statement
 	;	
 
 ifThenElseStatement
-	: 'if' '(' expression ')' statement 'else' statement
+	: IF LPAREN expression RPAREN statement ELSE statement
 	;	
 
 ifThenElseStatementNoShortIf
-	: 'if' '(' expression ')' statementNoShortIf 'else' statementNoShortIf
+	: IF LPAREN expression RPAREN statementNoShortIf ELSE statementNoShortIf
 	;	
 
 assertStatement
-	: 'assert' expression (':' expression)? ';'
+	: ASSERT expression (COLON expression)? SEMI
 	;	
 
 switchStatement
-	: 'switch' '(' expression ')' switchBlock
+	: SWITCH LPAREN expression RPAREN switchBlock
 	;	
 
 switchBlock
-	: '{' (switchBlockStatementGroup)* (switchLabel)* '}'
+	: LBRACE (switchBlockStatementGroup)* (switchLabel)* RBRACE
 	;
 
 switchBlockStatementGroup
@@ -126,9 +126,9 @@ switchLabels
 	;
 
 switchLabel
-	: 'case' constantExpression ':'
-	| 'case' eNumConstantname ':'
-	| 'default' ':'
+	: CASE constantExpression COLON
+	| CASE eNumConstantname COLON
+	| DEFAULT COLON
 	;
 
 eNumConstantname
@@ -136,15 +136,15 @@ eNumConstantname
 	;
 
 whileStatement
-	: 'while' '(' expression ')' statement
+	: WHILE LPAREN expression RPAREN statement
 	;	
 
 whileStatementNoShortIf
-	: 'while' '(' expression ')' statementNoShortIf
+	: WHILE LPAREN expression RPAREN statementNoShortIf
 	;	
 
 doStatement
-	: 'do' statement 'while' '(' expression ')' ';'
+	: DO statement WHILE LPAREN expression RPAREN SEMI
 	;	
 
 forStatement
@@ -158,11 +158,11 @@ forStatementNoShortIf
 	;
 
 basicForStatement
-	: 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement
+	: FOR LPAREN forInit? SEMI expression? SEMI forUpdate? RPAREN statement
 	;	
 
 basicForStatementNoShortIf
-	: 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statementNoShortIf
+	: FOR LPAREN forInit? SEMI expression? SEMI forUpdate? RPAREN statementNoShortIf
 	;	
 
 forInit
@@ -175,40 +175,40 @@ forUpdate
 	;
 
 statementExpressionList
-	: statementExpression (',' statementExpression)*
+	: statementExpression (COMMA statementExpression)*
 	;
 
 enhancedForStatement
-	:'for' '(' (variableModifier)* unannType variableDeclaratorId ':' expression ')' statement
+	:FOR LPAREN (variableModifier)* unannType variableDeclaratorId COLON expression RPAREN statement
 	;	
 
 enhancedForStatementNoShortIf
-	:'for' '('( variableModifier)* unannType variableDeclaratorId ':' expression ')' statementNoShortIf
+	: FOR LPAREN( variableModifier)* unannType variableDeclaratorId COLON expression RPAREN statementNoShortIf
 	;	
 
 breakStatement
-	: 'break' Identifiers? ';'
+	: BREAK Identifiers? SEMI
 	;
 
 continueStatement
-	: 'continue' Identifiers? ';'
+	: CONTINUE Identifiers? SEMI
 	;
 
 returnStatement
-	: 'return' expression? ';'
+	: RETURN expression? SEMI
 	;	
 
 throwStatement
-	: 'throw' expression ';'
+	: THROW expression SEMI
 	;	
 
 synchronizedStatement
-	: 'synchronized' '(' expression ')' block
+	: SYNCHRONIZED LPAREN expression RPAREN block
 	;	
 
 tryStatement
-	: 'try' block catches
-	| 'try' block (catches)? finallyBlock
+	: TRY block catches
+	| TRY block (catches)? finallyBlock
 	| tryWithResourcesStatement
 	;
 
@@ -217,7 +217,7 @@ catches
 	;
 
 catchClause
-	: 'catch' '(' catchFormalParameter ')' block
+	: CATCH LPAREN catchFormalParameter RPAREN block
 	;
 
 catchFormalParameter
@@ -225,25 +225,25 @@ catchFormalParameter
 	;	
 
 catchType
-	: unannClassType ('|' classType)*
+	: unannClassType (BITOR classType)*
 	;
 
 finallyBlock
-	: 'finally' block
+	: FINALLY block
 	;
 
 tryWithResourcesStatement
-	: 'try' resourceSpecification block (catches)? (finallyBlock)?
+	: TRY resourceSpecification block (catches)? (finallyBlock)?
 	;
 
 resourceSpecification
-	: '(' resourceList (';')? ')'
+	: LPAREN resourceList (SEMI)? RPAREN
 	;
 
 resourceList
-	: resource (';' resource)*
+	: resource (SEMI resource)*
 	;
 
 resource
-	:  (variableModifier)* unannType variableDeclaratorId '=' expression
+	:  (variableModifier)* unannType variableDeclaratorId ASSIGN expression
 	; 	
