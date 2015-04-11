@@ -13,7 +13,7 @@ interfaceDeclaration
 	;
 
 normalInterfaceDeclaration
-	: (interfaceModifier)* 'interface' Identifier (typeParameters)? (extendsInterfaces)? interfaceBody
+	: (interfaceModifier)* 'interface' Identifiers (typeParameters)? (extendsInterfaces)? interfaceBody
 	;
 
 interfaceModifier
@@ -63,7 +63,7 @@ interfaceMethodModifier
 	;
 
 annotationTypeDeclaration
-	: (interfaceModifier)*'@' 'interface' Identifier annotationTypeBody
+	: (interfaceModifier)*'@' 'interface' Identifiers annotationTypeBody
 	;
 
 annotationTypeBody
@@ -78,7 +78,7 @@ annotationTypeMemberDeclaration
 	;
 
 annotationTypeElementDeclaration
-	: (annotationTypeElementModifier)* unannType Identifier '('')' (dims)? (defaultValue)?
+	: (annotationTypeElementModifier)* unannType Identifiers '('')' (dims)? (defaultValue)?
 	;
 
 annotationTypeElementModifier
@@ -105,7 +105,7 @@ elementValuePairList
 	;
 
 elementValuePair
-	: Identifier '=' elementValue
+	: Identifiers '=' elementValue
 	;
 
 elementValue

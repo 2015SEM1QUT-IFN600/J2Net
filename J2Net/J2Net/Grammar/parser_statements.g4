@@ -72,11 +72,11 @@ emptyStatement
 	;
 
 labeledStatement
-	: Identifier ':' statement
+	: Identifiers ':' statement
 	;
 
 labeledStatementNoShortIf
-	: Identifier ':' statementNoShortIf
+	: Identifiers ':' statementNoShortIf
 	;
 
 expressionStatement

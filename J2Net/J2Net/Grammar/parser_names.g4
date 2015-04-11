@@ -16,22 +16,22 @@ ambiguousName : DOT;
 
 //packageName
 //	:	Identifiers
-//	|	packageName DOT Identifier
+//	|	packageName DOT Identifiers
 //	;
 
 //typeName
 //	:	Identifiers
-//	|	packageOrTypeName DOT Identifier
+//	|	packageOrTypeName DOT Identifiers
 //	;
 
 //packageOrTypeName
 //	:	Identifiers
-//	|	packageOrTypeName DOT Identifier
+//	|	packageOrTypeName DOT Identifiers
 //	;
 
 //expressionName
 //	:	Identifiers
-//	|	ambiguousName DOT Identifier
+//	|	ambiguousName DOT Identifiers
 //	;
 
 //ambiguousName

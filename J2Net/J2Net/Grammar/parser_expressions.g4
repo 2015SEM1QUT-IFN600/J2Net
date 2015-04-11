@@ -63,7 +63,7 @@ unqualifiedClassInstanceCreationExpression
 	;
 
 classOrInterfaceTypeToInstantiate
-	: annotation* Identifier ('.' annotation* Identifier)* typeArgumentsOrDiamond?
+	: annotation* Identifiers ('.' annotation* Identifiers)* typeArgumentsOrDiamond?
 	;
 
 typeArgumentsOrDiamond
@@ -72,9 +72,9 @@ typeArgumentsOrDiamond
 	;
 
 fieldAccess
-	: primary '.' Identifier
-	| 'super' '.' Identifier
-	| typeName '.' 'super' '.' Identifier
+	: primary '.' Identifiers
+	| 'super' '.' Identifiers
+	| typeName '.' 'super' '.' Identifiers
 	;
 
 
@@ -87,11 +87,11 @@ arrayAccess : DOT;
 
 methodInvocation
 	: MethodName '(' argumentList? ')'
-	| typeName '.' typeArguments? Identifier '(' argumentList? ')'
-	| expressionName '.' typeArguments? Identifier '(' argumentList? ')'
-	| primary '.' typeArguments? Identifier '(' argumentList? ')'
-	| 'super' '.' typeArguments? Identifier '(' argumentList? ')'
-	| typeName '.' 'super' '.' typeArguments? Identifier '(' argumentList? ')'
+	| typeName '.' typeArguments? Identifiers '(' argumentList? ')'
+	| expressionName '.' typeArguments? Identifiers '(' argumentList? ')'
+	| primary '.' typeArguments? Identifiers '(' argumentList? ')'
+	| 'super' '.' typeArguments? Identifiers '(' argumentList? ')'
+	| typeName '.' 'super' '.' typeArguments? Identifiers '(' argumentList? ')'
 	;
 
 argumentList
@@ -99,11 +99,11 @@ argumentList
 	;
 
 methodReference
-	: expressionName ':'':' typeArguments? Identifier
-	| referenceType ':'':' typeArguments? Identifier
-	| primary ':'':' typeArguments? Identifier
-	| 'super' ':'':' typeArguments? Identifier
-	| typeName '.' 'super' '::' typeArguments? Identifier
+	: expressionName ':'':' typeArguments? Identifiers
+	| referenceType ':'':' typeArguments? Identifiers
+	| primary ':'':' typeArguments? Identifiers
+	| 'super' ':'':' typeArguments? Identifiers
+	| typeName '.' 'super' '::' typeArguments? Identifiers
 	| classType ':'':' typeArguments? 'new'
 	| arrayType ':'':' 'new'
 	;
@@ -135,13 +135,13 @@ lambdaExpression
 	;
 
 lambdaParameters
-	: Identifier
+	: Identifiers
 	| '(' formalParameterList? ')'
 	| '(' inferredFormalParameterList')'
 	;
 
 inferredFormalParameterList
-	: Identifier (',' Identifier)?
+	: Identifiers (',' Identifiers)?
 	;
 
 lambdaBody

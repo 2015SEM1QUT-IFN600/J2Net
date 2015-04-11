@@ -15,7 +15,7 @@ classDeclaration
 	;
 
 normalClassDeclaration
-    	:   classModifier CLASS Identifier
+    	:   classModifier CLASS Identifiers
         LBRACK typeParameters RBRACK LBRACK superclass RBRACK LBRACK superinterfaces RBRACK classBody
     	;
 
@@ -112,7 +112,7 @@ variableInitializer
 	;
 
 variableDeclaratorId
-	:	Identifier LBRACK dims RBRACK
+	:	Identifiers LBRACK dims RBRACK
 	;
 
 methodDeclaration
@@ -138,7 +138,7 @@ methodHeader
 	;
 
 methodDeclarator
-	:	Identifier LPAREN LBRACK formalParameterList RBRACK RPAREN LBRACK dims RBRACK
+	:	Identifiers LPAREN LBRACK formalParameterList RBRACK RPAREN LBRACK dims RBRACK
 	;
 
 formalParameterList
@@ -167,7 +167,7 @@ formalParameter
 	;
 
 receiverParameter
-	:	LBRACE annotation RBRACE unannType LBRACK Identifier DOT RBRACK THIS
+	:	LBRACE annotation RBRACE unannType LBRACK Identifiers DOT RBRACK THIS
 	;
 
 result
@@ -192,7 +192,7 @@ constructorDeclarator
 	;
 
 simpleTypeName
-	:	Identifier
+	:	Identifiers
 	;
 
 constructorBody
@@ -241,8 +241,8 @@ unannClassOrInterfaceType
 //BUG: the following sets of rules are mutally left-recursive [unannClassOrInterfaceType, unannClassType, unannInterfaceType]
 unannClassType : ;
 //unannClassType
-//	:	Identifier LBRACK typeArguments RBRACK
-//	|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE Identifier LBRACK typeArguments RBRACK
+//	:	Identifiers LBRACK typeArguments RBRACK
+//	|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE Identifiers LBRACK typeArguments RBRACK
 //	;
 
 unannInterfaceType
@@ -250,7 +250,7 @@ unannInterfaceType
 	;
 
 unannTypeVariable
-	:	Identifier
+	:	Identifiers
 	;
 
 unannArrayType
@@ -260,7 +260,7 @@ unannArrayType
 	;
 
 enumDeclaration
-	:	LBRACE classModifier RBRACE ENUM Identifier LBRACK superinterfaces RBRACE enumBody
+	:	LBRACE classModifier RBRACE ENUM Identifiers LBRACK superinterfaces RBRACE enumBody
 	;
 
 enumBody
@@ -276,7 +276,7 @@ enumBodyDeclarations
 	;
 
 enumConstant
-	:	LBRACE enumConstantModifier RBRACE Identifier LBRACK LPAREN LBRACK argumentList RBRACK RPAREN RBRACK LBRACK classBody RBRACK
+	:	LBRACE enumConstantModifier RBRACE Identifiers LBRACK LPAREN LBRACK argumentList RBRACK RPAREN RBRACK LBRACK classBody RBRACK
 	;
 
 enumConstantModifier

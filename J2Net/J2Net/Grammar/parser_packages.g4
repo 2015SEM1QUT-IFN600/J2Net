@@ -19,7 +19,7 @@ typeImportOnDemandDeclaration
     ;
 
 singleStaticImportDeclaration
-    :   'import' 'static' typeName '.' Identifier ';'
+    :   'import' 'static' typeName '.' Identifiers ';'
     ;
 
 staticImportOnDemandDeclaration
@@ -31,7 +31,7 @@ compilationUnit
     ;
 
 packageDeclaration
-    :   annotation* 'package' Identifier ('.' Identifier)* ';'
+    :   annotation* 'package' Identifiers ('.' Identifiers)* ';'
     ;
 
 typeDeclaration

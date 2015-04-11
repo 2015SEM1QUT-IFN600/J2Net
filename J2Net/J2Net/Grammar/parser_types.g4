@@ -76,8 +76,8 @@ classOrInterfaceType
 //BUG: The following sets of rules are mutually left-recursive [classOrInterfaceType, classType, interfaceType]
 classType : DOT;
 //classType
-//	: annotation* Identifier typeArguments?
-//	| classOrInterfaceType '.' annotation* Identifier typeArguments?
+//	: annotation* Identifiers typeArguments?
+//	| classOrInterfaceType '.' annotation* Identifiers typeArguments?
 //	;	//waiting for this to be construct
 
 interfaceType
@@ -85,7 +85,7 @@ interfaceType
 	;
 
 typeVariable
-	: annotation* Identifier
+	: annotation* Identifiers
 	;
 
 arrayType
@@ -99,8 +99,8 @@ dims
 	;
 
 typeParameter
-	: typeParameterModifier* Identifier typeBound?
-	| Identifier typeBound?
+	: typeParameterModifier* Identifiers typeBound?
+	| Identifiers typeBound?
 	;
 
 typeParameterModifier
