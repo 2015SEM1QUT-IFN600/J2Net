@@ -3,13 +3,13 @@ parser grammar parser_statements;
 // Statements and Expressions
 import parser_classes;
 
-// TO BE OVERRIDDEN IN CHILD RULES //
-classDeclaration : DOT;
-variableModifier : DOT;
-unannType : DOT;
-unannClassType : DOT;
-variableDeclaratorList : DOT;
-variableDeclaratorId : DOT;
+// UNCOMMENT THESE RULES IF COMMENTING IMPORT CHAIN //
+//classDeclaration : DOT;
+//variableModifier : DOT;
+//unannType : DOT;
+//unannClassType : DOT;
+//variableDeclaratorList : DOT;
+//variableDeclaratorId : DOT;
 
 
 /************ STATEMENTS  ************/

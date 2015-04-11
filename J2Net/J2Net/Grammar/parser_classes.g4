@@ -2,8 +2,9 @@ parser grammar parser_classes;
 
 import parser_interfaces;
 
-// TO BE OVERRIDDEN IN CHILD RULES //
-interfaceDeclaration : DOT;
+// UNCOMMENT THESE RULES IF COMMENTING IMPORT CHAIN //
+//interfaceDeclaration : DOT;
+
 
 
 /************ CLASSES  ************/
@@ -237,10 +238,12 @@ unannClassOrInterfaceType
 	|	unannInterfaceType
 	;
 
-unannClassType
-	:	Identifier LBRACK typeArguments RBRACK
-	|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE Identifier LBRACK typeArguments RBRACK
-	;
+//BUG: the following sets of rules are mutally left-recursive [unannClassOrInterfaceType, unannClassType, unannInterfaceType]
+unannClassType : ;
+//unannClassType
+//	:	Identifier LBRACK typeArguments RBRACK
+//	|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE Identifier LBRACK typeArguments RBRACK
+//	;
 
 unannInterfaceType
 	:	unannClassType

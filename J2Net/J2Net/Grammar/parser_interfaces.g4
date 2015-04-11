@@ -2,8 +2,7 @@ parser grammar parser_interfaces;
 
 import parser_names;
 
-// TO BE OVERRIDDEN IN CHILD RULES //
-//none
+
 
 
 /************ INTERFACES  ************/

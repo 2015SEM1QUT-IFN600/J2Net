@@ -1,5 +1,7 @@
 parser grammar parser_packages;
 
+
+
 /************ NAMES  ************/
 importDeclaration
 	:	singleTypeImportDeclaration 

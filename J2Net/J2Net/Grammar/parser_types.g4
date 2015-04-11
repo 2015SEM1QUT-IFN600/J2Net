@@ -3,9 +3,10 @@ parser grammar parser_types;
 import parser_expressions;
 
 
-// TO BE OVERRIDDEN IN CHILD RULES //
-annotation : DOT;
-variableInitializer: DOT;
+// UNCOMMENT THESE RULES IF COMMENTING IMPORT CHAIN //
+//annotation : DOT;
+//variableInitializer: DOT;
+
 
 /************ ARRAYS  ************/
 

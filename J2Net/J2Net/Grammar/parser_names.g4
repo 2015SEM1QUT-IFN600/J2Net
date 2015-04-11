@@ -2,8 +2,7 @@ parser grammar parser_names;
 
 import parser_packages;
 
-// TO BE OVERRIDDEN IN CHILD RULES //
-//none
+
 
 
 /************ NAMES  ************/

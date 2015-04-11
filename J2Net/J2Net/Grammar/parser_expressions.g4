@@ -2,12 +2,12 @@ parser grammar parser_expressions;
 
 import parser_statements;
 
-// TO BE OVERRIDDEN IN CHILD RULES //
-typeName : DOT;
-expressionName : DOT;
-classBody : DOT;
-formalParameterList : DOT;
-block : DOT;
+// UNCOMMENT THESE RULES IF COMMENTING IMPORT CHAIN //
+//typeName : DOT;
+//expressionName : DOT;
+//classBody : DOT;
+//formalParameterList : DOT;
+//block : DOT;
 
 
 
