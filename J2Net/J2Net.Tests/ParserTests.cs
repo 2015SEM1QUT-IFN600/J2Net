@@ -13,6 +13,50 @@ namespace J2Net.Tests
         static JavaLexer _Lexer;
         static JavaParser _Parser;
 
+        /// <summary>
+        /// This will generate a ParseTreeMatch object based on testCode and the ruleName that you want to test. 
+        /// The pattern is a token that you wish to see matched from your rule. The ParseTreeMatch object is 
+        /// analogous to the Match object that you would receive after a RegEx match. But a better explanation 
+        /// is through an example. 
+        /// 
+        /// For this exmaple, supose the grammar is the following. In reality, the grammar is all of our parsers:
+        ///     expr : ID '=' s ';';
+        ///     s : ID ('+' ID)?;
+        ///     ID : [a-zA-Z]+;
+        /// 
+        /// testCode = "foo = a + b + z;";
+        /// ruleName = "expr";                      // you're entering the grammar here
+        /// pattern  = "<ID> = <ID> + <ID> + <ID>;" // you're identifying the lower level tokens here. In order to 
+        ///                                         // get from expr to ID tokens, it'll have passed through rule 's'.
+        ///                                         // so we'll have essentially tested rule 's' as well.
+        /// 
+        /// HOWEVER, patterns can be labeled. So rather than a buch of <ID> which is dificult to tell which ID you're 
+        /// referring too, do the following.
+        /// 
+        /// pattern  = "<a:ID> = <b:ID> + <c:ID> + <d:ID>;"
+        /// 
+        /// ParseTreeMatch m = GetParseTreeMatch(testCode, pattern, ruleName); // Now, match it
+        ///
+        /// FROM HERE, you'll have a ParseTreeMatch object that will allow you to inspect whether or not it matched as 
+        /// expected. See javadoc reference link to ParseTreeMatch for more detail. In most cases, we'll simply want to 
+        /// see that the match was successful or that the value is as expected.
+        /// 
+        /// Assert.IsTrue(match.Succeeded);
+        /// Assert.AreEqual(m.Get("a").GetText(), "foo");
+        /// 
+        /// IF YOU WANT TO CHECK ALL OF IT, you may want to work with arrays instead.
+        ///
+        /// Assert.AreEqual(m.GetAll("ID").toString(), "[foo, a, b, z]");
+        ///
+        /// </summary>
+        /// <param name="testCode">The line of Java code that you wish to parse.</param>
+        /// <param name="pattern">Tokenized "<token>" pattern that the parser should match too</param>
+        /// <param name="ruleName">The name of the rule that we're targeting</param>
+        /// <seealso type="javadoc" cref="http://www.antlr.org/api/Java/org/antlr/v4/runtime/tree/pattern/ParseTreeMatch.html"/>
+        /// <seealso cref="https://theantlrguy.atlassian.net/wiki/display/ANTLR4/Parse+Tree+Matching+and+XPath"/>
+        /// <seealso cref="https://github.com/antlr/antlr4/blob/master/tool/test/org/antlr/v4/test/tool/TestParseTreeMatcher.java"/>
+        /// <seealso type="javadoc" cref="http://www.antlr.org/api/Java/index.html"/>
+        /// <returns>ParseTreeMatch object built from Java.g4 Parser and matching against provided pattern</returns>
         private static ParseTreeMatch GetParseTreeMatch(String testCode, String pattern, String ruleName)
         {
             //Generate a lexer and parser based on test code
@@ -30,6 +74,10 @@ namespace J2Net.Tests
             return treePattern.Match(ruleTree);
         }
 
+        /// <summary>
+        /// This is a singleton pattern design pattern to construct only one empty parser that compiles a 
+        /// ParseTreePattern. You should not call this directly from any Test. Use GetParseTreeMatch(..) instead.
+        /// </summary>
         private static ParseTreePattern GetParseTreePattern(String pattern, String ruleName)
         {
             if (_Lexer == null)
@@ -45,15 +93,15 @@ namespace J2Net.Tests
         public void Parser_Types_type()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("int", "<a:integralType>", "type");
-            Assert.AreEqual(match.Get("a").GetText(), "int");
+            match = GetParseTreeMatch("int", "<integralType>", "type");
+            Assert.IsTrue(match.Succeeded);
+            Assert.AreEqual(match.Get("integralType").GetText(), "int");
 
             //this is obviously a wrong test, because typeName rule is broken at this time. But this gives an 
             // example of using multiple Pattern tags and going through Parser rules
             match = GetParseTreeMatch("@. long", "<b:annotation> <a:integralType>", "type");
             Assert.AreEqual(match.Get("a").GetText(), "long");
             Assert.AreEqual(match.Get("b").GetText(), "@.");
-
         }
     }
 }
