@@ -60,7 +60,9 @@
     <Compile Include="ParserTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="lexers.playlist" />
     <None Include="packages.config" />
+    <None Include="parsers.playlist" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\J2Net\J2Net.csproj">
