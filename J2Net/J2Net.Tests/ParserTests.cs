@@ -19,7 +19,7 @@ namespace J2Net.Tests
         /// analogous to the Match object that you would receive after a RegEx match. But a better explanation 
         /// is through an example. 
         /// 
-        /// For this exmaple, supose the grammar is the following. In reality, the grammar is all of our parsers:
+        /// For this example, suppose the grammar is the following. In reality, the grammar is all of our parsers:
         ///     expr : ID '=' s ';';
         ///     s : ID ('+' ID)?;
         ///     ID : [a-zA-Z]+;
@@ -30,7 +30,7 @@ namespace J2Net.Tests
         ///                                         // get from expr to ID tokens, it'll have passed through rule 's'.
         ///                                         // so we'll have essentially tested rule 's' as well.
         /// 
-        /// HOWEVER, patterns can be labeled. So rather than a buch of <ID> which is dificult to tell which ID you're 
+        /// HOWEVER, patterns can be labeled. So rather than a bunch of <ID> which is difficult to tell which ID you're 
         /// referring too, do the following.
         /// 
         /// pattern  = "<a:ID> = <b:ID> + <c:ID> + <d:ID>;"
@@ -63,7 +63,7 @@ namespace J2Net.Tests
             JavaLexer lexer = new JavaLexer(new AntlrInputStream(testCode));
             JavaParser parser = new JavaParser(new CommonTokenStream(lexer));
 
-            //use .Net Reflection to get the Paser's Rule's method and execute it to generate a Parse Tree object
+            //use .Net Reflection to get the Parser's Rule's method and execute it to generate a Parse Tree object
             System.Reflection.MethodInfo ruleMethod = parser.GetType().GetMethod(ruleName);
             IParseTree ruleTree = (IParseTree)ruleMethod.Invoke(parser, null);
 
@@ -90,7 +90,7 @@ namespace J2Net.Tests
 
 
         [TestMethod]
-        public void Parser_Types_type()
+       public void Parser_Types_type()
         {
             ParseTreeMatch match;
             match = GetParseTreeMatch("int", "<integralType>", "type");
@@ -102,6 +102,43 @@ namespace J2Net.Tests
             match = GetParseTreeMatch("@. long", "<b:annotation> <a:integralType>", "type");
             Assert.AreEqual(match.Get("a").GetText(), "long");
             Assert.AreEqual(match.Get("b").GetText(), "@.");
+         
+        }
+
+        [TestMethod]
+        public void Parser_Expressions_expressions()
+        {
+            ParseTreeMatch match;
+        }
+        
+        [TestMethod]
+        public void Parser_Statements_statements()
+        {
+            ParseTreeMatch match;
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classes()
+        {
+            ParseTreeMatch match;
+        }
+
+        [TestMethod]
+        public void Parser_Interfaces_interfaces()
+        {
+            ParseTreeMatch match;
+        }
+
+        [TestMethod]
+        public void Parser_Names_names()
+        {
+            ParseTreeMatch match;
+        }
+
+        [TestMethod]
+        public void Parser_Packages_packages()
+        {
+            ParseTreeMatch match;
         }
     }
 }

@@ -12,7 +12,7 @@
     <AssemblyName>J2Net</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>e2671687</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>567fba74</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +35,12 @@
     <Reference Include="Antlr4.Runtime.net45">
       <HintPath>..\packages\Antlr4.Runtime.4.3.0\lib\net45\Antlr4.Runtime.net45.dll</HintPath>
     </Reference>
+    <Reference Include="Moppet.Lapa">
+      <HintPath>..\packages\Moppet.Lapa.1.2.3\lib\Moppet.Lapa.dll</HintPath>
+    </Reference>
+    <Reference Include="Piglet">
+      <HintPath>..\packages\Piglet.1.4.0\lib\net40\Piglet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +48,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VBF.Compilers.Common">
+      <HintPath>..\packages\VBF.Compilers.Common.1.0.1\lib\VBF.Compilers.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VBF.Compilers.Parsers">
+      <HintPath>..\packages\VBF.Compilers.Parsers.1.0.1\lib\VBF.Compilers.Parsers.dll</HintPath>
+    </Reference>
+    <Reference Include="VBF.Compilers.Scanners">
+      <HintPath>..\packages\VBF.Compilers.Scanners.1.0.1\lib\VBF.Compilers.Scanners.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />

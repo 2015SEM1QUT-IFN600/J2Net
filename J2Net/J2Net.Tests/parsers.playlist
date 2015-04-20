@@ -1,1 +1,9 @@
-<Playlist Version="1.0"><Add Test="J2Net.Tests.ParserTests.Parser_Types_type" /></Playlist>
+<Playlist Version="1.0">
+  <Add Test="J2Net.Tests.ParserTests.Parser_Types_type" />
+  <Add Test="J2Net.Tests.ParserTests.Parser_Expressions_expressions" />
+  <Add Test="J2Net.Tests.ParserTests.Parser_Statements_statements" />
+  <Add Test="J2Net.Tests.ParserTests.Parser_Classes_classes" />
+  <Add Test="J2Net.Tests.ParserTests.Parser_Interfaces_interfaces" />
+  <Add Test="J2Net.Tests.ParserTests.Parser_Names_names" />
+  <Add Test="J2Net.Tests.ParserTests.Parser_Packages_packages" />
+</Playlist>

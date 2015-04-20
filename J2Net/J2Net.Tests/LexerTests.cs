@@ -477,13 +477,13 @@ namespace J2Net.Tests
         {
             AssertToken("%", JavaLexer.MOD);
         }
-
+        
         [TestMethod]
         public void Lexer_Operators_this()
         {
-            AssertToken(".", JavaLexer.THIS);
+            AssertToken(".", JavaLexer.DOT);
         }
-
+        
         [TestMethod]
         public void Lexer_Operators_add()
         {

@@ -14,7 +14,7 @@ RULES OF PARSER INHERITANCE:
 
 /*
 RULES OF RULES:
-	1) NEVER make forever looping parser rules like { myRule : myRule; } -- this causes the unknown build error
+	1) NEVER make forever looping parser rules like { myRule : myRule; instead use code such as myRule: myRule? or myRule: myRule myRule*} this will then allow the parser to continue on through the rule rather than continue into a loop
 	2) Tokens should be used in place of all literals -- http://stackoverflow.com/questions/16102540/is-implicit-token-definition-in-parser-rule-something-to-worry-about
 	2.5) All tokens should already exist. If not, they should be made. But no Token should be duplicated.
 	3) Do not match empty strings. This is avoided if you used Tokens -- http://stackoverflow.com/questions/26041293/antlr-4-warning-rule-contains-an-optional-block-with-at-least-one-alternative
@@ -31,7 +31,8 @@ import
 		lexer_whitespace,		//Eric
 		lexer_identifiers,		//Aaron
 
-		parser_types;
+		parser_types, 
+		parser_expressions;
 		// ORDER OF INHERITENCE
 		// types -> expressions -> statements -> classes -> interfaces -> names -> packages
 

@@ -33,9 +33,9 @@ primary : DOT;
 primaryNoNewArray
 	: literal
 	| classLiteral
-	| 'this'
-	| typeName '.' 'this'
-	| '(' Expression ')'
+	| THIS
+	| typeName DOT THIS
+	| LPAREN Expression RPAREN
 	| classInstanceCreationExpression
 	| fieldAccess
 	| arrayAccess
@@ -46,35 +46,35 @@ primaryNoNewArray
 //BUG: rule 'classLiteral' contains a closure with at least one alternative that can match an empty string
 classLiteral : DOT;
 //classLiteral
-//	: typeName (( )?)* '.' 'class'
-//	| numericType (( )?)* '.' 'class'
-//	| 'boolean' (( )?) '.' 'class'
-//	| 'void' '.' 'class'
+//	: typeName (( )?)* DOT CLASS
+//	| numericType (( )?)* DOT CLASS
+//	|  BOOLEAN (( )?) DOT CLASS
+//	| VOID DOT CLASS
 //	;
 
 classInstanceCreationExpression
 	: unqualifiedClassInstanceCreationExpression
-	| expressionName '.' unqualifiedClassInstanceCreationExpression
-	| primary '.' unqualifiedClassInstanceCreationExpression
+	| expressionName DOT unqualifiedClassInstanceCreationExpression
+	| primary DOT unqualifiedClassInstanceCreationExpression
 	;
 
 unqualifiedClassInstanceCreationExpression
-	: 'new' typeArguments? classOrInterfaceTypeToInstantiate '{' argumentList? '}' classBody?
+	: NEW typeArguments? classOrInterfaceTypeToInstantiate LBRACE argumentList? RBRACE classBody?
 	;
 
 classOrInterfaceTypeToInstantiate
-	: annotation* Identifiers ('.' annotation* Identifiers)* typeArgumentsOrDiamond?
+	: annotation* Identifiers (DOT annotation* Identifiers)* typeArgumentsOrDiamond?
 	;
 
 typeArgumentsOrDiamond
 	: typeArguments
-	| '<' '>'
+	| LT GT
 	;
 
 fieldAccess
-	: primary '.' Identifiers
-	| 'super' '.' Identifiers
-	| typeName '.' 'super' '.' Identifiers
+	: primary DOT Identifiers
+	| SUPER DOT Identifiers
+	| typeName DOT SUPER DOT Identifiers
 	;
 
 
@@ -86,33 +86,33 @@ arrayAccess : DOT;
 //	;
 
 methodInvocation
-	: MethodName '(' argumentList? ')'
-	| typeName '.' typeArguments? Identifiers '(' argumentList? ')'
-	| expressionName '.' typeArguments? Identifiers '(' argumentList? ')'
-	| primary '.' typeArguments? Identifiers '(' argumentList? ')'
-	| 'super' '.' typeArguments? Identifiers '(' argumentList? ')'
-	| typeName '.' 'super' '.' typeArguments? Identifiers '(' argumentList? ')'
+	: MethodName LPAREN argumentList? RPAREN
+	| typeName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	| expressionName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	| primary DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	| SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	| typeName DOT SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	;
 
 argumentList
-	: expression (',' expression)*
+	: expression (COMMA expression)*
 	;
 
 methodReference
-	: expressionName ':'':' typeArguments? Identifiers
-	| referenceType ':'':' typeArguments? Identifiers
-	| primary ':'':' typeArguments? Identifiers
-	| 'super' ':'':' typeArguments? Identifiers
-	| typeName '.' 'super' '::' typeArguments? Identifiers
-	| classType ':'':' typeArguments? 'new'
-	| arrayType ':'':' 'new'
+	: expressionName DBLCOLON typeArguments? Identifiers
+	| referenceType DBLCOLON typeArguments? Identifiers
+	| primary DBLCOLON typeArguments? Identifiers
+	| SUPER DBLCOLON typeArguments? Identifiers
+	| typeName DOT SUPER DBLCOLON typeArguments? Identifiers
+	| classType DBLCOLON typeArguments? NEW
+	| arrayType DBLCOLON NEW
 	;
 
 arrayCreationExpression
-	: 'new' primitiveType dimExprs dims?
-	| 'new' classOrInterfaceType dimExprs dims?
-	| 'new' primitiveType dims arrayInitializer
-	| 'new' classOrInterfaceType dims arrayInitializer
+	: NEW primitiveType dimExprs dims?
+	| NEW classOrInterfaceType dimExprs dims?
+	| NEW primitiveType dims arrayInitializer
+	| NEW classOrInterfaceType dims arrayInitializer
 	;
 
 //BUG: rule 'dimExprs' contains a closure with at least one alternative that can match an empty string
@@ -131,17 +131,17 @@ expression
 	; 
 
 lambdaExpression
-	: lambdaParameters '->' lambdaBody
+	: lambdaParameters COMMENT lambdaBody
 	;
 
 lambdaParameters
 	: Identifiers
-	| '(' formalParameterList? ')'
-	| '(' inferredFormalParameterList')'
+	| LPAREN formalParameterList? RPAREN
+	| LPAREN inferredFormalParameterList RPAREN
 	;
 
 inferredFormalParameterList
-	: Identifiers (',' Identifiers)?
+	: Identifiers (COMMA Identifiers)?
 	;
 
 lambdaBody
@@ -165,24 +165,24 @@ leftHandSide
 	;
 
 assignmentOperator
-	: '='  
-	| '*='  
-	| '/='  
-	| '%='  
-	| '+=' 
-	| '-=' 
-	| '<<=' 
-	| '>>='  
-	| '>>>='  
-	| '&='  
-	| '^='  
-	| '|='
+	: ASSIGN  
+	| MUL_ASSIGN  
+	| DIV_ASSIGN  
+	| MOD_ASSIGN  
+	| ADD_ASSIGN 
+	| SUB_ASSIGN 
+	| LSHIFT_ASSIGN 
+	| RSHIFT_ASSIGN  
+	| URSHIFT_ASSIGN  
+	| AND_ASSIGN  
+	| XOR_ASSIGN  
+	| OR_ASSIGN
 	;
 
 conditionalExpression
 	: conditionalOrExpression
-	| conditionalOrExpression '?' expression ':' conditionalExpression
-	| conditionalOrExpression '?' expression ':' lambdaExpression
+	| conditionalOrExpression  QUESTION expression COLON conditionalExpression
+	| conditionalOrExpression  QUESTION expression COLON lambdaExpression
 	;
 
 //BUG: causes unknown build error. Each of the following calls itself in a forever loop
@@ -197,86 +197,86 @@ shiftExpression : DOT;
 additiveExpression : DOT;
 multiplicativeExpression : DOT;
 
-//conditionalOrExpression
-//	: conditionalAndExpression
-//	| conditionalOrExpression '||' conditionalAndExpression
-//	;
+/*conditionalOrExpression
+	: conditionalAndExpression?
+	| conditionalOrExpression? OR conditionalAndExpression
+	;
 
-//conditionalAndExpression
-//	: inclusiveOrExpression
-//	| conditionalAndExpression '&&' inclusiveOrExpression
-//	;
+conditionalAndExpression
+	: inclusiveOrExpression?
+	| conditionalAndExpression? AND inclusiveOrExpression
+	;
 
-//inclusiveOrExpression
-//	: exclusiveOrExpression
-//	| inclusiveOrExpression '|' exclusiveOrExpression
-//	;
+inclusiveOrExpression
+	: exclusiveOrExpression?
+	| inclusiveOrExpression? BITOR exclusiveOrExpression
+	;
 
-//exclusiveOrExpression
-//	: andExpression
-//	| exclusiveOrExpression '^' andExpression
-//	;
+exclusiveOrExpression
+	: andExpression?
+	| exclusiveOrExpression? CARET andExpression
+	;
 
-//andExpression
-//	: equalityExpression
-//	| andExpression '&' equalityExpression
-//	;
+andExpression
+	: equalityExpression?
+	| andExpression BITAND equalityExpression
+	;
 
-//equalityExpression
-//	: relationalExpression
-//	| equalityExpression '==' relationalExpression
-//	| equalityExpression '!=' relationalExpression
-//	;
+equalityExpression
+	: relationalExpression?
+	| equalityExpression EQUAL relationalExpression
+	| equalityExpression NOTEQUAL relationalExpression
+	;
 
-//relationalExpression
-//	: shiftExpression
-//	| relationalExpression '<' shiftExpression
-//	| relationalExpression '>' shiftExpression
-//	| relationalExpression '<=' shiftExpression
-//	| relationalExpression '>=' shiftExpression
-//	| relationalExpression 'instanceof' referenceType
-//	;
+relationalExpression
+	: shiftExpression?
+	| relationalExpression LT shiftExpression
+	| relationalExpression GT shiftExpression
+	| relationalExpression LE shiftExpression
+	| relationalExpression GE shiftExpression
+	| relationalExpression 'instanceof' referenceType
+	;
 
-//shiftExpression
-//	: additiveExpression
-//	| shiftExpression '<<' additiveExpression
-//	| shiftExpression '>>' additiveExpression
-//	| shiftExpression '>>>' additiveExpression
-//	;
+shiftExpression
+	: additiveExpression?
+	| shiftExpression LEFT_SIGNED additiveExpression
+	| shiftExpression RIGHT_SIGNED additiveExpression
+	| shiftExpression RIGHT_UNSIGNED additiveExpression
+	;
 
-//additiveExpression
-//	: multiplicativeExpression
-//	| additiveExpression '+' multiplicativeExpression
-//	| additiveExpression '-' multiplicativeExpression
-//	;
+additiveExpression
+	: multiplicativeExpression?
+	| additiveExpression ADD multiplicativeExpression
+	| additiveExpression SUB multiplicativeExpression
+	;
 
-//multiplicativeExpression
-//	: unaryExpression
-//	| multiplicativeExpression '*' unaryExpression
-//	| multiplicativeExpression '/' unaryExpression
-//	| multiplicativeExpression '%' unaryExpression
-//	;
+multiplicativeExpression
+	: unaryExpression?
+	| multiplicativeExpression MUL unaryExpression
+	| multiplicativeExpression DIV unaryExpression
+	| multiplicativeExpression MOD unaryExpression
+	;*/
 
 unaryExpression
 	: preIncrementExpression
 	| preDecrementExpression
-	| '+' unaryExpression
-	| '-' unaryExpression
+	| ADD unaryExpression
+	| SUB unaryExpression
 	| unaryExpressionNotPlusMinus
 	;
 
 preIncrementExpression
-	: '++' unaryExpression
+	: INC unaryExpression
 	;
 
 preDecrementExpression
-	: '--' unaryExpression
+	: DEC unaryExpression
 	;
 
 unaryExpressionNotPlusMinus
 	: postfixExpression
-	| '~' unaryExpression
-	| '!' unaryExpression
+	| TILDE unaryExpression
+	| NOT unaryExpression
 	| castExpression
 	;
 
@@ -290,17 +290,17 @@ postfixExpression : DOT;
 //	;
 
 postIncrementExpression
-	: postfixExpression '++'
+	: postfixExpression INC
 	;
 
 postDecrementExpression
-	: postfixExpression '--'
+	: postfixExpression DEC
 	;
 
 castExpression
-	: '(' primitiveType ')' unaryExpression
-	| '(' referenceType additionalBound* ')' unaryExpressionNotPlusMinus
-	| '(' referenceType additionalBound* ')' lambdaExpression
+	: LPAREN primitiveType RPAREN unaryExpression
+	| LPAREN referenceType additionalBound* RPAREN unaryExpressionNotPlusMinus
+	| LPAREN referenceType additionalBound* RPAREN lambdaExpression
 	;
 
 constantExpression
