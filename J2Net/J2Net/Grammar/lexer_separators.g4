@@ -17,4 +17,3 @@ DOT : '.';
 TRPDOT : '...';
 ATSIGN : '@';
 DBLCOLON : '::';
-ASTERISK : '*';
