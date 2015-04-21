@@ -71,10 +71,10 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Name_packageName_3Pack()
         {
-            ParseTreeMatch match = getParseTreeMatch("Office.Stationary.Pen.WithEraser", "<packageName>.<Identifiers>.<Identifiers>.<Identifiers>", "packageName");
+            ParseTreeMatch match = getParseTreeMatch("Office.Stationary.Pen.WithEraser", "<packageName>.<Identifiers>", "packageName");
             Assert.IsTrue(match.Succeeded);
             //Excpetion: Object reference not set to an instance of an object
-            //Assert.AreEqual(match.Get("packageName.Identifiers.Identifiers.Identifiers").GetText(), "Office.Stationary.Pen.WithEraser");
+            //Assert.AreEqual(match.Get("packageName.Identifiers").GetText(), "Office.Stationary.Pen.WithEraser");
         }
 
 

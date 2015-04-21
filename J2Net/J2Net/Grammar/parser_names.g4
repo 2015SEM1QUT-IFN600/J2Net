@@ -19,8 +19,8 @@ any Unicode character that is a "Java letter-or-digit"
 
 packageName
 	: Identifiers
-	| packageName (DOT Identifiers)+		//From Java spec
-//	| Identifiers (DOT packageName)+
+	| packageName DOT Identifiers		//From Java spec - pass!!!!!!
+//	| Identifiers (DOT packageName)+	//-Don't need
 	;
 
 typeName
