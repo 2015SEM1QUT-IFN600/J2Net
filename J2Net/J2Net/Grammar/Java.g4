@@ -31,8 +31,7 @@ import
 		lexer_whitespace,		//Eric
 		lexer_identifiers,		//Aaron
 
-		parser_types, 
-		parser_expressions;
+		parser_types;
 		// ORDER OF INHERITENCE
 		// types -> expressions -> statements -> classes -> interfaces -> names -> packages
 
