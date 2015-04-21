@@ -28,7 +28,7 @@ singleTypeImportDeclaration
     ;
 
 typeImportOnDemandDeclaration
-    :   IMPORT packageOrTypeName DOT ASTERISK SEMI
+    :   IMPORT packageOrTypeName DOT MUL SEMI
     ;
 
 singleStaticImportDeclaration
@@ -36,7 +36,7 @@ singleStaticImportDeclaration
     ;
 
 staticImportOnDemandDeclaration
-    :   IMPORT STATIC typeName DOT ASTERISK SEMI
+    :   IMPORT STATIC typeName DOT MUL SEMI
     ;
 
 typeDeclaration
