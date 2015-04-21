@@ -6,39 +6,46 @@ import parser_packages;
 
 
 /************ NAMES  ************/
+/*
+Identifier:
+IdentifierChars but not a Keyword or BooleanLiteral or NullLiteral
+IdentifierChars:
+JavaLetter {JavaLetterOrDigit}
+JavaLetter:
+any Unicode character that is a "Java letter"
+JavaLetterOrDigit:
+any Unicode character that is a "Java letter-or-digit"
+*/
 
-//BUG: causes unknown build error. Each of the following calls itself in a forever loop
-packageName : DOT;
-typeName : DOT;
-packageOrTypeName : DOT;
-expressionName : DOT;
-ambiguousName : DOT; 
+packageName
+	: Identifiers
+	| packageName (DOT Identifiers)+		//From Java spec
+//	| Identifiers (DOT packageName)+
+	;
 
-//packageName
-//	:	Identifiers
-//	|	packageName DOT Identifiers
-//	;
+typeName
+	: Identifiers
+	| packageOrTypeName (DOT Identifiers)+	//From Java spec
+	;
 
-//typeName
-//	:	Identifiers
-//	|	packageOrTypeName DOT Identifiers
-//	;
+packageOrTypeName
+	: Identifiers
+//	| packageOrTypeName (DOT Identifiers)+	//From Java spec
+	| Identifiers (DOT packageOrTypeName)+
+	;
 
-//packageOrTypeName
-//	:	Identifiers
-//	|	packageOrTypeName DOT Identifiers
-//	;
-
-//expressionName
-//	:	Identifiers
-//	|	ambiguousName DOT Identifiers
-//	;
-
-//ambiguousName
-//	:	Identifiers
-//	|	ambiguousName DOT Identifiers
-//	;
+expressionName
+	: Identifiers
+//	| ambiguousName (DOT Identifiers)+		//From Java spec
+	| Identifiers (DOT ambiguousName)+
+	;
 
 methodName
-	:	Identifiers
+	: Identifiers
+	;
+
+ambiguousName
+	: Identifiers
+//	| ambiguousName (DOT Identifiers)+		//From Java spec - got error
+	| Identifiers (DOT ambiguousName)+
 	;
