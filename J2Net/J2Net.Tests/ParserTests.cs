@@ -151,19 +151,19 @@ namespace J2Net.Tests
         public void Parser_Classes_classDeclaration()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("public", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("public", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
-            match = GetParseTreeMatch("protected", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("protected", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
-            match = GetParseTreeMatch("private", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("private", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
-            match = GetParseTreeMatch("abstract", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("abstract", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
-            match = GetParseTreeMatch("static", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("static", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
-            match = GetParseTreeMatch("final", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("final", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
-            match = GetParseTreeMatch("strictfp", "<normalClassDeclaration>", "classDeclaration");
+            match = GetParseTreeMatch("strictfp", "<classModifier>", "classModifier");
             Assert.IsTrue(match.Succeeded);
         }
 
@@ -171,8 +171,17 @@ namespace J2Net.Tests
         public void Parser_Classes_normalClassDeclaration()
         {
             ParseTreeMatch match;
-            String treePattern = "public class <Identifiers> <typeParameters> <superclass> <superinterfaces> classBody;";
+            String treePattern = "<classModifier> class <Identifiers> <typeParameters> <superclass> <superinterfaces> <classBody>;";
             match = GetParseTreeMatch("public class testclass { }", treePattern, "normalClassDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_enumDeclaration()
+        {
+            ParseTreeMatch match;
+            String treePattern = "<classModifier> enum <Identifiers> <superinterfaces> <enumBody>;";
+            match = GetParseTreeMatch("public enum testenum { }", treePattern, "enumDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 
