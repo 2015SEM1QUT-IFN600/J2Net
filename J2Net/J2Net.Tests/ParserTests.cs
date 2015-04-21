@@ -106,6 +106,62 @@ namespace J2Net.Tests
         }
 
         [TestMethod]
+        public void Parser_Classes_classDeclaration1()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("public", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classDeclaration2()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("protected", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classDeclaration3()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("private", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classDeclaration4()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("abstract", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classDeclaration5()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("static", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classDeclaration6()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("final", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_classDeclaration7()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("strictfp", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
         public void Parser_Expressions_expressions()
         {
             ParseTreeMatch match;
