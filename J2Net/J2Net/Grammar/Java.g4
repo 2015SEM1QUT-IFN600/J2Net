@@ -35,15 +35,15 @@ import
 		// ORDER OF INHERITENCE
 		// types -> expressions -> statements -> classes -> interfaces -> names -> packages
 
-		/*//
-		parser_literal,			//Eric (combined into parser_types)
-		parser_names,			//CT
-		parser_interfaces,		//Monte and Aaron
-		parser_types,			//jason (completed by Eric) 
-		parser_packages,		//Mana
-		parser_classes,			//Dori
-		parser_arrays,			//Harsh (combined into parser_types)
-		parser_statements,		//Eric
-		parser_expressions;		//Monte
-		parser_exceptions,		//Matty (cancelled, no work to be done here)
-		//*/
+		
+		//parser_literal,		//Eric (combined into parser_types)
+		//parser_names,			//CT
+		//parser_interfaces,	//Monte and Aaron
+		//parser_types,			//jason (completed by Eric) 
+		//parser_packages,		//Mana
+		//parser_classes,		//Dori
+		//parser_arrays,		//Harsh (combined into parser_types)
+		//parser_statements,	//Eric
+		//parser_expressions;	//Monte
+		//parser_exceptions,	//Matty (cancelled, no work to be done here)
+		

@@ -162,10 +162,58 @@ namespace J2Net.Tests
         }
 
         [TestMethod]
-        public void Parser_Expressions_expressions()
+        public void Parser_Expressions_primaryNoNewArray()
         {
             ParseTreeMatch match;
+            match = GetParseTreeMatch("true", "<literal>", "primaryNoNewArray");
+            Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch("false", "<literal>", "primaryNoNewArray");
+            Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch(".", "<classLiteral>", "primaryNoNewArray");
+            Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch("new", "<classInstanceCreationExpression>", "primaryNoNewArray");
+            Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch("super.a", "<fieldAccess>", "primaryNoNewArray");
+            Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch("super", "<methodInvocation>", "primaryNoNewArray");
+            //Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch("Method()", "<methodReference>", "primaryNoNewArray");
+            Assert.IsTrue(match.Succeeded);
         }
+
+        [TestMethod]
+        public void Parser_Expressions_classInstanceCreationExpression()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("new a", "<unqualifiedClassInstanceCreationExpression>", "classInstanceCreationExpression");
+            Assert.IsTrue(match.Succeeded);
+            //match = GetParseTreeMatch("String new String ", "<expressionName.unqualifiedClassInstanceCreationExpression>", "classInstanceCreationExpression");
+            //Assert.IsTrue(match.Succeeded);
+            //match = GetParseTreeMatch("this.", "<primary DOT unqualifiedClassInstanceCreationExpression>", "classInstanceCreationExpression");
+            //Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Expressions_typeArgumentsOrDiamond()
+        {
+            ParseTreeMatch match;
+            //match = GetParseTreeMatch("new a", "<typeArguments>", "typeArgumentsOrDiamond");
+            //Assert.IsTrue(match.Succeeded);
+            //match = GetParseTreeMatch("<>", "<LT GT>", "typeArgumentsOrDiamond");
+            //ssert.IsTrue(match.Succeeded);
+            }
+
+        [TestMethod]
+        public void Parser_Expressions_fieldAccess()
+        {
+            ParseTreeMatch match;
+            //match = GetParseTreeMatch("t.x=1", "<primary . Identifiers>", "fieldAccess");
+            //Assert.IsTrue(match.Succeeded);
+            //match = GetParseTreeMatch("String", "SUPER . Identifiers", "fieldAccess");
+            //Assert.IsTrue(match.Succeeded);
+            //match = GetParseTreeMatch("String new String ", "typeName . SUPER . Identifiers", "fieldAccess");
+            //Assert.IsTrue(match.Succeeded);
+        } 
         
         [TestMethod]
         public void Parser_Statements_statements()

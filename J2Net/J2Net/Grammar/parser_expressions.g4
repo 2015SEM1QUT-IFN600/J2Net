@@ -198,38 +198,38 @@ additiveExpression : DOT;
 multiplicativeExpression : DOT;
 
 /*conditionalOrExpression
-	: conditionalAndExpression?
-	| conditionalOrExpression? OR conditionalAndExpression
+	: conditionalAndExpression+
+	| conditionalOrExpression OR conditionalAndExpression
 	;
 
 conditionalAndExpression
-	: inclusiveOrExpression?
-	| conditionalAndExpression? AND inclusiveOrExpression
+	: inclusiveOrExpression+
+	| conditionalAndExpression+ AND inclusiveOrExpression
 	;
 
 inclusiveOrExpression
-	: exclusiveOrExpression?
-	| inclusiveOrExpression? BITOR exclusiveOrExpression
+	: exclusiveOrExpression+
+	| inclusiveOrExpression+ BITOR exclusiveOrExpression
 	;
 
 exclusiveOrExpression
-	: andExpression?
-	| exclusiveOrExpression? CARET andExpression
+	: andExpression+
+	| exclusiveOrExpression+ CARET andExpression
 	;
 
 andExpression
-	: equalityExpression?
+	: equalityExpression+
 	| andExpression BITAND equalityExpression
 	;
 
 equalityExpression
-	: relationalExpression?
+	: relationalExpression+
 	| equalityExpression EQUAL relationalExpression
 	| equalityExpression NOTEQUAL relationalExpression
 	;
 
 relationalExpression
-	: shiftExpression?
+	: shiftExpression+
 	| relationalExpression LT shiftExpression
 	| relationalExpression GT shiftExpression
 	| relationalExpression LE shiftExpression
@@ -238,24 +238,24 @@ relationalExpression
 	;
 
 shiftExpression
-	: additiveExpression?
+	: additiveExpression+
 	| shiftExpression LEFT_SIGNED additiveExpression
 	| shiftExpression RIGHT_SIGNED additiveExpression
 	| shiftExpression RIGHT_UNSIGNED additiveExpression
 	;
 
 additiveExpression
-	: multiplicativeExpression?
-	| additiveExpression ADD multiplicativeExpression
-	| additiveExpression SUB multiplicativeExpression
+	: multiplicativeExpression+
+	| additiveExpression+ ADD multiplicativeExpression
+	| additiveExpression+ SUB multiplicativeExpression
 	;
 
 multiplicativeExpression
-	: unaryExpression?
-	| multiplicativeExpression MUL unaryExpression
-	| multiplicativeExpression DIV unaryExpression
-	| multiplicativeExpression MOD unaryExpression
-	;*/
+	: unaryExpression+
+	| multiplicativeExpression+ MUL unaryExpression
+	| multiplicativeExpression+ DIV unaryExpression
+	| multiplicativeExpression+ MOD unaryExpression
+	; */
 
 unaryExpression
 	: preIncrementExpression
