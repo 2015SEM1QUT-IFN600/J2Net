@@ -13,24 +13,24 @@ interfaceDeclaration
 	;
 
 normalInterfaceDeclaration
-	: (interfaceModifier)* 'interface' Identifiers (typeParameters)? (extendsInterfaces)? interfaceBody
+	: (interfaceModifier)* INTERFACE Identifiers (typeParameters)? (extendsInterfaces)? interfaceBody
 	;
 
 interfaceModifier
-	: annotation 'public'
-	| annotation 'protected'
-	| annotation 'private'
-	| annotation 'abstract' 
-	| annotation 'static' 
-	| annotation 'strictfp'
+	: annotation PUBLIC
+	| annotation PROTECTED'
+	| annotation PRIVATE
+	| annotation ABSTRACT 
+	| annotation STATIC 
+	| annotation STRICTFP
 	;
 
 extendsInterfaces
-	: 'extends' interfaceTypeList
+	: EXTENDS interfaceTypeList
 	;
 
 interfaceBody
-	: '{' (interfaceMemberDeclaration)* '}'
+	: LBRACE (interfaceMemberDeclaration)* RBRACE
 	;
 
 interfaceMemberDeclaration
@@ -45,9 +45,9 @@ constantDeclaration
 	;
 
 constantModifier
-	: annotation 'public'
-	| annotation 'static' 
-	| annotation 'final'
+	: annotation PUBLIC
+	| annotation STATIC 
+	| annotation FINAL
 	;
 
 interfaceMethodDeclaration
@@ -55,19 +55,19 @@ interfaceMethodDeclaration
 	;
 
 interfaceMethodModifier
-	: annotation 'public'
-	| annotation 'abstract' 
-	| annotation 'default' 
-	| annotation 'static' 
-	| annotation 'strictfp'
+	: annotation PUBLIC
+	| annotation ABSTRACT
+	| annotation DEFAULT 
+	| annotation STATIC 
+	| annotation STRICTFP
 	;
 
 annotationTypeDeclaration
-	: (interfaceModifier)*'@' 'interface' Identifiers annotationTypeBody
+	: (interfaceModifier)*ATSIGN INTERFACE Identifiers annotationTypeBody
 	;
 
 annotationTypeBody
-	: '{'(annotationTypeMemberDeclaration)*'}'
+	: LBRACE (annotationTypeMemberDeclaration)* RBRACE
 	;
 
 annotationTypeMemberDeclaration
@@ -78,16 +78,16 @@ annotationTypeMemberDeclaration
 	;
 
 annotationTypeElementDeclaration
-	: (annotationTypeElementModifier)* unannType Identifiers '('')' (dims)? (defaultValue)?
+	: (annotationTypeElementModifier)* unannType Identifiers LPAREN RPAREN (dims)? (defaultValue)?
 	;
 
 annotationTypeElementModifier
-	: annotation 'public'
-	| annotation 'abstract'
+	: annotation PUBLIC
+	| annotation ABSTRACT
 	;
 
 defaultValue
-	: 'default' elementValue
+	: DEFAULT elementValue
 	;
 
 annotation
@@ -97,15 +97,15 @@ annotation
 	;
 
 normalAnnotation
-	: '@' typeName '{' (elementValuePairList)? '}'
+	: ATSIGN typeName LBRACE (elementValuePairList)? RBRACE
 	;
 
 elementValuePairList
-	: elementValuePair (',' elementValuePair)*
+	: elementValuePair (COMMA elementValuePair)*
 	;
 
 elementValuePair
-	: Identifiers '=' elementValue
+	: Identifiers ASSIGN elementValue
 	;
 
 elementValue
@@ -115,17 +115,17 @@ elementValue
 	;
 
 elementValueArrayInitializer
-	: '{' (elementValueList)? (',')? '}'
+	: LBRACE (elementValueList)? (COMMA)? RBRACE
 	;
 
 elementValueList
-	: elementValue (',' elementValue)*
+	: elementValue (COMMA elementValue)*
 	;
 
 markerAnnotation
-	: '@' typeName
+	: ATSIGN typeName
 	;
 
 singleElementAnnotation
-	: '@' typeName '(' elementValue ')'
+	: ATSIGN typeName LPAREN elementValue RPAREN
 	;
