@@ -1,8 +1,21 @@
 parser grammar parser_packages;
 
 
-
 /************ NAMES  ************/
+
+
+compilationUnit
+    :   packageDeclaration? importDeclaration* typeDeclaration* EOF
+    ;
+
+packageDeclaration
+    :   (PackageModifier)* PACKAGE Identifiers (DOT Identifiers)* SEMI
+    ;
+
+PackageModifier
+	:	annotation
+	;
+
 importDeclaration
 	:	singleTypeImportDeclaration 
 	|	typeImportOnDemandDeclaration 
@@ -11,32 +24,24 @@ importDeclaration
 	;
 
 singleTypeImportDeclaration
-    :   'import' typeName ';'
+    :   IMPORT typeName SEMI
     ;
 
 typeImportOnDemandDeclaration
-    :   'import' packageOrTypeName '.' '*' ';'
+    :   IMPORT packageOrTypeName DOT ASTERISK SEMI
     ;
 
 singleStaticImportDeclaration
-    :   'import' 'static' typeName '.' Identifiers ';'
+    :   IMPORT STATIC typeName DOT Identifiers SEMI
     ;
 
 staticImportOnDemandDeclaration
-    :   'import' 'static' typeName '.' '*' ';'
-    ;
-
-compilationUnit
-    :   packageDeclaration? importDeclaration* typeDeclaration* EOF
-    ;
-
-packageDeclaration
-    :   annotation* 'package' Identifiers ('.' Identifiers)* ';'
+    :   IMPORT STATIC typeName DOT ASTERISK SEMI
     ;
 
 typeDeclaration
 	:	classDeclaration
 	|	interfaceDeclaration
-	|	';'
+	|	SEMI
 	;
 
