@@ -118,7 +118,8 @@ namespace J2Net.Tests
         public void Parser_Packages_singleTypeImportDeclaration()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("import", "<singleTypeImportDeclaration>", "importDeclaration");
+            String treePattern = "import <typeName>;";
+            match = GetParseTreeMatch("import java.util.Vector;", treePattern, "singleTypeImportDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 
@@ -126,21 +127,24 @@ namespace J2Net.Tests
         public void Parser_Packages_typeImportOnDemandDeclaration()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("import", "<typeImportOnDemandDeclaration>", "importDeclaration");
+            String treePattern = "import <typeName>.*;";
+            match = GetParseTreeMatch("import java.util.*;", treePattern, "typeImportOnDemandDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
         [TestMethod]
         public void Parser_Packages_singleStaticImportDeclaration()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("import static", "<singleStaticImportDeclaration>", "importDeclaration");
+            String treePattern = "import static <typeName>.<Identifiers>;";
+            match = GetParseTreeMatch("import static java.lang.Math.PI;", treePattern, "singleStaticImportDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
         [TestMethod]
         public void Parser_Packages_staticImportOnDemandDeclaration()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("import static", "<singleTypeImportDeclaration>", "importDeclaration");
+            String treePattern = "import static <typeName>.*;";
+            match = GetParseTreeMatch("import static java.lang.Math.*;", treePattern, "staticImportOnDemandDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
         [TestMethod]
