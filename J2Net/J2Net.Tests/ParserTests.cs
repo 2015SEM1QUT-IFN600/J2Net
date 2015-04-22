@@ -148,58 +148,31 @@ namespace J2Net.Tests
             Assert.IsTrue(match.Succeeded);
         }
         [TestMethod]
-        public void Parser_Classes_classDeclaration1()
+        public void Parser_Classes_classDeclaration()
         {
             ParseTreeMatch match;
             match = GetParseTreeMatch("public", "<normalClassDeclaration>", "classDeclaration");
             Assert.IsTrue(match.Succeeded);
-        }
-
-        [TestMethod]
-        public void Parser_Classes_classDeclaration2()
-        {
-            ParseTreeMatch match;
             match = GetParseTreeMatch("protected", "<normalClassDeclaration>", "classDeclaration");
             Assert.IsTrue(match.Succeeded);
-        }
-
-        [TestMethod]
-        public void Parser_Classes_classDeclaration3()
-        {
-            ParseTreeMatch match;
             match = GetParseTreeMatch("private", "<normalClassDeclaration>", "classDeclaration");
             Assert.IsTrue(match.Succeeded);
-        }
-
-        [TestMethod]
-        public void Parser_Classes_classDeclaration4()
-        {
-            ParseTreeMatch match;
             match = GetParseTreeMatch("abstract", "<normalClassDeclaration>", "classDeclaration");
             Assert.IsTrue(match.Succeeded);
-        }
-
-        [TestMethod]
-        public void Parser_Classes_classDeclaration5()
-        {
-            ParseTreeMatch match;
             match = GetParseTreeMatch("static", "<normalClassDeclaration>", "classDeclaration");
             Assert.IsTrue(match.Succeeded);
-        }
-
-        [TestMethod]
-        public void Parser_Classes_classDeclaration6()
-        {
-            ParseTreeMatch match;
             match = GetParseTreeMatch("final", "<normalClassDeclaration>", "classDeclaration");
+            Assert.IsTrue(match.Succeeded);
+            match = GetParseTreeMatch("strictfp", "<normalClassDeclaration>", "classDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 
         [TestMethod]
-        public void Parser_Classes_classDeclaration7()
+        public void Parser_Classes_normalClassDeclaration()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("strictfp", "<normalClassDeclaration>", "classDeclaration");
+            String treePattern = "public class <Identifiers> <typeParameters> <superclass> <superinterfaces> classBody;";
+            match = GetParseTreeMatch("public class testclass { }", treePattern, "normalClassDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 

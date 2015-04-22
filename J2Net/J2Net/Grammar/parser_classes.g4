@@ -15,8 +15,8 @@ classDeclaration
 	;
 
 normalClassDeclaration
-    	:   classModifier CLASS Identifiers
-        LBRACK typeParameters RBRACK LBRACK superclass RBRACK LBRACK superinterfaces RBRACK classBody
+    	//:   classModifier CLASS Identifiers LBRACK typeParameters RBRACK LBRACK superclass RBRACK LBRACK superinterfaces RBRACK classBody
+		:   classModifier CLASS Identifiers (typeParameters)? (superclass)? (superinterfaces)? classBody
     	;
 
 classModifier
@@ -35,7 +35,7 @@ typeParameters
     ;
 
 typeParameterList
-	:	typeParameter LBRACE COMMA typeParameter RBRACE
+	:	typeParameter (COMMA typeParameter)*
 	;
 
 
@@ -52,7 +52,7 @@ interfaceTypeList
 	;
 
 classBody
-	:	LBRACE LBRACE classBodyDeclaration RBRACE RBRACE
+	:	LBRACE (classBodyDeclaration)* RBRACE
 	;
 
 classBodyDeclaration
