@@ -18,7 +18,7 @@ normalInterfaceDeclaration
 
 interfaceModifier
 	: annotation PUBLIC
-	| annotation PROTECTED'
+	| annotation PROTECTED
 	| annotation PRIVATE
 	| annotation ABSTRACT 
 	| annotation STATIC 
