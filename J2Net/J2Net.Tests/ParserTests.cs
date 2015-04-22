@@ -110,7 +110,7 @@ namespace J2Net.Tests
         {
             ParseTreeMatch match;
             String treePattern = "package <Identifiers>.<Identifiers>;";
-            match = GetParseTreeMatch("Package java.lang;", treePattern, "packageDeclaration");
+            match = GetParseTreeMatch("package java.lang;", treePattern, "packageDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 
