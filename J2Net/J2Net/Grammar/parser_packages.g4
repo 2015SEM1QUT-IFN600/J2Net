@@ -9,12 +9,12 @@ compilationUnit
     ;
 
 packageDeclaration
-    :   (PackageModifier)* PACKAGE Identifiers (DOT Identifiers)* SEMI
+    :   (annotation)* PACKAGE Identifiers (DOT Identifiers)* SEMI
     ;
 
-PackageModifier
-	:	annotation
-	;
+//PackageModifier
+//	:	annotation
+//	;
 
 importDeclaration
 	:	singleTypeImportDeclaration 
