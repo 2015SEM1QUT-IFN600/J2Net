@@ -260,11 +260,11 @@ unannArrayType
 	;
 
 enumDeclaration
-	:	LBRACE classModifier RBRACE ENUM Identifiers LBRACK superinterfaces RBRACE enumBody
+	:	classModifier ENUM Identifiers (superinterfaces)? enumBody
 	;
 
 enumBody
-	:	LBRACE LBRACK enumConstantList RBRACK LBRACK COMMA RBRACK LBRACK enumBodyDeclarations RBRACK RBRACE
+	:	LBRACE (enumConstantList)? (COMMA)? (enumBodyDeclarations)? RBRACE
 	;
 
 enumConstantList
