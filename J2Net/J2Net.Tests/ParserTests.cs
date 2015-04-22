@@ -105,13 +105,14 @@ namespace J2Net.Tests
          
         }
 
-        //[TestMethod]
-        //public void Parser_Packages_packageDeclaration()
-        //{
-        //    ParseTreeMatch match;
-        //    match = GetParseTreeMatch("package", "<packageDeclaration>", "packageDeclaration");
-        //    Assert.IsTrue(match.Succeeded);
-        //}
+        [TestMethod]
+        public void Parser_Packages_packageDeclaration()
+        {
+            ParseTreeMatch match;
+            String treePattern = "package <Identifiers>.<Identifiers>;";
+            match = GetParseTreeMatch("Package java.lang;", treePattern, "packageDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
 
         [TestMethod]
         public void Parser_Packages_singleTypeImportDeclaration()
