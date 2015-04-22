@@ -105,6 +105,43 @@ namespace J2Net.Tests
          
         }
 
+        //[TestMethod]
+        //public void Parser_Packages_packageDeclaration()
+        //{
+        //    ParseTreeMatch match;
+        //    match = GetParseTreeMatch("package", "<packageDeclaration>", "packageDeclaration");
+        //    Assert.IsTrue(match.Succeeded);
+        //}
+
+        [TestMethod]
+        public void Parser_Packages_singleTypeImportDeclaration()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("import", "<singleTypeImportDeclaration>", "importDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Packages_typeImportOnDemandDeclaration()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("import", "<typeImportOnDemandDeclaration>", "importDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+        [TestMethod]
+        public void Parser_Packages_singleStaticImportDeclaration()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("import static", "<singleStaticImportDeclaration>", "importDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+        [TestMethod]
+        public void Parser_Packages_staticImportOnDemandDeclaration()
+        {
+            ParseTreeMatch match;
+            match = GetParseTreeMatch("import static", "<singleTypeImportDeclaration>", "importDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
         [TestMethod]
         public void Parser_Classes_classDeclaration1()
         {
