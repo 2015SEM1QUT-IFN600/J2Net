@@ -28,7 +28,7 @@ singleTypeImportDeclaration
     ;
 
 typeImportOnDemandDeclaration
-    :   IMPORT packageOrTypeName DOT MUL SEMI
+    :   IMPORT typeName DOT MUL SEMI
     ;
 
 singleStaticImportDeclaration
