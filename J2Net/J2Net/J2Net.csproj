@@ -59,7 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Compiler.cs" />
+    <Compile Include="J2NetListener.cs" />
     <Compile Include="Grammar\Java.g4.lexer.cs">
       <DependentUpon>Java.g4</DependentUpon>
     </Compile>

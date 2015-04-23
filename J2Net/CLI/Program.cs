@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using J2Net;
-using J2Net.Grammar;
 using System.IO;
-using Antlr4.Runtime;
 
 namespace CLI
 {
@@ -14,11 +11,15 @@ namespace CLI
     {
         static void Main(string[] args)
         {
-
-            //User enter file name
-            Console.WriteLine("Please input full file name with extension.");
-            //String fileName = Console.ReadLine();
-             String fileName = Path.GetFullPath(".\\JavaCodeTestFiles\\CLSFractal.java");
+            String fileName;
+            if (args.Count() > 0)
+            {
+                fileName = Path.GetFullPath(".\\JavaCodeTestFiles\\CLSFractal.java");
+            }
+            else
+            {
+                fileName = Path.GetFullPath(".\\JavaCodeTestFiles\\HelloIFN660.java"); // default to hello world file
+            }
 
             //Check to see if file exist
             if (!File.Exists(fileName))
@@ -27,33 +28,20 @@ namespace CLI
                 Terminate();
             }
 
-
-            //Antlr4 Build Pipeline
-            //StreamReader inputStream = new StreamReader(Console.OpenStandardInput());   //stream reader to read input
-            StreamReader inputStream = new StreamReader(fileName);                        //read file into stream
-            AntlrInputStream input = new AntlrInputStream(inputStream.ReadToEnd());       //pass the string (read input) into an Antlr stream
-            JavaLexer lexer = new JavaLexer(input);                                       //lexer is created with Antlr stream
-            //CommonTokenStream tokens = new CommonTokenStream(lexer);                    //created lexer is saved in CommonToken
-
-            //Reading in token by token instead of dealing with a large stream
-            while (true)
+            //Read file
+            StreamReader inputStream = new StreamReader(fileName);
+            
+            //Compile
+            if (J2Net.Compiler.Compile(inputStream))
             {
-                CommonToken tokens = new CommonToken(lexer.NextToken());
-                if (tokens.Type.Equals(JavaLexer.Eof))
-                {
-                    break;
-                }
-                Console.WriteLine(tokens.Type + " :: " + tokens.Text);
-
+                Console.WriteLine("Compilation Successful\n\n");
+            }
+            else
+            {
+                Console.WriteLine("Compilation Failed, see debug output\n\n");
             }
 
             Terminate();
-
-            /*J2NetParser parser = new J2NetParser(tokens);                             //pass saved token into parser
-            IParseTree tree = parser.prog();                                            //rules to run the parser (prog rule). Output of parser is saved in IParseTree
-            Console.WriteLine(tree.ToStringTree(parser));
-            J2NetVisitor visitor = new J2NetVisitor();                                  //IparseTree evaluation being done in Visitor
-            Console.WriteLine(visitor.Visit(tree));*/
         }
 
         private static void Terminate()
