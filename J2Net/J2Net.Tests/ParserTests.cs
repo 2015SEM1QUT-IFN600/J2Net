@@ -220,7 +220,7 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Expressions_typeArgumentsOrDiamond()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
             //match = GetParseTreeMatch("new a", "<typeArguments>", "typeArgumentsOrDiamond");
             //Assert.IsTrue(match.Succeeded);
             //match = GetParseTreeMatch("<>", "<LT GT>", "typeArgumentsOrDiamond");
@@ -230,7 +230,7 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Expressions_fieldAccess()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
             //match = GetParseTreeMatch("t.x=1", "<primary . Identifiers>", "fieldAccess");
             //Assert.IsTrue(match.Succeeded);
             //match = GetParseTreeMatch("String", "SUPER . Identifiers", "fieldAccess");
@@ -242,31 +242,31 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Statements_statements()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
         }
 
         [TestMethod]
         public void Parser_Classes_classes()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
         }
 
         [TestMethod]
         public void Parser_Interfaces_interfaces()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
         }
 
         [TestMethod]
         public void Parser_Names_names()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
         }
 
         [TestMethod]
         public void Parser_Packages_packages()
         {
-            ParseTreeMatch match;
+            //ParseTreeMatch match;
         }
     }
 }

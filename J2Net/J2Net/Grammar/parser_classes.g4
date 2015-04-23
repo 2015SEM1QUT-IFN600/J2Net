@@ -202,8 +202,8 @@ constructorBody
 explicitConstructorInvocation
 	:	RBRACK typeArguments LBRACK THIS LPAREN LBRACK argumentList RBRACK RPAREN SEMI
 	|	RBRACK typeArguments LBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI 
-	|	expressionName DOT LBRACK typeArguments RBRACK SUPER LPAREN LBrACK argumentList RBRACK RPAREN SEMI
-	|	primary DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACKET argumentList RBRACKET RPAREN SEMI
+	|	expressionName DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI
+	|	primary DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI
 	;
 
 fieldModifier

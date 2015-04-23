@@ -35,7 +35,7 @@ primaryNoNewArray
 	| classLiteral
 	| THIS
 	| typeName DOT THIS
-	| LPAREN Expression RPAREN
+	| LPAREN expression RPAREN
 	| classInstanceCreationExpression
 	| fieldAccess
 	| arrayAccess
@@ -86,7 +86,7 @@ arrayAccess : DOT;
 //	;
 
 methodInvocation
-	: MethodName LPAREN argumentList? RPAREN
+	: methodName LPAREN argumentList? RPAREN
 	| typeName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	| expressionName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	| primary DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
