@@ -171,8 +171,8 @@ namespace J2Net.Tests
         public void Parser_Classes_normalClassDeclaration()
         {
             ParseTreeMatch match;
-            String treePattern = "<classModifier> class <Identifiers> <typeParameters> <superclass> <superinterfaces> <classBody>;";
-            match = GetParseTreeMatch("public class testclass { }", treePattern, "normalClassDeclaration");
+            String treePattern = "<classModifier> class <Identifiers> { }";
+            match = GetParseTreeMatch("public class main { }", treePattern, "normalClassDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 
@@ -180,8 +180,8 @@ namespace J2Net.Tests
         public void Parser_Classes_enumDeclaration()
         {
             ParseTreeMatch match;
-            String treePattern = "<classModifier> enum <Identifiers> <superinterfaces> <enumBody>;";
-            match = GetParseTreeMatch("public enum testenum { }", treePattern, "enumDeclaration");
+            String treePattern = "<classModifier> enum <Identifiers> { }";
+            match = GetParseTreeMatch("public enum testEnum { }", treePattern, "enumDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
 
