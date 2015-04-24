@@ -7,14 +7,30 @@ import parser_expressions;
 //annotation : DOT;
 //variableInitializer: DOT;
 
+/************ parser_names  ************/
+//The reason this is being moved out of the parser_name.g4 file is because of the error that it was producing.
+//After hours of research + testing, it appears that parser_names was running out of indexs when compiling due to LR being used too much.
+//Currently this is a solution, however, some people might think that the code might not be so organized.
+
+expressionName
+	: Identifiers
+	| ambiguousName DOT Identifiers		//From Java spec
+//	| Identifiers (DOT ambiguousName)+
+	;
+
+ambiguousName
+	: Identifiers
+	| ambiguousName DOT Identifiers		//From Java spec
+//	| Identifiers (DOT ambiguousName)+
+	;
 
 /************ ARRAYS  ************/
 
 //BUG: rule 'arrayInitializer' contains a closure with at least one alternative that can match an empty string
-arrayInitializer : DOT; 
-//arrayInitializer
-//	:	 (variableInitializerList? ','?)*
-//	;
+//arrayInitializer : DOT; 
+arrayInitializer
+	:	 LBRACE variableInitializerList? COMMA? RBRACE
+	;
 
 variableInitializerList
 	:	variableInitializer (',' variableInitializer)*
@@ -121,12 +137,13 @@ arrayType
 	;
 
 dims
-	: (annotation* LBRACK RBRACK)+
+	//: (annotation* LBRACK RBRACK)+
+	: annotation* LBRACK RBRACK (annotation* LBRACK RBRACK)*
 	;
 
 typeParameter
 	: typeParameterModifier* Identifiers typeBound?
-	| Identifiers typeBound?
+	//| Identifiers typeBound?
 	;
 
 typeParameterModifier
