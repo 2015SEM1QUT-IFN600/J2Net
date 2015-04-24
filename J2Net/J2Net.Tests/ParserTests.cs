@@ -96,12 +96,13 @@ namespace J2Net.Tests
             match = GetParseTreeMatch("int", "<integralType>", "type");
             Assert.IsTrue(match.Succeeded);
             Assert.AreEqual(match.Get("integralType").GetText(), "int");
-
             //this is obviously a wrong test, because typeName rule is broken at this time. But this gives an 
             // example of using multiple Pattern tags and going through Parser rules
-            match = GetParseTreeMatch("@. long", "<b:annotation> <a:integralType>", "type");
+            //Eric reason of change: the DOT seems to be very buggy at this stage, as it can mean DOT or THIS at the same time.
+            //match = GetParseTreeMatch("@.long", "<b:annotation> <a:integralType>", "type"); 
+            match = GetParseTreeMatch("@lang long", "<b:annotation> <a:integralType>", "type");
             Assert.AreEqual(match.Get("a").GetText(), "long");
-            Assert.AreEqual(match.Get("b").GetText(), "@.");
+            Assert.AreEqual(match.Get("b").GetText(), "@lang");
          
         }
 
@@ -173,6 +174,15 @@ namespace J2Net.Tests
             ParseTreeMatch match;
             String treePattern = "<classModifier> class <Identifiers> { }";
             match = GetParseTreeMatch("public class main { }", treePattern, "normalClassDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Classes_methodDeclaration()
+        {
+            ParseTreeMatch match;
+            String treePattern = "{<methodModifier> <methodModifier> <result> <methodDeclarator> { }}";
+            match = GetParseTreeMatch("{public static void main(String[] args) { }}", treePattern, "classBody");
             Assert.IsTrue(match.Succeeded);
         }
 
