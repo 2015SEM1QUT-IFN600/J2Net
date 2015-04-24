@@ -121,7 +121,7 @@ arrayType
 	;
 
 dims
-	: annotation* LBRACK RBRACK (annotation* LBRACK RBRACK)*
+	: (annotation* LBRACK RBRACK)+
 	;
 
 typeParameter

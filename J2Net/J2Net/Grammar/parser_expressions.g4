@@ -21,14 +21,9 @@ import parser_statements;
 //
 
 
-
-
-//BUG: mutual left-recursion -- see top of file
-primary : DOT;
-//primary
-//	: primaryNoNewArray
-//	| arrayCreationExpression
-//	;
+primary
+	:	( primaryNoNewArray | arrayCreationExpression ) (primaryNoNewArray)*
+	;
 
 primaryNoNewArray
 	: literal
@@ -43,23 +38,21 @@ primaryNoNewArray
 	| methodReference
 	;
 
-//BUG: rule 'classLiteral' contains a closure with at least one alternative that can match an empty string
-classLiteral : DOT;
-//classLiteral
-//	: typeName (( )?)* DOT CLASS
-//	| numericType (( )?)* DOT CLASS
-//	|  BOOLEAN (( )?) DOT CLASS
-//	| VOID DOT CLASS
-//	;
+classLiteral
+	: typeName (LBRACK RBRACK)* DOT CLASS
+	| numericType (LBRACK RBRACK)* DOT CLASS
+	| BOOLEAN (LBRACK RBRACK) DOT CLASS
+	| VOID DOT CLASS
+	;
 
 classInstanceCreationExpression
 	: unqualifiedClassInstanceCreationExpression
 	| expressionName DOT unqualifiedClassInstanceCreationExpression
-	| primary DOT unqualifiedClassInstanceCreationExpression
+	//| primary DOT unqualifiedClassInstanceCreationExpression // <-- not sure if needed
 	;
 
 unqualifiedClassInstanceCreationExpression
-	: NEW typeArguments? classOrInterfaceTypeToInstantiate LBRACE argumentList? RBRACE classBody?
+	: NEW typeArguments? classOrInterfaceTypeToInstantiate LPAREN argumentList? RPAREN classBody?
 	;
 
 classOrInterfaceTypeToInstantiate
@@ -72,24 +65,21 @@ typeArgumentsOrDiamond
 	;
 
 fieldAccess
-	: primary DOT Identifiers
-	| SUPER DOT Identifiers
+	: SUPER DOT Identifiers
 	| typeName DOT SUPER DOT Identifiers
+	//| primary DOT Identifiers // <-- not sure if needed
 	;
 
-
-//BUG: mutual left-recursion -- see top of file
-arrayAccess : DOT;
-//arrayAccess
-//	: expressionName expression?
-//	| primaryNoNewArray expression?
-//	;
+arrayAccess
+	: expressionName LBRACK expression RBRACK
+	//| primaryNoNewArray LBRACK expression RBRACK // <-- not sure if needed
+	;
 
 methodInvocation
 	: methodName LPAREN argumentList? RPAREN
 	| typeName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	| expressionName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
-	| primary DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	//| primary DOT typeArguments? Identifiers LPAREN argumentList? RPAREN // <-- not sure if needed
 	| SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	| typeName DOT SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	;
@@ -101,7 +91,7 @@ argumentList
 methodReference
 	: expressionName DBLCOLON typeArguments? Identifiers
 	| referenceType DBLCOLON typeArguments? Identifiers
-	| primary DBLCOLON typeArguments? Identifiers
+	//| primary DBLCOLON typeArguments? Identifiers // <-- not sure if needed
 	| SUPER DBLCOLON typeArguments? Identifiers
 	| typeName DOT SUPER DBLCOLON typeArguments? Identifiers
 	| classType DBLCOLON typeArguments? NEW
@@ -115,14 +105,12 @@ arrayCreationExpression
 	| NEW classOrInterfaceType dims arrayInitializer
 	;
 
-//BUG: rule 'dimExprs' contains a closure with at least one alternative that can match an empty string
-dimExprs : DOT;
-//dimExprs
-//	: dimExpr dimExpr*
-//	;
+dimExprs
+	: dimExpr+
+	;
 
 dimExpr
-	: annotation* expression?
+	: annotation* LBRACK expression RBRACK
 	;
 
 expression
@@ -131,7 +119,7 @@ expression
 	; 
 
 lambdaExpression
-	: lambdaParameters COMMENT lambdaBody
+	: lambdaParameters LAMBDA_ASSIGN lambdaBody
 	;
 
 lambdaParameters
@@ -141,7 +129,7 @@ lambdaParameters
 	;
 
 inferredFormalParameterList
-	: Identifiers (COMMA Identifiers)?
+	: Identifiers (COMMA Identifiers)*
 	;
 
 lambdaBody
@@ -180,82 +168,61 @@ assignmentOperator
 	;
 
 conditionalExpression
-	: conditionalOrExpression
-	| conditionalOrExpression  QUESTION expression COLON conditionalExpression
-	| conditionalOrExpression  QUESTION expression COLON lambdaExpression
+	: oderOfOperations1
+	| oderOfOperations1 QUESTION expression COLON conditionalExpression
+	| oderOfOperations1 QUESTION expression COLON lambdaExpression
 	;
 
-//BUG: causes unknown build error. Each of the following calls itself in a forever loop
-conditionalOrExpression : DOT;
-conditionalAndExpression : DOT;
-inclusiveOrExpression : DOT;
-exclusiveOrExpression : DOT;
-andExpression : DOT;
-equalityExpression : DOT;
-relationalExpression : DOT;
-shiftExpression : DOT;
-additiveExpression : DOT;
-multiplicativeExpression : DOT;
-
-/*conditionalOrExpression
-	: conditionalAndExpression+
-	| conditionalOrExpression OR conditionalAndExpression
+oderOfOperations1
+	: oderOfOperations2 (OR oderOfOperations1)?
 	;
 
-conditionalAndExpression
-	: inclusiveOrExpression+
-	| conditionalAndExpression+ AND inclusiveOrExpression
+oderOfOperations2
+	: oderOfOperations3 (AND oderOfOperations1)?
 	;
 
-inclusiveOrExpression
-	: exclusiveOrExpression+
-	| inclusiveOrExpression+ BITOR exclusiveOrExpression
+oderOfOperations3
+	: oderOfOperations4 (BITOR oderOfOperations1)?
 	;
 
-exclusiveOrExpression
-	: andExpression+
-	| exclusiveOrExpression+ CARET andExpression
+oderOfOperations4
+	: oderOfOperations5 (CARET oderOfOperations1)?
 	;
 
-andExpression
-	: equalityExpression+
-	| andExpression BITAND equalityExpression
+oderOfOperations5
+	: oderOfOperations6 (BITAND oderOfOperations1)?
 	;
 
-equalityExpression
-	: relationalExpression+
-	| equalityExpression EQUAL relationalExpression
-	| equalityExpression NOTEQUAL relationalExpression
+oderOfOperations6
+	: oderOfOperations7 (EQUAL oderOfOperations1)?
+	| oderOfOperations7 (NOTEQUAL oderOfOperations1)?
+	;
+	
+oderOfOperations7
+	: oderOfOperations8 (LT oderOfOperations1)?
+	| oderOfOperations8 (GT oderOfOperations1)?
+	| oderOfOperations8 (LE oderOfOperations1)?
+	| oderOfOperations8 (GE oderOfOperations1)?
+	| oderOfOperations8 ('instanceof' oderOfOperations1)?
 	;
 
-relationalExpression
-	: shiftExpression+
-	| relationalExpression LT shiftExpression
-	| relationalExpression GT shiftExpression
-	| relationalExpression LE shiftExpression
-	| relationalExpression GE shiftExpression
-	| relationalExpression 'instanceof' referenceType
+oderOfOperations8
+	: oderOfOperations9 (LEFT_SIGNED oderOfOperations1)?
+	| oderOfOperations9 (RIGHT_SIGNED oderOfOperations1)?
+	| oderOfOperations9 (RIGHT_UNSIGNED oderOfOperations1)?
 	;
 
-shiftExpression
-	: additiveExpression+
-	| shiftExpression LEFT_SIGNED additiveExpression
-	| shiftExpression RIGHT_SIGNED additiveExpression
-	| shiftExpression RIGHT_UNSIGNED additiveExpression
+oderOfOperations9
+	: oderOfOperations10 (ADD oderOfOperations1)?
+	| oderOfOperations10 (SUB oderOfOperations1)?
 	;
 
-additiveExpression
-	: multiplicativeExpression+
-	| additiveExpression+ ADD multiplicativeExpression
-	| additiveExpression+ SUB multiplicativeExpression
+oderOfOperations10
+	: unaryExpression (MUL oderOfOperations1)?
+	| unaryExpression (DIV oderOfOperations1)?
+	| unaryExpression (MOD oderOfOperations1)?
 	;
 
-multiplicativeExpression
-	: unaryExpression+
-	| multiplicativeExpression+ MUL unaryExpression
-	| multiplicativeExpression+ DIV unaryExpression
-	| multiplicativeExpression+ MOD unaryExpression
-	; */
 
 unaryExpression
 	: preIncrementExpression
@@ -280,21 +247,9 @@ unaryExpressionNotPlusMinus
 	| castExpression
 	;
 
-//BUG: mutual left-recursion -- see top of file
-postfixExpression : DOT;
-//postfixExpression
-//	: primary
-//	| expressionName
-//	| postIncrementExpression
-//	| postDecrementExpression
-//	;
-
-postIncrementExpression
-	: postfixExpression INC
-	;
-
-postDecrementExpression
-	: postfixExpression DEC
+postfixExpression
+	: (expressionName | primary) INC
+	| (expressionName | primary) DEC
 	;
 
 castExpression

@@ -75,7 +75,7 @@ namespace J2Net.Tests
         }
 
         /// <summary>
-        /// This is a singleton pattern design pattern to construct only one empty parser that compiles a 
+        /// This is a singleton design pattern to construct only one empty parser that compiles a 
         /// ParseTreePattern. You should not call this directly from any Test. Use GetParseTreeMatch(..) instead.
         /// </summary>
         private static ParseTreePattern GetParseTreePattern(String pattern, String ruleName)
@@ -190,19 +190,22 @@ namespace J2Net.Tests
         {
             ParseTreeMatch match;
             match = GetParseTreeMatch("true", "<literal>", "primaryNoNewArray");
-            Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "boolean literal");
             match = GetParseTreeMatch("false", "<literal>", "primaryNoNewArray");
-            Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "boolean literal");
+
             match = GetParseTreeMatch(".", "<classLiteral>", "primaryNoNewArray");
-            Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "class literal");
+
             match = GetParseTreeMatch("new", "<classInstanceCreationExpression>", "primaryNoNewArray");
-            Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "'new' operation");
             match = GetParseTreeMatch("super.a", "<fieldAccess>", "primaryNoNewArray");
-            Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "accessing field");
+
             match = GetParseTreeMatch("super", "<methodInvocation>", "primaryNoNewArray");
-            //Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "method's super");
             match = GetParseTreeMatch("Method()", "<methodReference>", "primaryNoNewArray");
-            Assert.IsTrue(match.Succeeded);
+            Assert.IsTrue(match.Succeeded, "method reference");
         }
 
         [TestMethod]

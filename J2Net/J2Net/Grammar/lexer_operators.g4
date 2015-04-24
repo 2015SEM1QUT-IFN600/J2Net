@@ -54,3 +54,5 @@ XOR_ASSIGN : '^=';
 MOD_ASSIGN : '%=';
 LSHIFT_ASSIGN : '<<=';
 RSHIFT_ASSIGN : '>>=';
+
+LAMBDA_ASSIGN : '->';
