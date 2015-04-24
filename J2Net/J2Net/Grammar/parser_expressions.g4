@@ -252,6 +252,15 @@ postfixExpression
 	| (expressionName | primary) DEC
 	;
 
+postIncrementExpression
+	: postfixExpression
+	;
+
+postDecrementExpression
+	: postfixExpression
+	;
+
+
 castExpression
 	: LPAREN primitiveType RPAREN unaryExpression
 	| LPAREN referenceType additionalBound* RPAREN unaryExpressionNotPlusMinus
