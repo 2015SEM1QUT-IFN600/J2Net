@@ -48,7 +48,7 @@ superinterfaces
 	;
 
 interfaceTypeList
-	:	interfaceType LBRACE COMMA interfaceType RBRACE
+	:	interfaceType (COMMA interfaceType)*
 	;
 
 classBody
@@ -78,7 +78,7 @@ staticInitializer
 	;
 
 constructorDeclaration
-	:	LBRACE constructorModifier RBRACE constructorDeclarator LBRACK THROWS RBRACK constructorBody
+	:	(constructorModifier)* constructorDeclarator THROWS? constructorBody
 	;
 
 THROWS
@@ -86,7 +86,7 @@ THROWS
 	;
 
 exceptionTypeList
-	:	exceptionType LBRACE COMMA exceptionType RBRACE
+	:	exceptionType (COMMA exceptionType)*
 	;
 
 exceptionType
@@ -95,15 +95,15 @@ exceptionType
 	;
 
 fieldDeclaration
-	:	LBRACE fieldModifier RBRACE unannType variableDeclaratorList
+	:	fieldModifier* unannType variableDeclaratorList
 	;
 
 variableDeclaratorList
-	:	variableDeclarator LBRACE COMMA variableDeclarator RBRACE
+	:	variableDeclarator (COMMA variableDeclarator)*
 	;
 
 variableDeclarator
-	:	variableDeclaratorId LBRACK ASSIGN variableInitializer RBRACK
+	:	variableDeclaratorId (ASSIGN variableInitializer)?
 	;
 
 variableInitializer
@@ -112,11 +112,11 @@ variableInitializer
 	;
 
 variableDeclaratorId
-	:	Identifiers LBRACK dims RBRACK
+	:	Identifiers dims?
 	;
 
 methodDeclaration
-	:	LBRACE methodModifier RBRACE methodHeader methodBody
+	:	methodModifier* methodHeader methodBody
 	;
 
 methodModifier
@@ -133,12 +133,12 @@ methodModifier
 	; 
 
 methodHeader
-	:	result methodDeclarator LBRACK THROWS RBRACK THROWS?
-	|	typeParameters LBRACE annotation RBRACE result methodDeclarator LBRACK THROWS RBRACK
+	:	result methodDeclarator THROWS?
+	|	typeParameters annotation* result methodDeclarator THROWS?
 	;
 
 methodDeclarator
-	:	Identifiers LPAREN LBRACK formalParameterList RBRACK RPAREN LBRACK dims RBRACK
+	:	Identifiers LPAREN formalParameterList? RPAREN dims?
 	;
 
 formalParameterList
@@ -148,7 +148,7 @@ formalParameterList
 	;
 
 lastFormalParameter
-	:	LBRACE variableModifier RBRACE unannType LBRACE annotation RBRACE TRPDOT variableDeclaratorId
+	:	variableModifier* unannType annotation* TRPDOT variableDeclaratorId
 	|	formalParameter 
 	;
 
@@ -158,16 +158,16 @@ variableModifier
 	;
 
 formalParameters
-	:	formalParameter LBRACE COMMA formalParameter RBRACE
-	|	receiverParameter LBRACE COMMA formalParameter RBRACE
+	:	formalParameter (COMMA formalParameter)*
+	|	receiverParameter (COMMA formalParameter)*
 	;
 
 formalParameter
-	:	LBRACE variableModifier RBRACE unannType variableDeclaratorId
+	:	variableModifier* unannType variableDeclaratorId
 	;
 
 receiverParameter
-	:	LBRACE annotation RBRACE unannType LBRACK Identifiers DOT RBRACK THIS
+	:	annotation? unannType (Identifiers DOT)? THIS
 	;
 
 result
@@ -188,7 +188,7 @@ constructorModifier
 	;
 
 constructorDeclarator
-	:	LBRACK typeParameters RBRACK simpleTypeName LPAREN LBRACK formalParameterList LBRACK LPAREN
+	:	typeParameters? simpleTypeName LPAREN formalParameterList? LPAREN
 	;
 
 simpleTypeName
@@ -196,14 +196,14 @@ simpleTypeName
 	;
 
 constructorBody
-	:	LBRACE LBRACK explicitConstructorInvocation RBRACK LBRACK
+	:	LBRACE explicitConstructorInvocation? blockStatements? LBRACK
 	;
 
 explicitConstructorInvocation
-	:	RBRACK typeArguments LBRACK THIS LPAREN LBRACK argumentList RBRACK RPAREN SEMI
-	|	RBRACK typeArguments LBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI 
-	|	expressionName DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI
-	|	primary DOT LBRACK typeArguments RBRACK SUPER LPAREN LBRACK argumentList RBRACK RPAREN SEMI
+	:	typeArguments? THIS LPAREN argumentList? RPAREN SEMI
+	|	typeArguments? SUPER LPAREN argumentList? RPAREN SEMI 
+	|	expressionName DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
+	|	primary DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
 	;
 
 fieldModifier
@@ -233,17 +233,43 @@ unannReferenceType
 	|	unannArrayType
 	;
 
-unannClassOrInterfaceType
+/*unannClassOrInterfaceType
 	:	unannClassType 
 	|	unannInterfaceType
 	;
+*/
+
+unannClassOrInterfaceType
+	:	( unannClassType_lfno_unannClassOrInterfaceType
+		| unannInterfaceType_lfno_unannClassOrInterfaceType
+		)
+		( unannClassType_lf_unannClassOrInterfaceType
+		| unannInterfaceType_lf_unannClassOrInterfaceType
+		)*
+	;
+
+unannClassType_lfno_unannClassOrInterfaceType
+	:	Identifiers typeArguments?
+	;
+
+unannClassType_lf_unannClassOrInterfaceType
+	:	DOT annotation* Identifiers typeArguments?
+	;
+
+unannInterfaceType_lfno_unannClassOrInterfaceType
+	:	unannClassType_lfno_unannClassOrInterfaceType
+	;
+
+unannInterfaceType_lf_unannClassOrInterfaceType
+	:	unannClassType_lf_unannClassOrInterfaceType
+	;
 
 //BUG: the following sets of rules are mutally left-recursive [unannClassOrInterfaceType, unannClassType, unannInterfaceType]
-unannClassType : ;
-//unannClassType
-//	:	Identifiers LBRACK typeArguments RBRACK
-//	|	unannClassOrInterfaceType DOT LBRACE annotation RBRACE Identifiers LBRACK typeArguments RBRACK
-//	;
+//unannClassType : ;
+unannClassType
+	:	Identifiers typeArguments?
+	|	unannClassOrInterfaceType DOT annotation? Identifiers typeArguments?
+	;
 
 unannInterfaceType
 	:	unannClassType
@@ -268,15 +294,15 @@ enumBody
 	;
 
 enumConstantList
-	:	enumConstant LBRACE COMMA enumConstant RBRACE
+	:	enumConstant (COMMA enumConstant)*
 	;
 
 enumBodyDeclarations
-	:	SEMI LBRACE classBodyDeclaration RBRACE
+	:	SEMI classBodyDeclaration*
 	;
 
 enumConstant
-	:	LBRACE enumConstantModifier RBRACE Identifiers LBRACK LPAREN LBRACK argumentList RBRACK RPAREN RBRACK LBRACK classBody RBRACK
+	:	enumConstantModifier* Identifiers (LPAREN argumentList? RPAREN)? classBody?
 	;
 
 enumConstantModifier
