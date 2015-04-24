@@ -25,27 +25,28 @@ packageName
 
 typeName
 	: Identifiers
-	| packageOrTypeName (DOT Identifiers)+	//From Java spec
+	| packageOrTypeName DOT Identifiers	//From Java spec
 	;
 
 packageOrTypeName
 	: Identifiers
-//	| packageOrTypeName (DOT Identifiers)+	//From Java spec
-	| Identifiers (DOT packageOrTypeName)+
-	;
-
-expressionName
-	: Identifiers
-//	| ambiguousName (DOT Identifiers)+		//From Java spec
-	| Identifiers (DOT ambiguousName)+
+	| packageOrTypeName DOT Identifiers	//From Java spec
+//	| Identifiers (DOT packageOrTypeName)+
 	;
 
 methodName
 	: Identifiers
 	;
+/*
+	expressionName
+	: Identifiers
+	| ambiguousName DOT Identifiers		//From Java spec
+//	| Identifiers (DOT ambiguousName)+
+	;
 
 ambiguousName
 	: Identifiers
-//	| ambiguousName (DOT Identifiers)+		//From Java spec - got error
-	| Identifiers (DOT ambiguousName)+
+	| ambiguousName DOT Identifiers		//From Java spec
+//	| Identifiers (DOT ambiguousName)+
 	;
+*/
