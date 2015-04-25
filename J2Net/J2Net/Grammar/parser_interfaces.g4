@@ -2,9 +2,6 @@ parser grammar parser_interfaces;
 
 import parser_names;
 
-
-
-
 /************ INTERFACES  ************/
 
 interfaceDeclaration
@@ -17,12 +14,14 @@ normalInterfaceDeclaration
 	;
 
 interfaceModifier
-	: annotation PUBLIC
-	| annotation PROTECTED
-	| annotation PRIVATE
-	| annotation ABSTRACT 
-	| annotation STATIC 
-	| annotation STRICTFP
+	: annotation 
+	| (	PUBLIC
+	  | PROTECTED
+	  | PRIVATE
+	  | ABSTRACT 
+	  | STATIC 
+	  | STRICTFP
+	  )
 	;
 
 extendsInterfaces
@@ -45,9 +44,11 @@ constantDeclaration
 	;
 
 constantModifier
-	: annotation PUBLIC
-	| annotation STATIC 
-	| annotation FINAL
+	: annotation 
+	| ( PUBLIC
+	  | STATIC 
+	  | FINAL
+	  )
 	;
 
 interfaceMethodDeclaration
@@ -55,15 +56,17 @@ interfaceMethodDeclaration
 	;
 
 interfaceMethodModifier
-	: annotation PUBLIC
-	| annotation ABSTRACT
-	| annotation DEFAULT 
-	| annotation STATIC 
-	| annotation STRICTFP
+	: annotation 
+	| ( PUBLIC
+	  | ABSTRACT
+	  | DEFAULT 
+	  | STATIC 
+	  | STRICTFP
+	  )
 	;
 
 annotationTypeDeclaration
-	: (interfaceModifier)*ATSIGN INTERFACE Identifiers annotationTypeBody
+	: (interfaceModifier)* ATSIGN INTERFACE Identifiers annotationTypeBody
 	;
 
 annotationTypeBody
@@ -82,8 +85,10 @@ annotationTypeElementDeclaration
 	;
 
 annotationTypeElementModifier
-	: annotation PUBLIC
-	| annotation ABSTRACT
+	: annotation 
+	| ( PUBLIC
+	  | ABSTRACT
+	  )
 	;
 
 defaultValue
