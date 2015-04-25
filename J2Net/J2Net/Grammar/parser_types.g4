@@ -33,7 +33,7 @@ arrayInitializer
 	;
 
 variableInitializerList
-	:	variableInitializer (',' variableInitializer)*
+	:	variableInitializer (COMMA variableInitializer)*
 	;
 
 /************ LITERALS  ************/
