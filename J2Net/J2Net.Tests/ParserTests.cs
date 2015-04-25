@@ -231,7 +231,7 @@ namespace J2Net.Tests
         public void Parser_Expressions_classInstanceCreationExpression()
         {
             ParseTreeMatch match;
-            match = GetParseTreeMatch("new a", "<unqualifiedClassInstanceCreationExpression>", "classInstanceCreationExpression");
+            match = GetParseTreeMatch("new a()", "<unqualifiedClassInstanceCreationExpression>", "classInstanceCreationExpression");
             Assert.IsTrue(match.Succeeded);
             //match = GetParseTreeMatch("String new String ", "<expressionName.unqualifiedClassInstanceCreationExpression>", "classInstanceCreationExpression");
             //Assert.IsTrue(match.Succeeded);
