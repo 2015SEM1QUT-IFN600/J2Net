@@ -89,6 +89,7 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Name_typeName_packageOrTypeName()
         {
+            //Fail - InputMismatchException
             ParseTreeMatch match = getParseTreeMatch("Number.Integer", "<packageOrTypeName>.<Identifiers>", "typeName");
             Assert.IsTrue(match.Succeeded);
 
@@ -108,7 +109,8 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Name_packageOrTypeName_Identifiers()
         {
-            ParseTreeMatch match = getParseTreeMatch("Number.Double", "<Identifiers>.<packageOrTypeName>", "packageOrTypeName");
+            //Fail - 
+            ParseTreeMatch match = getParseTreeMatch("Number.Double", "<packageOrTypeName>.<Identifiers>", "packageOrTypeName");
             Assert.IsTrue(match.Succeeded);
 
             //Exception object reference not set to an instance of an object
@@ -127,8 +129,8 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Name_expressionName_AmbiguousName()
         {
-            //failed
-            ParseTreeMatch match = getParseTreeMatch("Student.Number", "<Identifiers>.<ambiguousName>", "expressionName");
+            //failed - InputMismatchException
+            ParseTreeMatch match = getParseTreeMatch("Human.Student", "<ambiguousName>.<Identifiers>", "expressionName");
             Assert.IsTrue(match.Succeeded);
 
             //Exception object reference not set to an instance of an object
@@ -157,7 +159,7 @@ namespace J2Net.Tests
         [TestMethod]
         public void Parser_Name_ambiguousName_2()
         {
-            ParseTreeMatch match = getParseTreeMatch("Human.Student", "<Identifiers>.<ambiguousName>", "ambiguousName");
+            ParseTreeMatch match = getParseTreeMatch("Human.Student", "<ambiguousName>.<Identifiers>", "ambiguousName");
             Assert.IsTrue(match.Succeeded);
 
             //Exception object reference not set to an instance of an object
