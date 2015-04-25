@@ -22,7 +22,8 @@ import parser_statements;
 
 
 primary
-	:	( primaryNoNewArray | arrayCreationExpression ) (primaryNoNewArray)*
+	:	( primaryNoNewArray_no_primary | arrayCreationExpression ) (primaryNoNewArray_primary)*
+	//:	( primaryNoNewArray | arrayCreationExpression ) (primaryNoNewArray)*
 	;
 
 primaryNoNewArray
@@ -38,17 +39,96 @@ primaryNoNewArray
 	| methodReference
 	;
 
+primaryNoNewArray_arrayAccess
+	:
+	;
+
+primaryNoNewArray_no_arrayAccess
+	:	literal
+	|	classLiteral
+	|	THIS
+	|	typeName DOT THIS
+	|	LPAREN expression RPAREN
+	|	classInstanceCreationExpression
+	|	fieldAccess
+	|	methodInvocation
+	|	methodReference
+	;
+
+primaryNoNewArray_primary
+	: classInstanceCreationExpression_primary
+	| fieldAccess_primary
+	| arrayAccess_primary
+	| methodInvocation_primary
+	| methodReference_primary
+	;
+
+primaryNoNewArray_primary_arrayAccess_primary
+	:
+	;
+
+primaryNoNewArray_primary_no_arrayAccess_primary 
+	: classInstanceCreationExpression_primary
+	| fieldAccess_primary
+	| methodInvocation_primary
+	| methodReference_primary
+	;
+
+primaryNoNewArray_no_primary
+	:	literal
+	|	classLiteral
+	|	THIS
+	|	typeName DOT THIS
+	|	RPAREN expression LPAREN
+	|	classInstanceCreationExpression_no_primary
+	|	fieldAccess_no_primary
+	|	arrayAccess_no_primary
+	|	methodInvocation_no_primary
+	|	methodReference_no_primary
+	;
+
+primaryNoNewArray_no_primary_arrayAccess_no_primary
+	:
+	;
+
+primaryNoNewArray_no_primary_no_arrayAccess_no_primary
+	:	literal
+	|	classLiteral
+	|	THIS
+	|	typeName DOT THIS
+	|	LPAREN expression RPAREN
+	|	classInstanceCreationExpression_no_primary
+	|	fieldAccess_no_primary
+	|	methodInvocation_no_primary
+	|	methodReference_no_primary
+	;
+
 classLiteral
 	: typeName (LBRACK RBRACK)* DOT CLASS
 	| numericType (LBRACK RBRACK)* DOT CLASS
-	| BOOLEAN (LBRACK RBRACK) DOT CLASS
+	| BOOLEAN (LBRACK RBRACK)* DOT CLASS
 	| VOID DOT CLASS
 	;
 
 classInstanceCreationExpression
+	//: NEW typeArguments? annotation* Identifiers (DOT annotation* Identifiers)* typeArgumentsOrDiamond? LPAREN argumentList? RPAREN classBody?
+	//| expressionName DOT NEW typeArguments? annotation* Identifiers typeArgumentsOrDiamond? LPAREN argumentList? RPAREN classBody?
+	//| primary DOT typeArguments? annotation* Identifiers typeArgumentsOrDiamond? LPAREN argumentList? RPAREN classBody?
 	: unqualifiedClassInstanceCreationExpression
 	| expressionName DOT unqualifiedClassInstanceCreationExpression
-	//| primary DOT unqualifiedClassInstanceCreationExpression // <-- not sure if needed
+	| primary DOT unqualifiedClassInstanceCreationExpression // <-- not sure if needed
+	;
+
+classInstanceCreationExpression_primary
+	//:	DOT NEW typeArguments? annotation* Identifiers typeArgumentsOrDiamond? LPAREN argumentList? RPAREN classBody?
+	: DOT unqualifiedClassInstanceCreationExpression
+	;
+
+classInstanceCreationExpression_no_primary
+	//:	NEW typeArguments? annotation* Identifiers (DOT annotation* Identifiers)* typeArgumentsOrDiamond? LPAREN argumentList? RPAREN classBody?
+	//|	expressionName DOT NEW typeArguments? annotation* Identifiers typeArgumentsOrDiamond? LPAREN argumentList? RPAREN classBody?
+	: unqualifiedClassInstanceCreationExpression
+	| expressionName DOT unqualifiedClassInstanceCreationExpression
 	;
 
 unqualifiedClassInstanceCreationExpression
@@ -67,21 +147,62 @@ typeArgumentsOrDiamond
 fieldAccess
 	: SUPER DOT Identifiers
 	| typeName DOT SUPER DOT Identifiers
-	//| primary DOT Identifiers // <-- not sure if needed
+	| primary DOT Identifiers // <-- not sure if needed
+	;
+
+fieldAccess_primary
+	:	DOT Identifiers
+	;
+
+fieldAccess_no_primary
+	:	SUPER DOT Identifiers
+	|	typeName DOT SUPER DOT Identifiers
 	;
 
 arrayAccess
-	: expressionName LBRACK expression RBRACK
+	: ( expressionName LBRACK expression RBRACK
+	  | primaryNoNewArray_no_arrayAccess LBRACK expression RBRACK
+	  )
+	  ( primaryNoNewArray_arrayAccess LBRACK expression RBRACK
+	  )*
+	//: expressionName LBRACK expression RBRACK
 	//| primaryNoNewArray LBRACK expression RBRACK // <-- not sure if needed
+	;
+
+arrayAccess_primary
+	: ( primaryNoNewArray_primary_no_arrayAccess_primary LBRACK expression RBRACK
+	  )
+	  ( primaryNoNewArray_primary_arrayAccess_primary LBRACK expression RBRACK
+	  )
+	;
+
+arrayAccess_no_primary
+	: ( expressionName LBRACK expression RBRACK
+	  | primaryNoNewArray_no_primary_no_arrayAccess_no_primary LBRACK expression RBRACK
+	  )
+	  ( primaryNoNewArray_no_primary_arrayAccess_no_primary LBRACK expression RBRACK
+	  )*
 	;
 
 methodInvocation
 	: methodName LPAREN argumentList? RPAREN
 	| typeName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	| expressionName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
-	//| primary DOT typeArguments? Identifiers LPAREN argumentList? RPAREN // <-- not sure if needed
+	| primary DOT typeArguments? Identifiers LPAREN argumentList? RPAREN // <-- not sure if needed
 	| SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	| typeName DOT SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	;
+
+methodInvocation_primary
+	:	DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	;
+
+methodInvocation_no_primary
+	:	methodName LPAREN argumentList? RPAREN
+	|	typeName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	|	expressionName DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	|	SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
+	|	typeName DOT SUPER DOT typeArguments? Identifiers LPAREN argumentList? RPAREN
 	;
 
 argumentList
@@ -91,7 +212,20 @@ argumentList
 methodReference
 	: expressionName DBLCOLON typeArguments? Identifiers
 	| referenceType DBLCOLON typeArguments? Identifiers
-	//| primary DBLCOLON typeArguments? Identifiers // <-- not sure if needed
+	| primary DBLCOLON typeArguments? Identifiers // <-- not sure if needed
+	| SUPER DBLCOLON typeArguments? Identifiers
+	| typeName DOT SUPER DBLCOLON typeArguments? Identifiers
+	| classType DBLCOLON typeArguments? NEW
+	| arrayType DBLCOLON NEW
+	;
+
+methodReference_primary
+	: DBLCOLON typeArguments? Identifiers
+	;
+
+methodReference_no_primary
+	: expressionName DBLCOLON typeArguments? Identifiers
+	| referenceType DBLCOLON typeArguments? Identifiers
 	| SUPER DBLCOLON typeArguments? Identifiers
 	| typeName DOT SUPER DBLCOLON typeArguments? Identifiers
 	| classType DBLCOLON typeArguments? NEW
@@ -203,7 +337,7 @@ oderOfOperations7
 	| oderOfOperations8 (GT oderOfOperations1)?
 	| oderOfOperations8 (LE oderOfOperations1)?
 	| oderOfOperations8 (GE oderOfOperations1)?
-	| oderOfOperations8 ('instanceof' oderOfOperations1)?
+	| oderOfOperations8 (INSTANCEOF oderOfOperations1)?
 	;
 
 oderOfOperations8
@@ -248,16 +382,15 @@ unaryExpressionNotPlusMinus
 	;
 
 postfixExpression
-	: (expressionName | primary) INC
-	| (expressionName | primary) DEC
+	: (expressionName | primary) (postIncrementExpression | postDecrementExpression)*
 	;
 
 postIncrementExpression
-	: postfixExpression
+	: postfixExpression INC
 	;
 
 postDecrementExpression
-	: postfixExpression
+	: postfixExpression DEC
 	;
 
 

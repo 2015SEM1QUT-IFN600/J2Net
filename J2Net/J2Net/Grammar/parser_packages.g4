@@ -12,9 +12,9 @@ packageDeclaration
     :   (annotation)* PACKAGE Identifiers (DOT Identifiers)* SEMI
     ;
 
-//PackageModifier
-//	:	annotation
-//	;
+packageModifier
+	:	annotation
+	;
 
 importDeclaration
 	:	singleTypeImportDeclaration 

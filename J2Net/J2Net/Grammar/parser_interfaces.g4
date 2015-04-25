@@ -37,10 +37,11 @@ interfaceMemberDeclaration
 	| interfaceMethodDeclaration
 	| classDeclaration
 	| interfaceDeclaration
+	| SEMI
 	;
 
 constantDeclaration
-	: (constantModifier)* unannType variableDeclaratorList
+	: (constantModifier)* unannType variableDeclaratorList SEMI
 	;
 
 constantModifier
@@ -78,10 +79,11 @@ annotationTypeMemberDeclaration
 	| constantDeclaration
 	| classDeclaration
 	| interfaceDeclaration
+	| SEMI
 	;
 
 annotationTypeElementDeclaration
-	: (annotationTypeElementModifier)* unannType Identifiers LPAREN RPAREN (dims)? (defaultValue)?
+	: (annotationTypeElementModifier)* unannType Identifiers LPAREN RPAREN (dims)? (defaultValue)? SEMI
 	;
 
 annotationTypeElementModifier

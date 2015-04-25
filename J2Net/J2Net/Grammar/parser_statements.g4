@@ -19,7 +19,7 @@ block
 	;
 
 blockStatements
-	: blockStatement LBRACE blockStatement RBRACE
+	: blockStatement blockStatement*
 	;
 
 blockStatement
@@ -68,7 +68,7 @@ statementWithoutTrailingSubstatement
 	;
 
 emptyStatement
-	:
+	: SEMI
 	;
 
 labeledStatement
@@ -98,7 +98,7 @@ ifThenStatement
 	;	
 
 ifThenElseStatement
-	: IF LPAREN expression RPAREN statement ELSE statement
+	: IF LPAREN expression RPAREN statementNoShortIf ELSE statement
 	;	
 
 ifThenElseStatementNoShortIf
@@ -183,7 +183,7 @@ enhancedForStatement
 	;	
 
 enhancedForStatementNoShortIf
-	: FOR LPAREN( variableModifier)* unannType variableDeclaratorId COLON expression RPAREN statementNoShortIf
+	: FOR LPAREN (variableModifier)* unannType variableDeclaratorId COLON expression RPAREN statementNoShortIf
 	;	
 
 breakStatement

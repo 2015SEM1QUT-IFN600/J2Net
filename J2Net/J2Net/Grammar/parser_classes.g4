@@ -16,7 +16,7 @@ classDeclaration
 
 normalClassDeclaration
     	//:   classModifier CLASS Identifiers LBRACK typeParameters RBRACK LBRACK superclass RBRACK LBRACK superinterfaces RBRACK classBody
-		:   classModifier CLASS Identifiers (typeParameters)? (superclass)? (superinterfaces)? classBody
+		:   classModifier* CLASS Identifiers (typeParameters)? (superclass)? (superinterfaces)? classBody
     	;
 
 classModifier
@@ -67,143 +67,11 @@ classMemberDeclaration
 	|	methodDeclaration
 	|	classDeclaration
 	|	interfaceDeclaration
-	;
-
-instanceInitializer
-	:	block
-	;
-
-staticInitializer
-	:	STATIC block
-	;
-
-constructorDeclaration
-	:	(constructorModifier)* constructorDeclarator THROWS? constructorBody
-	;
-
-THROWS
-	:	THROWS exceptionTypeList
-	;
-
-exceptionTypeList
-	:	exceptionType (COMMA exceptionType)*
-	;
-
-exceptionType
-	:	classType 
-	|	typeVariable
+	|	SEMI
 	;
 
 fieldDeclaration
-	:	fieldModifier* unannType variableDeclaratorList
-	;
-
-variableDeclaratorList
-	:	variableDeclarator (COMMA variableDeclarator)*
-	;
-
-variableDeclarator
-	:	variableDeclaratorId (ASSIGN variableInitializer)?
-	;
-
-variableInitializer
-	:	expression
-	|	arrayInitializer
-	;
-
-variableDeclaratorId
-	:	Identifiers dims?
-	;
-
-methodDeclaration
-	:	methodModifier* methodHeader methodBody
-	;
-
-methodModifier
-	:	annotation
-	|	PUBLIC 
-	|	PROTECTED 
-	|	PRIVATE
-	|	ABSTRACT
-	|	STATIC
-	|	FINAL
-	|	SYNCHRONIZED
-	|	NATIVE
-	|	STRICTFP
-	; 
-
-methodHeader
-	:	result methodDeclarator THROWS?
-	|	typeParameters annotation* result methodDeclarator THROWS?
-	;
-
-methodDeclarator
-	:	Identifiers LPAREN formalParameterList? RPAREN dims?
-	;
-
-formalParameterList
-	:	receiverParameter 
-	|	formalParameters COMMA lastFormalParameter 
-	|	lastFormalParameter
-	;
-
-lastFormalParameter
-	:	variableModifier* unannType annotation* TRPDOT variableDeclaratorId
-	|	formalParameter 
-	;
-
-variableModifier
-	:	annotation
-	| FINAL
-	;
-
-formalParameters
-	:	formalParameter (COMMA formalParameter)*
-	|	receiverParameter (COMMA formalParameter)*
-	;
-
-formalParameter
-	:	variableModifier* unannType variableDeclaratorId
-	;
-
-receiverParameter
-	:	annotation? unannType (Identifiers DOT)? THIS
-	;
-
-result
-	:	unannType 
-	|	VOID
-	;
-
-methodBody
-	:	block
-	|	';'
-	;
-
-constructorModifier
-	:	annotation
-	|	PUBLIC 
-	|	PROTECTED 
-	|	PRIVATE
-	;
-
-constructorDeclarator
-	:	typeParameters? simpleTypeName LPAREN formalParameterList? LPAREN
-	;
-
-simpleTypeName
-	:	Identifiers
-	;
-
-constructorBody
-	:	LBRACE explicitConstructorInvocation? blockStatements? LBRACK
-	;
-
-explicitConstructorInvocation
-	:	typeArguments? THIS LPAREN argumentList? RPAREN SEMI
-	|	typeArguments? SUPER LPAREN argumentList? RPAREN SEMI 
-	|	expressionName DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
-	|	primary DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
+	:	fieldModifier* unannType variableDeclaratorList SEMI
 	;
 
 fieldModifier
@@ -216,6 +84,23 @@ fieldModifier
 	|	TRANSIENT
 	|	VOLATILE
 	; 
+
+variableDeclaratorList
+	:	variableDeclarator (COMMA variableDeclarator)*
+	;
+
+variableDeclarator
+	:	variableDeclaratorId (ASSIGN variableInitializer)?
+	;
+
+variableDeclaratorId
+	:	Identifiers dims?
+	;
+
+variableInitializer
+	:	expression
+	|	arrayInitializer
+	;
 
 unannType
 	:	unannPrimitiveType 
@@ -264,8 +149,6 @@ unannInterfaceType_lf_unannClassOrInterfaceType
 	:	unannClassType_lf_unannClassOrInterfaceType
 	;
 
-//BUG: the following sets of rules are mutally left-recursive [unannClassOrInterfaceType, unannClassType, unannInterfaceType]
-//unannClassType : ;
 unannClassType
 	:	Identifiers typeArguments?
 	|	unannClassOrInterfaceType DOT annotation? Identifiers typeArguments?
@@ -285,8 +168,124 @@ unannArrayType
 	|	unannTypeVariable dims
 	;
 
+methodDeclaration
+	:	methodModifier* methodHeader methodBody
+	;
+
+methodModifier
+	:	annotation
+	|	PUBLIC 
+	|	PROTECTED 
+	|	PRIVATE
+	|	ABSTRACT
+	|	STATIC
+	|	FINAL
+	|	SYNCHRONIZED
+	|	NATIVE
+	|	STRICTFP
+	; 
+
+methodHeader
+	:	result methodDeclarator THROWS?
+	|	typeParameters annotation* result methodDeclarator THROWS?
+	;
+
+result
+	:	unannType 
+	|	VOID
+	;
+
+methodDeclarator
+	:	Identifiers LPAREN formalParameterList? RPAREN dims?
+	;
+
+formalParameterList
+	:	receiverParameter 
+	|	formalParameters COMMA lastFormalParameter 
+	|	lastFormalParameter
+	;
+
+formalParameters
+	:	formalParameter (COMMA formalParameter)*
+	|	receiverParameter (COMMA formalParameter)*
+	;
+
+formalParameter
+	:	variableModifier* unannType variableDeclaratorId
+	;
+
+variableModifier
+	: annotation
+	| FINAL
+	;
+
+lastFormalParameter
+	:	variableModifier* unannType annotation* TRPDOT variableDeclaratorId
+	|	formalParameter 
+	;
+
+receiverParameter
+	:	annotation* unannType (Identifiers DOT)? THIS
+	;
+
+THROWS
+	:	THROWS exceptionTypeList
+	;
+
+exceptionTypeList
+	:	exceptionType (COMMA exceptionType)*
+	;
+
+exceptionType
+	:	classType 
+	|	typeVariable
+	;
+
+methodBody
+	:	block
+	|	SEMI
+	;
+
+instanceInitializer
+	:	block
+	;
+
+staticInitializer
+	:	STATIC block
+	;
+
+constructorDeclaration
+	:	(constructorModifier)* constructorDeclarator THROWS? constructorBody
+	;
+
+constructorModifier
+	:	annotation
+	|	PUBLIC 
+	|	PROTECTED 
+	|	PRIVATE
+	;
+
+constructorDeclarator
+	:	typeParameters? simpleTypeName LPAREN formalParameterList? LPAREN
+	;
+
+simpleTypeName
+	:	Identifiers
+	;
+
+constructorBody
+	:	LBRACE explicitConstructorInvocation? blockStatements? LBRACK
+	;
+
+explicitConstructorInvocation
+	:	typeArguments? THIS LPAREN argumentList? RPAREN SEMI
+	|	typeArguments? SUPER LPAREN argumentList? RPAREN SEMI 
+	|	expressionName DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
+	|	primary DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
+	;
+
 enumDeclaration
-	:	classModifier ENUM Identifiers (superinterfaces)? enumBody
+	:	classModifier* ENUM Identifiers (superinterfaces)? enumBody
 	;
 
 enumBody
@@ -297,15 +296,15 @@ enumConstantList
 	:	enumConstant (COMMA enumConstant)*
 	;
 
-enumBodyDeclarations
-	:	SEMI classBodyDeclaration*
-	;
-
 enumConstant
 	:	enumConstantModifier* Identifiers (LPAREN argumentList? RPAREN)? classBody?
 	;
 
 enumConstantModifier
 	:	annotation
+	;
+
+enumBodyDeclarations
+	:	SEMI classBodyDeclaration*
 	;
 
