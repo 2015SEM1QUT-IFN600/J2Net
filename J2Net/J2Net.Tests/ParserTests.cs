@@ -149,6 +149,15 @@ namespace J2Net.Tests
             Assert.IsTrue(match.Succeeded);
         }
         [TestMethod]
+        public void Parser_Packages_HelloIFN660PackageDeclaration()
+        {
+            ParseTreeMatch match;
+            String treePattern = "package <Identifiers>.<Identifiers>;";
+            match = GetParseTreeMatch("package com.company;", treePattern, "packageDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
         public void Parser_Classes_classDeclaration()
         {
             ParseTreeMatch match;
