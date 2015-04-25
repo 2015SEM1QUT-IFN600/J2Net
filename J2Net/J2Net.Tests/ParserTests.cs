@@ -290,5 +290,14 @@ namespace J2Net.Tests
         {
             //ParseTreeMatch match;
         }
+
+        [TestMethod]
+        public void Parser_Interfaces_normalInterfaceDeclaration()
+        {
+            ParseTreeMatch match;
+            String treePattern = "public interface <Identifiers>{}";
+            match = GetParseTreeMatch("public interface MyInterface{}", treePattern, "normalInterfaceDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
     }
 }
