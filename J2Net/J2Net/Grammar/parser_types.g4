@@ -141,14 +141,6 @@ dims
 	: annotation* LBRACK RBRACK (annotation* LBRACK RBRACK)*
 	;
 
-typeParameters
-	: LT typeParameterList GT
-	;
-
-typeParameterList
-	: typeParameter (COMMA typeParameter)*
-	;
-
 typeParameter
 	: typeParameterModifier* Identifiers typeBound?
 	//| Identifiers typeBound?
