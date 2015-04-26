@@ -299,5 +299,24 @@ namespace J2Net.Tests
             match = GetParseTreeMatch("public interface MyInterface{}", treePattern, "normalInterfaceDeclaration");
             Assert.IsTrue(match.Succeeded);
         }
+
+
+        [TestMethod]
+        public void Parser_Interfaces_normalInterfaceDeclarationWithExtends()
+        {
+            ParseTreeMatch match;
+            String treePattern = "public interface <Identifiers> extends <interfaceTypeList>{}";
+            match = GetParseTreeMatch("public interface MyInterface extends AnotherInterface1,AnotherInterface2{}", treePattern, "normalInterfaceDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
+        public void Parser_Interfaces_normalInterfaceDeclarationComplete()
+        {
+            ParseTreeMatch match;
+            String treePattern = "public interface <Identifiers> <typeParameters> extends <interfaceTypeList>{}";
+            match = GetParseTreeMatch("public interface MyInterface <K, V> extends AnotherInterface{}", treePattern, "normalInterfaceDeclaration");
+            Assert.IsTrue(match.Succeeded);
+        }
     }
 }
