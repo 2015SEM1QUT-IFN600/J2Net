@@ -56,14 +56,14 @@ namespace J2Net
             base.EnterConstructorBody(context);
             //{
             //.maxstack  8
-            //IL_0000:  ldarg.0
-            //IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+            //ldarg.0
+            //call       instance void [mscorlib]System.Object::.ctor()
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
         public override void ExitConstructorBody(JavaParser.ConstructorBodyContext context)
         {
             base.ExitConstructorBody(context);
-            //IL_0006:  ret
+            //ret
             //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
@@ -85,7 +85,7 @@ namespace J2Net
         public override void ExitMethodBody(JavaParser.MethodBodyContext context)
         {
             base.ExitMethodBody(context);
-            //IL_000b:  ret
+            //ret
             //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
@@ -103,8 +103,8 @@ namespace J2Net
         public override void EnterStatement(JavaParser.StatementContext context)
         {
             base.EnterStatement(context);
-            //IL_0001:  ldc.i4.s   42
-            //IL_0003:  stloc.0
+            //ldc.i4.s   42
+            //stloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
 
@@ -112,7 +112,7 @@ namespace J2Net
         public override void EnterExpression(JavaParser.ExpressionContext context)
         {
             base.EnterExpression(context);
-            //IL_0004:  ldloc.0
+            //ldloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
 
