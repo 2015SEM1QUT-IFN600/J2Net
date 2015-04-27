@@ -165,5 +165,12 @@ namespace J2Net.Tests
             //Exception object reference not set to an instance of an object
             //Assert.AreEqual(match.Get("Identifiers.ambiguousName").GetText(), "Human.Student");
         }
+
+        [TestMethod]
+        public void Parser_define_variable()
+        {
+            ParseTreeMatch match = getParseTreeMatch("int i;", "<localVariableDeclarationStatement>", "blockStatement");
+            Assert.IsTrue(match.Succeeded);
+        }
     }
 }

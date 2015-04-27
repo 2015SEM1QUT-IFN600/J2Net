@@ -28,6 +28,10 @@ extendsInterfaces
 	: EXTENDS interfaceTypeList
 	;
 
+interfaceTypeList
+	:  interfaceType (COMMA interfaceType)*
+	;
+
 interfaceBody
 	: LBRACE (interfaceMemberDeclaration)* RBRACE
 	;
