@@ -20,6 +20,7 @@ namespace J2Net
         public override void EnterPackageDeclaration(JavaParser.PackageDeclarationContext context)
         {
             base.EnterPackageDeclaration(context);
+            //".assembly HelloIFN660 {}"
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
 
@@ -27,38 +28,94 @@ namespace J2Net
         public override void EnterClassDeclaration(JavaParser.ClassDeclarationContext context)
         {
             base.EnterClassDeclaration(context);
+            //.class private auto ansi beforefieldinit HelloIFN660.Program extends [mscorlib]System.Object
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        }
+        public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
+        {
+            base.EnterClassBodyDeclaration(context);
+            //{
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        }
+        public override void ExitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
+        {
+            base.ExitClassBodyDeclaration(context);
+            //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
 
-        public override void EnterFieldDeclaration(JavaParser.FieldDeclarationContext context)
+
+        public override void EnterConstructorDeclaration(JavaParser.ConstructorDeclarationContext context)
         {
-            base.EnterFieldDeclaration(context);
+            base.EnterConstructorDeclaration(context);
+            //  .method public hidebysig specialname rtspecialname instance void  .ctor() cil managed
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
+        public override void EnterConstructorBody(JavaParser.ConstructorBodyContext context)
+        {
+            base.EnterConstructorBody(context);
+            //{
+            //.maxstack  8
+            //IL_0000:  ldarg.0
+            //IL_0001:  call       instance void [mscorlib]System.Object::.ctor()
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        }
+        public override void ExitConstructorBody(JavaParser.ConstructorBodyContext context)
+        {
+            base.ExitConstructorBody(context);
+            //IL_0006:  ret
+            //}
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        }
+
 
         public override void EnterMethodDeclaration(JavaParser.MethodDeclarationContext context)
         {
             base.EnterMethodDeclaration(context);
+            //.method private hidebysig static void  Main(string[] args) cil managed
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
+        public override void EnterMethodBody(JavaParser.MethodBodyContext context)
+        {
+            base.EnterMethodBody(context);
+            //{
+            //.entrypoint
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        }
+        public override void ExitMethodBody(JavaParser.MethodBodyContext context)
+        {
+            base.ExitMethodBody(context);
+            //IL_000b:  ret
+            //}
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        }
+
 
         public override void EnterLocalVariableDeclaration(JavaParser.LocalVariableDeclarationContext context)
         {
             base.EnterLocalVariableDeclaration(context);
+            //.maxstack  1 // <-- maybe count the number of variables then put that number for maxstack
+            //.locals init ([0] int32 i)
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
+
 
         public override void EnterStatement(JavaParser.StatementContext context)
         {
             base.EnterStatement(context);
+            //IL_0001:  ldc.i4.s   42
+            //IL_0003:  stloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
+
 
         public override void EnterExpression(JavaParser.ExpressionContext context)
         {
             base.EnterExpression(context);
+            //IL_0004:  ldloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         }
+
     }
 
     /// <summary>
