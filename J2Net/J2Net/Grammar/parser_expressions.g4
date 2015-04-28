@@ -23,7 +23,7 @@ import parser_statements;
 
 primary
 	:	( primaryNoNewArray_no_primary | arrayCreationExpression ) (primaryNoNewArray_primary)*
-	//:	( primaryNoNewArray | arrayCreationExpression ) (primaryNoNewArray)*
+	//|	( primaryNoNewArray | arrayCreationExpression ) (primaryNoNewArray)*
 	;
 
 primaryNoNewArray

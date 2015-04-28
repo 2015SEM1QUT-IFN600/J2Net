@@ -9,7 +9,7 @@ import parser_expressions;
 
 /************ parser_names  ************/
 //The reason this is being moved out of the parser_name.g4 file is because of the error that it was producing.
-//After hours of research + testing, it appears that parser_names was running out of indexs when compiling due to LR being used too much.
+//After hours of research + testing, it appears that parser_names was running out of indexes when compiling due to LR being used too much.
 //Currently this is a solution, however, some people might think that the code might not be so organized.
 
 expressionName
