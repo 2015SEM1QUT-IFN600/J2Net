@@ -71,7 +71,7 @@ classMemberDeclaration
 	;
 
 fieldDeclaration
-	:	fieldModifier* unannType variableDeclaratorList SEMI
+	:	(fieldModifier)* unannType variableDeclaratorList SEMI
 	;
 
 fieldModifier
@@ -94,7 +94,7 @@ variableDeclarator
 	;
 
 variableDeclaratorId
-	:	Identifiers dims?
+	:	Identifiers (dims)?
 	;
 
 variableInitializer
@@ -150,8 +150,8 @@ unannInterfaceType_lf_unannClassOrInterfaceType
 	;
 
 unannClassType
-	:	Identifiers typeArguments?
-	|	unannClassOrInterfaceType DOT annotation? Identifiers typeArguments?
+	:	Identifiers (typeArguments)?
+	|	unannClassOrInterfaceType DOT (annotation)? Identifiers (typeArguments)?
 	;
 
 unannInterfaceType
@@ -169,7 +169,7 @@ unannArrayType
 	;
 
 methodDeclaration
-	:	methodModifier* methodHeader methodBody
+	:	(methodModifier)* methodHeader methodBody
 	;
 
 methodModifier
@@ -186,8 +186,8 @@ methodModifier
 	; 
 
 methodHeader
-	:	result methodDeclarator THROWS?
-	|	typeParameters annotation* result methodDeclarator THROWS?
+	:	result methodDeclarator (THROWS)?
+	|	typeParameters (annotation)* result methodDeclarator (THROWS)?
 	;
 
 result
@@ -196,7 +196,7 @@ result
 	;
 
 methodDeclarator
-	:	Identifiers LPAREN formalParameterList? RPAREN dims?
+	:	Identifiers LPAREN (formalParameterList)? RPAREN (dims)?
 	;
 
 formalParameterList
@@ -211,7 +211,7 @@ formalParameters
 	;
 
 formalParameter
-	:	variableModifier* unannType variableDeclaratorId
+	:	(variableModifier)* unannType variableDeclaratorId
 	;
 
 variableModifier
@@ -220,12 +220,12 @@ variableModifier
 	;
 
 lastFormalParameter
-	:	variableModifier* unannType annotation* TRPDOT variableDeclaratorId
+	:	(variableModifier)* unannType (annotation)* TRPDOT variableDeclaratorId
 	|	formalParameter 
 	;
 
 receiverParameter
-	:	annotation* unannType (Identifiers DOT)? THIS
+	:	(annotation)* unannType (Identifiers DOT)? THIS
 	;
 
 THROWS
@@ -255,7 +255,7 @@ staticInitializer
 	;
 
 constructorDeclaration
-	:	(constructorModifier)* constructorDeclarator THROWS? constructorBody
+	:	(constructorModifier)* constructorDeclarator (THROWS)? constructorBody
 	;
 
 constructorModifier
@@ -266,7 +266,7 @@ constructorModifier
 	;
 
 constructorDeclarator
-	:	typeParameters? simpleTypeName LPAREN formalParameterList? LPAREN
+	:	(typeParameters)? simpleTypeName LPAREN (formalParameterList)? LPAREN
 	;
 
 simpleTypeName
@@ -274,18 +274,18 @@ simpleTypeName
 	;
 
 constructorBody
-	:	LBRACE explicitConstructorInvocation? blockStatements? LBRACK
+	:	LBRACE (explicitConstructorInvocation)? (blockStatements)? LBRACK
 	;
 
 explicitConstructorInvocation
-	:	typeArguments? THIS LPAREN argumentList? RPAREN SEMI
-	|	typeArguments? SUPER LPAREN argumentList? RPAREN SEMI 
-	|	expressionName DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
-	|	primary DOT typeArguments? SUPER LPAREN argumentList? RPAREN SEMI
+	:	(typeArguments)? THIS LPAREN (argumentList)? RPAREN SEMI
+	|	(typeArguments)? SUPER LPAREN (argumentList)? RPAREN SEMI 
+	|	expressionName DOT (typeArguments)? SUPER LPAREN (argumentList)? RPAREN SEMI
+	|	primary DOT (typeArguments)? SUPER LPAREN (argumentList)? RPAREN SEMI
 	;
 
 enumDeclaration
-	:	classModifier* ENUM Identifiers (superinterfaces)? enumBody
+	:	(classModifier)* ENUM Identifiers (superinterfaces)? enumBody
 	;
 
 enumBody
@@ -297,7 +297,7 @@ enumConstantList
 	;
 
 enumConstant
-	:	enumConstantModifier* Identifiers (LPAREN argumentList? RPAREN)? classBody?
+	:	(enumConstantModifier)* Identifiers (LPAREN (argumentList)? RPAREN)? (classBody)?
 	;
 
 enumConstantModifier
@@ -305,6 +305,6 @@ enumConstantModifier
 	;
 
 enumBodyDeclarations
-	:	SEMI classBodyDeclaration*
+	:	SEMI (classBodyDeclaration)*
 	;
 
