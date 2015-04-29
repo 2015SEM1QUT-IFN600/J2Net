@@ -246,6 +246,13 @@ namespace J2Net.Tests
         }
 
         [TestMethod]
+        public void Parser_Declaration_Test1()
+        {
+            ParseTreeMatch match = GetParseTreeMatch("int i;", "<localVariableDeclarationStatement>", "blockStatement");
+            Assert.IsTrue(match.Succeeded);
+        }
+
+        [TestMethod]
         public void Parser_Declaration_Test()
         {
             ParseTreeMatch match;
