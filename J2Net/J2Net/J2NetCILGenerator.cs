@@ -12,6 +12,8 @@ namespace J2Net
     [CLSCompliant(false)]
     public partial class J2NetCILGenerator : JavaBaseListener
     {
+        StringBuilder sb = new StringBuilder();
+
         public J2NetCILGenerator(Parser parser)
         {
             parser.AddParseListener(this); //upon instantiation, add this listener to a parser
@@ -22,6 +24,8 @@ namespace J2Net
             base.EnterPackageDeclaration(context);
             //".assembly HelloIFN660 {}"
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -30,18 +34,24 @@ namespace J2Net
             base.EnterClassDeclaration(context);
             //.class private auto ansi beforefieldinit HelloIFN660.Program extends [mscorlib]System.Object
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
         public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
         {
             base.EnterClassBodyDeclaration(context);
             //{
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
         public override void ExitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
         {
             base.ExitClassBodyDeclaration(context);
             //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -50,6 +60,8 @@ namespace J2Net
             base.EnterConstructorDeclaration(context);
             //  .method public hidebysig specialname rtspecialname instance void  .ctor() cil managed
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
         public override void EnterConstructorBody(JavaParser.ConstructorBodyContext context)
         {
@@ -59,6 +71,8 @@ namespace J2Net
             //ldarg.0
             //call       instance void [mscorlib]System.Object::.ctor()
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
         public override void ExitConstructorBody(JavaParser.ConstructorBodyContext context)
         {
@@ -66,6 +80,8 @@ namespace J2Net
             //ret
             //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -74,6 +90,8 @@ namespace J2Net
             base.EnterMethodDeclaration(context);
             //.method private hidebysig static void  Main(string[] args) cil managed
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -81,6 +99,8 @@ namespace J2Net
             //{
             //.entrypoint
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
         public override void ExitMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -88,6 +108,8 @@ namespace J2Net
             //ret
             //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -97,6 +119,8 @@ namespace J2Net
             //.maxstack  1 // <-- maybe count the number of variables then put that number for maxstack
             //.locals init ([0] int32 i)
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -106,6 +130,8 @@ namespace J2Net
             //ldc.i4.s   42
             //stloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -114,8 +140,13 @@ namespace J2Net
             base.EnterExpression(context);
             //ldloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
         }
 
+        public StringBuilder printCIL()
+        {
+            return sb;
+        }
     }
 
     /// <summary>
