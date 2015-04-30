@@ -10,9 +10,9 @@ using System.Diagnostics;
 namespace J2Net
 {
     [CLSCompliant(false)]
-    public partial class J2NetListener : JavaBaseListener
+    public partial class J2NetCILGenerator : JavaBaseListener
     {
-        public J2NetListener(Parser parser)
+        public J2NetCILGenerator(Parser parser)
         {
             parser.AddParseListener(this); //upon instantiation, add this listener to a parser
         }
@@ -121,7 +121,7 @@ namespace J2Net
     /// <summary>
     /// Keeping this method separate so not to confuse this method with the overrides
     /// </summary>
-    public partial class J2NetListener
+    public partial class J2NetCILGenerator
     {
         private static void Log(String methodName, String contextText)
         {

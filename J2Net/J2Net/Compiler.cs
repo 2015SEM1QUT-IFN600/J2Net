@@ -21,7 +21,7 @@ namespace J2Net
             ParserRuleContext tree = parser.compilationUnit();
 
             ParseTreeWalker walker = new ParseTreeWalker(); 
-            J2NetListener extractor = new J2NetListener(parser); //attach our listener to build CIL
+            J2NetCILGenerator extractor = new J2NetCILGenerator(parser); //attach our listener to build CIL
             walker.Walk(extractor, tree); //initiate walk of tree with listener
             
             //TODO: output parsed code to text-based CIL (*.il) file.

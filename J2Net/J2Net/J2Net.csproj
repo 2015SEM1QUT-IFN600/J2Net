@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler.cs" />
-    <Compile Include="J2NetListener.cs" />
+    <Compile Include="J2NetCILGenerator.cs" />
     <Compile Include="Grammar\Java.g4.lexer.cs">
       <DependentUpon>Java.g4</DependentUpon>
     </Compile>
