@@ -22,12 +22,14 @@ namespace J2Net
 
             ParseTreeWalker walker = new ParseTreeWalker(); 
             J2NetCILGenerator extractor = new J2NetCILGenerator(parser); //attach our listener to build CIL
+            extractor.Start();
             walker.Walk(extractor, tree); //initiate walk of tree with listener
+            extractor.End();
             
             //TODO: output parsed code to text-based CIL (*.il) file.
 
             // Test stringbuilder
-            Console.WriteLine(extractor.printCIL());
+            //Console.WriteLine(extractor.printCIL());
             
             return true;
         }
