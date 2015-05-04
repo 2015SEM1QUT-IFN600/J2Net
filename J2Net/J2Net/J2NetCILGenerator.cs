@@ -114,7 +114,18 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.methodModifier(0).GetText()+context.methodHeader().GetText()+"{");
             sb.Append(context.methodModifier(0).GetText()+context.methodHeader().GetText() + "{");
             sb.Append("\n");
-            IlCodeStream.WriteLine(TAB + ".method " + context.methodHeader().GetText() + "\n" + TAB + "{");
+
+            IlCodeStream.WriteLine(TAB);
+            for (int i = 0; i < context.methodModifier().Count; i++)
+            {
+                IlCodeStream.Write(context.methodModifier(i).GetText() + " ");
+            }
+
+            for (int i = 0; i < context.methodHeader().ChildCount; i++)
+            {
+                IlCodeStream.Write(context.methodHeader().GetChild(i).GetText() + " ");
+            }
+            IlCodeStream.WriteLine("\n" + TAB + "{");
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
         {
