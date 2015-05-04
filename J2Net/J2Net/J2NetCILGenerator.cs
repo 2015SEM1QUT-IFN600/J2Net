@@ -67,12 +67,12 @@ namespace J2Net
                                                                      +context.normalClassDeclaration().Identifiers().GetText()+"{");
         }
 
-        public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
-        {
-            base.EnterClassBodyDeclaration(context);
-            //{
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
-        }
+        //public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
+        //{
+        //    base.EnterClassBodyDeclaration(context);
+        //    //{
+        //    Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+        //}
         public override void ExitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
         {
             base.ExitClassBodyDeclaration(context);
