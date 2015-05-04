@@ -34,7 +34,6 @@ namespace J2Net
         {
             IlCodeStream = new StreamWriter(ilName + ".il", false);
             IlCodeStream.WriteLine(".assembly HelloIFN660\n{\n}\n");
-            IlCodeStream.WriteLine(".class private auto ansi beforefieldinit " + "HelloIFN660.Program" + " extends [mscorlib]System.Object \n{");
         }
 
         public void End()
@@ -73,6 +72,9 @@ namespace J2Net
                       + context.normalClassDeclaration().Identifiers().GetText() + "{");
             sb.Append("\n");
 
+            IlCodeStream.WriteLine(".class " + context.normalClassDeclaration().classModifier(0).GetText() + " "
+                      + context.normalClassDeclaration().CLASS().GetText() + " "
+                      + context.normalClassDeclaration().Identifiers().GetText() + "\n{");
         }
 
         //public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
