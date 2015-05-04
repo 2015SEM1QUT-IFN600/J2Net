@@ -115,7 +115,7 @@ namespace J2Net
             sb.Append(context.methodModifier(0).GetText()+context.methodHeader().GetText() + "{");
             sb.Append("\n");
 
-            IlCodeStream.WriteLine(TAB);
+            IlCodeStream.Write(TAB + ".method ");
             for (int i = 0; i < context.methodModifier().Count; i++)
             {
                 IlCodeStream.Write(context.methodModifier(i).GetText() + " ");
