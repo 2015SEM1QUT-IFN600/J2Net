@@ -20,7 +20,17 @@ namespace J2Net
         static private string TAB = "    ";
         private StreamWriter IlCodeStream;
         string ilName;
-        List<string> localVariableDeclarationList = new List<string>();
+        List<variableDeclaration> localVariableDeclarationList = new List<variableDeclaration>();
+
+        public struct variableDeclaration {
+            public string type;
+            public string name;
+
+            public variableDeclaration(string t, string n) {
+                type = t;
+                name = n;
+            }
+        }
 
         StringBuilder sb = new StringBuilder();
 
@@ -163,7 +173,9 @@ namespace J2Net
             //Do not do the following over here. if you have more than 1 variable to declare, you will print multiple .maxstack and .locals
             //IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
             //IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
-            localVariableDeclarationList.Add(context.GetChild(1).GetText());
+            
+            //first value is type, second value is name
+            localVariableDeclarationList.Add(new variableDeclaration(context.GetChild(0).GetText(), context.GetChild(1).GetText()));
         }
 
 
@@ -199,7 +211,7 @@ namespace J2Net
                 string tempString = "(";
                 for (int i = 0; i < localVariableDeclarationList.Count; i++)
                 {
-                    tempString += "[" + i + "] int32 " + localVariableDeclarationList[i];
+                    tempString += "[" + i + "] " + typeRecognition(localVariableDeclarationList[i].type) + " " + localVariableDeclarationList[i].name;
                     if (i != localVariableDeclarationList.Count - 1)
                     {
                         tempString += ", ";
@@ -231,6 +243,22 @@ namespace J2Net
         public StringBuilder printCIL()
         {
             return sb;
+        }
+
+        public string typeRecognition (string type) {
+            string temp = "";
+            if (type.Equals("int") || type.Equals("float") || type.Equals("unsigned int")) {
+                if (type.Equals("int")) {
+                    temp = "int32";
+                } else if (type.Equals("float")){
+                    temp = "float32";
+                } else if (type.Equals("unsigned int")) {   //don't think this is ever needed for java
+                    temp = "unsigned int32";
+                }
+            } else {
+                temp = type;
+            }
+            return temp;
         }
     }
 
