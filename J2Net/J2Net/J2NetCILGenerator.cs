@@ -20,6 +20,7 @@ namespace J2Net
         static private string TAB = "    ";
         private StreamWriter IlCodeStream;
         string ilName;
+        List<string> localVariableDeclarationList = new List<string>();
 
         StringBuilder sb = new StringBuilder();
 
@@ -146,8 +147,10 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
-            IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
-            IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
+            //Do not do the following over here. if you have more than 1 variable to declare, you will print multiple .maxstack and .locals
+            //IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
+            //IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
+            localVariableDeclarationList.Add(context.GetChild(1).GetText());
         }
 
 
@@ -169,6 +172,35 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
+
+            //Should not be doing this over here too, as it will call multiple generations. Need a better place to put these code
+            //Create .maxstack. Set to defaul value '8' if localVariableDeclarationList is 0
+            if (localVariableDeclarationList.Count == 0)
+            {
+                IlCodeStream.WriteLine(TAB + TAB + ".maxstack 8");
+            }
+            else
+            {    //localVariableDeclartionList != 0 and creates Local
+                IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationList.Count);
+                //creates Local
+                string tempString = "(";
+                for (int i = 0; i < localVariableDeclarationList.Count; i++)
+                {
+                    tempString += "[" + i + "] int32 " + localVariableDeclarationList[i];
+                    if (i != localVariableDeclarationList.Count - 1)
+                    {
+                        tempString += ", ";
+                    }
+                    else
+                    {
+                        tempString += ")";
+                    }
+                }
+                IlCodeStream.WriteLine(TAB + TAB + ".locals init " + tempString);
+            }
+            //need to clear localVariableDeclarationList for further usage?
+            localVariableDeclarationList.Clear();
+
             IlCodeStream.WriteLine(TAB + TAB + "ldc.i4.s " + context.GetText());
             IlCodeStream.WriteLine(TAB + TAB + "stloc.0 ");
             IlCodeStream.WriteLine(TAB + TAB + "ldloc.0 ");
