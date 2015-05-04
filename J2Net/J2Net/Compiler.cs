@@ -25,10 +25,13 @@ namespace J2Net
             
             extractor.Start();
             walker.Walk(extractor, tree); //initiate walk of tree with listener
+            
             extractor.End();
             
             //TODO: output parsed code to text-based CIL (*.il) file.
 
+            // Test stringbuilder
+            Console.WriteLine(extractor.printCIL());
             
             return true;
         }

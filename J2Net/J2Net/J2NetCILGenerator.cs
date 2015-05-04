@@ -21,6 +21,8 @@ namespace J2Net
         private StreamWriter IlCodeStream;
         string ilName;
 
+        StringBuilder sb = new StringBuilder();
+
         public J2NetCILGenerator(Parser parser, string ilName2)
         {
             parser.AddParseListener(this); //upon instantiation, add this listener to a parser
@@ -65,6 +67,12 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, /*context.normalClassDeclaration().classModifier()
                                                                      +*/context.normalClassDeclaration().CLASS().GetText()
                                                                      +context.normalClassDeclaration().Identifiers().GetText()+"{");
+
+            sb.Append( /*context.normalClassDeclaration().classModifier()
+                      +*/context.normalClassDeclaration().CLASS().GetText()
+                      + context.normalClassDeclaration().Identifiers().GetText() + "{");
+            sb.Append("\n");
+
         }
 
         //public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
@@ -73,12 +81,6 @@ namespace J2Net
         //    //{
         //    Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
         //}
-        public override void ExitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
-        {
-            base.ExitClassBodyDeclaration(context);
-            //}
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, "}");
-        }
 
 
         public override void EnterConstructorDeclaration(JavaParser.ConstructorDeclarationContext context)
@@ -110,6 +112,8 @@ namespace J2Net
             base.EnterMethodDeclaration(context);
             //.method private hidebysig static void  Main(string[] args) cil managed
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, /*context.methodModifier()+*/context.methodHeader().GetText()+"{");
+            sb.Append(/*context.methodModifier()+*/context.methodHeader().GetText() + "{");
+            sb.Append("\n");
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -117,6 +121,8 @@ namespace J2Net
             //{
             //.entrypoint
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.block().blockStatements().GetText());
+            sb.Append(context.block().blockStatements().GetText());
+            sb.Append("\n");
         }
         public override void ExitMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -124,6 +130,8 @@ namespace J2Net
             //ret
             //}
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, "}");
+            sb.Append("}");
+            sb.Append("\n");
         }
 
 
@@ -133,6 +141,8 @@ namespace J2Net
             //.maxstack  1 // <-- maybe count the number of variables then put that number for maxstack
             //.locals init ([0] int32 i)
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -142,6 +152,8 @@ namespace J2Net
             //ldc.i4.s   42
             //stloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
 
@@ -150,6 +162,8 @@ namespace J2Net
             base.EnterExpression(context);
             //ldloc.0
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
 
             IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
             IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
@@ -157,6 +171,19 @@ namespace J2Net
             IlCodeStream.WriteLine(TAB + TAB + "stloc.0 ");
             IlCodeStream.WriteLine(TAB + TAB + "ldloc.0 ");
             IlCodeStream.WriteLine(TAB + TAB + "call " + TAB + "void [mscorlib]System.Console::WriteLine(int32)");
+        }
+        public override void ExitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
+        {
+            base.ExitClassBodyDeclaration(context);
+            //}
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, "}");
+            sb.Append("}");
+            sb.Append("\n");
+        }
+
+        public StringBuilder printCIL()
+        {
+            return sb;
         }
     }
 
