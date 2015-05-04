@@ -34,14 +34,10 @@ namespace J2Net
             IlCodeStream = new StreamWriter(ilName + ".il", false);
             IlCodeStream.WriteLine(".assembly HelloIFN660\n{\n}\n");
             IlCodeStream.WriteLine(".class private auto ansi beforefieldinit " + "HelloIFN660.Program" + " extends [mscorlib]System.Object \n{");
-            IlCodeStream.WriteLine(TAB + ".method private hidebysig static void  Main(string[] args) cil managed\n" + TAB + "{");
-            IlCodeStream.WriteLine(TAB + TAB + " .entrypoint");
         }
 
         public void End()
         {
-            IlCodeStream.WriteLine(TAB + TAB + "ret");
-            IlCodeStream.WriteLine(TAB + "}");
             IlCodeStream.WriteLine("}");
             IlCodeStream.Flush();
             IlCodeStream.Close();
@@ -117,6 +113,7 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.methodModifier(0).GetText()+context.methodHeader().GetText()+"{");
             sb.Append(context.methodModifier(0).GetText()+context.methodHeader().GetText() + "{");
             sb.Append("\n");
+            IlCodeStream.WriteLine(TAB + ".method " + context.methodHeader().GetText() + "\n" + TAB + "{");
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -126,6 +123,7 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.block().blockStatements().GetText());
             sb.Append(context.block().blockStatements().GetText());
             sb.Append("\n");
+            IlCodeStream.WriteLine(TAB + TAB + ".entrypoint");
         }
         public override void ExitMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -135,6 +133,8 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, "}");
             sb.Append("}");
             sb.Append("\n");
+            IlCodeStream.WriteLine(TAB + TAB + "ret");
+            IlCodeStream.WriteLine(TAB + "}");
         }
 
 
@@ -146,6 +146,8 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
+            IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
+            IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
         }
 
 
@@ -167,9 +169,6 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
-
-            IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
-            IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
             IlCodeStream.WriteLine(TAB + TAB + "ldc.i4.s " + context.GetText());
             IlCodeStream.WriteLine(TAB + TAB + "stloc.0 ");
             IlCodeStream.WriteLine(TAB + TAB + "ldloc.0 ");
