@@ -58,18 +58,21 @@ namespace J2Net
             //{
             //    Console.WriteLine(context.GetChild(i));
             //}
+
+            sb.Append(context.GetText());
+            sb.Append("\n");
         }
 
         public override void EnterClassDeclaration(JavaParser.ClassDeclarationContext context)
         {
             base.EnterClassDeclaration(context);
             //.class private auto ansi beforefieldinit HelloIFN660.Program extends [mscorlib]System.Object
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, /*context.normalClassDeclaration().classModifier()
-                                                                     +*/context.normalClassDeclaration().CLASS().GetText()
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.normalClassDeclaration().classModifier(0).GetText()
+                                                                     +context.normalClassDeclaration().CLASS().GetText()
                                                                      +context.normalClassDeclaration().Identifiers().GetText()+"{");
 
-            sb.Append( /*context.normalClassDeclaration().classModifier()
-                      +*/context.normalClassDeclaration().CLASS().GetText()
+            sb.Append(context.normalClassDeclaration().classModifier(0).GetText()
+                      +context.normalClassDeclaration().CLASS().GetText()
                       + context.normalClassDeclaration().Identifiers().GetText() + "{");
             sb.Append("\n");
 
@@ -111,8 +114,8 @@ namespace J2Net
         {
             base.EnterMethodDeclaration(context);
             //.method private hidebysig static void  Main(string[] args) cil managed
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, /*context.methodModifier()+*/context.methodHeader().GetText()+"{");
-            sb.Append(/*context.methodModifier()+*/context.methodHeader().GetText() + "{");
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.methodModifier(0).GetText()+context.methodHeader().GetText()+"{");
+            sb.Append(context.methodModifier(0).GetText()+context.methodHeader().GetText() + "{");
             sb.Append("\n");
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
