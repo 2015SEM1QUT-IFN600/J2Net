@@ -62,7 +62,9 @@ namespace J2Net
         {
             base.EnterClassDeclaration(context);
             //.class private auto ansi beforefieldinit HelloIFN660.Program extends [mscorlib]System.Object
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, /*context.normalClassDeclaration().classModifier()
+                                                                     +*/context.normalClassDeclaration().CLASS().GetText()
+                                                                     +context.normalClassDeclaration().Identifiers().GetText()+"{");
         }
 
         public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
@@ -75,7 +77,7 @@ namespace J2Net
         {
             base.ExitClassBodyDeclaration(context);
             //}
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, "}");
         }
 
 
@@ -107,21 +109,21 @@ namespace J2Net
         {
             base.EnterMethodDeclaration(context);
             //.method private hidebysig static void  Main(string[] args) cil managed
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, /*context.methodModifier()+*/context.methodHeader().GetText()+"{");
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
         {
             base.EnterMethodBody(context);
             //{
             //.entrypoint
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.block().blockStatements().GetText());
         }
         public override void ExitMethodBody(JavaParser.MethodBodyContext context)
         {
             base.ExitMethodBody(context);
             //ret
             //}
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, "}");
         }
 
 
