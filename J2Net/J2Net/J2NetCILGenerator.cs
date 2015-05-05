@@ -78,12 +78,18 @@ namespace J2Net
                                                                      +context.normalClassDeclaration().Identifiers().GetText()+"{");
 
             sb.Append(context.normalClassDeclaration().classModifier(0).GetText()
-                      +context.normalClassDeclaration().CLASS().GetText()
+//----------------------------------------------------------------------------------
+//BUG:This causes error while ilasm.exe tries to build a executable file.
+//                      +context.normalClassDeclaration().CLASS().GetText()
+//----------------------------------------------------------------------------------
                       + context.normalClassDeclaration().Identifiers().GetText() + "{");
             sb.Append("\n");
 
             IlCodeStream.WriteLine(".class " + context.normalClassDeclaration().classModifier(0).GetText() + " "
-                      + context.normalClassDeclaration().CLASS().GetText() + " "
+//----------------------------------------------------------------------------------
+//BUG:This causes error while ilasm.exe tries to build a executable file.
+//                      + context.normalClassDeclaration().CLASS().GetText() + " "
+//----------------------------------------------------------------------------------
                       + context.normalClassDeclaration().Identifiers().GetText() + "\n{");
         }
 

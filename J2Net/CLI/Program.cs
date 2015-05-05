@@ -43,6 +43,8 @@ namespace CLI
 
 
             //Generate execution file
+            string ilFileName = "test.il";
+            generateExecutionFile(ilFileName);
 
 
             Terminate();
@@ -56,13 +58,20 @@ namespace CLI
         }
 
         //Generate executable file from CIL code
-        //Note: Before using this function, please leaving ilasm.exe with this program in the same folder.
-        private void generateExecutionFile(string fileName)
+        //Note: Before using this function, please leaving ilasm.exe, fusion.dll with this program in the same folder.
+        private static void generateExecutionFile(string fileName)
         {
             string converterName = "ilasm.exe";
             string cmdArgument = "/EXE";
 
-            System.Diagnostics.Process.Start(String.Format("{0} {1} {2}", converterName, cmdArgument, fileName));
+            try
+            {
+                System.Diagnostics.Process.Start(String.Format("{0} {1} {2}", converterName, cmdArgument, fileName));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception Occurred: {0}\nPlease check the format of il file is correct.", ex.Message);
+            }
         }
     }
 }
