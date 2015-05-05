@@ -184,7 +184,7 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
-            binder.SymbolTable(context.variableDeclaratorList().GetText(),"int");
+            binder.SymbolTable(context.variableDeclaratorList().GetText(),context.GetChild(0).GetText());
             //push identifeir name into hashtable, this section needs improvement, i am still pushing datatype manually.need help to find out the data type of identifier
             
            
@@ -199,6 +199,7 @@ namespace J2Net
             
             //first value is type, second value is name
             localVariableDeclarationList.Add(new variableDeclaration(context.GetChild(0).GetText(), context.GetChild(1).GetText()));
+            
         }
 
 
