@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,8 @@ namespace J2Net
         }
 
         StringBuilder sb = new StringBuilder();
+        J2NetNameBinder binder = new J2NetNameBinder();
+        Hashtable Symtable = new Hashtable();
 
         public J2NetCILGenerator(Parser parser, string ilName2)
         {
@@ -67,6 +70,7 @@ namespace J2Net
 
             sb.Append(context.GetText());
             sb.Append("\n");
+            
         }
 
         public override void EnterClassDeclaration(JavaParser.ClassDeclarationContext context)
@@ -91,15 +95,23 @@ namespace J2Net
 //                      + context.normalClassDeclaration().CLASS().GetText() + " "
 //----------------------------------------------------------------------------------
                       + context.normalClassDeclaration().Identifiers().GetText() + "\n{");
+           binder.SymbolTable(context.normalClassDeclaration().Identifiers().GetText(),"-"); 
+            //push class name into hashtable
         }
 
-        //public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
-        //{
-        //    base.EnterClassBodyDeclaration(context);
-        //    //{
-        //    Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
-        //}
-
+       
+        public override void EnterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
+        {
+            base.EnterClassBodyDeclaration(context);
+            //{
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            sb.Append(context.GetText());
+            sb.Append("\n");
+                     
+            
+            
+        }
+       
 
         public override void EnterConstructorDeclaration(JavaParser.ConstructorDeclarationContext context)
         {
@@ -144,6 +156,8 @@ namespace J2Net
                 IlCodeStream.Write(context.methodHeader().GetChild(i).GetText() + " ");
             }
             IlCodeStream.WriteLine("\n" + TAB + "{");
+            binder.SymbolTable(context.methodHeader().methodDeclarator().Identifiers().GetText(),"-");
+            //push method name into hashtable
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
         {
@@ -176,12 +190,22 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
+            binder.SymbolTable(context.variableDeclaratorList().GetText(),context.GetChild(0).GetText());
+            //push identifeir name into hashtable, this section needs improvement, i am still pushing datatype manually.need help to find out the data type of identifier
+            
+           
+        }
+
+        public override void ExitLocalVariableDeclaration(JavaParser.LocalVariableDeclarationContext context)
+        {
+            base.ExitLocalVariableDeclaration(context);
             //Do not do the following over here. if you have more than 1 variable to declare, you will print multiple .maxstack and .locals
             //IlCodeStream.WriteLine(TAB + TAB + ".maxstack  1");
             //IlCodeStream.WriteLine(TAB + TAB + ".locals init ([0] int32 i)");
             
             //first value is type, second value is name
             localVariableDeclarationList.Add(new variableDeclaration(context.GetChild(0).GetText(), context.GetChild(1).GetText()));
+            
         }
 
 
@@ -193,6 +217,7 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
+            //this part should return me left hand side value and right hand side value but no luck.
         }
 
 
@@ -246,8 +271,17 @@ namespace J2Net
             sb.Append("\n");
         }
 
+
+        
+            
+
+
+       
+        
+
         public StringBuilder printCIL()
         {
+            binder.printHash();
             return sb;
         }
 
