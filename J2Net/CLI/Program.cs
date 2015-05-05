@@ -41,6 +41,10 @@ namespace CLI
                 Console.WriteLine("Compilation Failed, see debug output\n\n");
             }
 
+
+            //Generate execution file
+
+
             Terminate();
         }
 
@@ -49,6 +53,16 @@ namespace CLI
             Console.WriteLine("Press any key to end the program");
             Console.ReadKey();
             Environment.Exit(0);
+        }
+
+        //Generate executable file from CIL code
+        //Note: Before using this function, please leaving ilasm.exe with this program in the same folder.
+        private void generateExecutionFile(string fileName)
+        {
+            string converterName = "ilasm.exe";
+            string cmdArgument = "/EXE";
+
+            System.Diagnostics.Process.Start(String.Format("{0} {1} {2}", converterName, cmdArgument, fileName));
         }
     }
 }
