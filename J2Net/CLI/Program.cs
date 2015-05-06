@@ -66,7 +66,10 @@ namespace CLI
 
             try
             {
-                System.Diagnostics.Process.Start(String.Format("{0} {1} {2}", converterName, cmdArgument, fileName));
+                //System.Diagnostics.Process.Start(String.Format("{0} {1} {2}", converterName, cmdArgument, fileName));
+                string strCmdText;
+                strCmdText = "/C ilasm test.il";
+                System.Diagnostics.Process.Start("CMD.exe", strCmdText);
             }
             catch (Exception ex)
             {
