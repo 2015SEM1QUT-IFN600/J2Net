@@ -46,7 +46,6 @@ namespace J2Net
         public void Start()
         {
             IlCodeStream = new StreamWriter(ilName + ".il", false);
-            IlCodeStream.WriteLine(".assembly extern mscorlib\n{\n}\n");
             IlCodeStream.WriteLine(".assembly HelloIFN660\n{\n}\n");
         }
 
@@ -152,11 +151,11 @@ namespace J2Net
                 IlCodeStream.Write(context.methodModifier(i).GetText() + " ");
             }
 
-            for (int i = 0; i < context.methodHeader().ChildCount - 1; i++) // -1 to not print main(String[]args)
+            for (int i = 0; i < context.methodHeader().ChildCount; i++)
             {
                 IlCodeStream.Write(context.methodHeader().GetChild(i).GetText() + " ");
             }
-            IlCodeStream.WriteLine("main(string[]args)\n" + TAB + "{"); // Hardcoded until fixed...
+            IlCodeStream.WriteLine("\n" + TAB + "{");
             binder.SymbolTable(context.methodHeader().methodDeclarator().Identifiers().GetText(),"-");
             //push method name into hashtable
         }
@@ -260,8 +259,8 @@ namespace J2Net
 
             IlCodeStream.WriteLine(TAB + TAB + "ldc.i4.s " + context.GetText());
             IlCodeStream.WriteLine(TAB + TAB + "stloc.0 ");
-            //IlCodeStream.WriteLine(TAB + TAB + "ldloc.0 ");
-            //IlCodeStream.WriteLine(TAB + TAB + "call " + TAB + "void [mscorlib]System.Console::WriteLine(int32)");
+            IlCodeStream.WriteLine(TAB + TAB + "ldloc.0 ");
+            IlCodeStream.WriteLine(TAB + TAB + "call " + TAB + "void [mscorlib]System.Console::WriteLine(int32)");
         }
         public override void ExitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
         {
