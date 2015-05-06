@@ -1,11 +1,13 @@
 package com.company;
 
 public class Main {
+	int k;
+
     public static void main(String[] args) {
         int i;
-		//double j;
-        i = 42;
-		
+		i = 42;
+		k = i + 8 / 5;
+		System.out.println(k);
     }
 
 }
