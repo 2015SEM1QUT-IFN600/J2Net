@@ -4,24 +4,117 @@ using J2Net.Grammar;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace J2Net
 {
-    public class J2NetCILVisitor : JavaBaseVisitor<int>
+    public class J2NetCILVisitor : JavaBaseVisitor<string>
     {
-        public override int VisitPackageDeclaration(JavaParser.PackageDeclarationContext context)
+        static private string TAB = "    ";
+        private StreamWriter IlCodeStream;
+        string ilName;
+
+        public J2NetCILVisitor(string ilName2)
+        {
+            ilName = ilName2;
+        }
+
+        public override string VisitPackageDeclaration(JavaParser.PackageDeclarationContext context)
         {
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText()); 
             return base.VisitPackageDeclaration(context);
         }
 
-        public override int VisitClassDeclaration(JavaParser.ClassDeclarationContext context)
+        public override string VisitClassDeclaration(JavaParser.ClassDeclarationContext context)
         {
+            IlCodeStream.WriteLine(".class " + context.normalClassDeclaration().classModifier(0).GetText() + " "
+                      + context.normalClassDeclaration().Identifiers().GetText() + "\n{");
+
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText()); 
             return base.VisitClassDeclaration(context);
+        }
+
+        public override string VisitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
+        {
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitClassBodyDeclaration(context);
+        }
+
+        public override string VisitMethodDeclaration(JavaParser.MethodDeclarationContext context)
+        {
+            IlCodeStream.Write(TAB + ".method ");
+            for (int i = 0; i < context.methodModifier().Count; i++)
+            {
+                IlCodeStream.Write(context.methodModifier(i).GetText() + " ");
+            }
+
+            IlCodeStream.Write(context.methodHeader().GetChild(0).GetText() + " ");
+
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitMethodDeclaration(context);
+        }
+
+        public override string VisitMethodDeclarator(JavaParser.MethodDeclaratorContext context)
+        {
+            IlCodeStream.WriteLine(context.GetText() + "\n" + TAB + "{");
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitMethodDeclarator(context);
+        }
+
+        public override string VisitMethodBody(JavaParser.MethodBodyContext context)
+        {
+            IlCodeStream.WriteLine(TAB + TAB + ".entrypoint");
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitMethodBody(context);
+        }
+
+        public override string VisitVariableDeclarator(JavaParser.VariableDeclaratorContext context)
+        {
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitVariableDeclarator(context);
+        }
+
+        public override string VisitVariableDeclaratorList(JavaParser.VariableDeclaratorListContext context)
+        {
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitVariableDeclaratorList(context);
+        }
+
+        public override string VisitStatement(JavaParser.StatementContext context)
+        {
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitStatement(context);
+        }
+
+        public override string VisitExpression(JavaParser.ExpressionContext context)
+        {
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitExpression(context);
+        }
+
+        public override string VisitExpressionName(JavaParser.ExpressionNameContext context)
+        {
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitExpressionName(context);
+        }
+
+        public void Start()
+        {
+            IlCodeStream = new StreamWriter(ilName + ".il", false);
+            IlCodeStream.WriteLine(".assembly extern mscorlib\n{\n}\n");
+            IlCodeStream.WriteLine(".assembly HelloIFN660\n{\n}\n");
+        }
+
+        public void End()
+        {
+            IlCodeStream.WriteLine(TAB + TAB + "ret");
+            IlCodeStream.WriteLine(TAB + "}");
+            IlCodeStream.WriteLine("}");
+            IlCodeStream.Flush();
+            IlCodeStream.Close();
         }
 
         /// <summary>

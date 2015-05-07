@@ -29,12 +29,14 @@ namespace J2Net
             //listener.End();
             
             //TODO: output parsed code to text-based CIL (*.il) file.
-
+            
             // Test stringbuilder
             //Console.WriteLine(listener.printCIL());
 
-            J2NetCILVisitor visitor = new J2NetCILVisitor();
+            J2NetCILVisitor visitor = new J2NetCILVisitor("test");
+            visitor.Start();
             Console.WriteLine(visitor.Visit(tree));
+            visitor.End();
             
             return true;
         }
