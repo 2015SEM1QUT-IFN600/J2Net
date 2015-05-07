@@ -16,6 +16,9 @@ namespace J2Net
         static private string TAB = "    ";
         private StreamWriter IlCodeStream;
         string ilName;
+        private bool exitLocalVariableDeclaration = false;
+        private int localVariableDeclarationCounter = 0;
+        private string localVariableDeclarationString = TAB + TAB + ".locals (";
 
         public J2NetCILVisitor(string ilName2)
         {
@@ -42,7 +45,7 @@ namespace J2Net
             //Field declaration
             if (context.classMemberDeclaration().fieldDeclaration() != null)
             {
-                string fieldString = ".field ";
+                string fieldString = TAB + ".field ";
                 for (int i = 0; i < context.classMemberDeclaration().fieldDeclaration().fieldModifier().Count; i++)
                 {
                     fieldString += context.classMemberDeclaration().fieldDeclaration().fieldModifier(i).GetText() + " ";
@@ -84,6 +87,31 @@ namespace J2Net
             return base.VisitMethodBody(context);
         }
 
+        public override string VisitLocalVariableDeclaration(JavaParser.LocalVariableDeclarationContext context)
+        {
+            //incase if localVariableDeclaration needs to be call again
+            if (exitLocalVariableDeclaration == true)
+            {
+                exitLocalVariableDeclaration = false;
+                localVariableDeclarationCounter = 0;
+                localVariableDeclarationString = TAB + TAB + ".locals (";
+            }
+            //Setting up string for .locals
+            if (localVariableDeclarationCounter == 0)
+            {
+                localVariableDeclarationString += "[" + localVariableDeclarationCounter + "] " + typeRecognition(context.unannType().GetText()) + " " + context.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().GetText();
+            }
+            else
+            {
+                localVariableDeclarationString += ", [" + localVariableDeclarationCounter + "] " + typeRecognition(context.unannType().GetText()) + " " + context.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().GetText();
+            }
+            
+            //adds a counter for maxstack usage
+            localVariableDeclarationCounter++;
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            return base.VisitLocalVariableDeclaration(context);
+        }
+
         public override string VisitVariableDeclarator(JavaParser.VariableDeclaratorContext context)
         {
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
@@ -96,8 +124,18 @@ namespace J2Net
             return base.VisitVariableDeclaratorList(context);
         }
 
+
         public override string VisitStatement(JavaParser.StatementContext context)
         {
+            //writes .locals and maxstack before performing statements
+            if (exitLocalVariableDeclaration == false)
+            {
+                if (localVariableDeclarationCounter > 0) { 
+                    exitLocalVariableDeclaration = true;
+                    IlCodeStream.WriteLine(localVariableDeclarationString + ")");
+                    IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+                }
+            }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitStatement(context);
         }
