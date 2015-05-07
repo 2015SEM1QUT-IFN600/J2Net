@@ -39,6 +39,19 @@ namespace J2Net
 
         public override string VisitClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext context)
         {
+            //Field declaration
+            if (context.classMemberDeclaration().fieldDeclaration() != null)
+            {
+                string fieldString = ".field ";
+                for (int i = 0; i < context.classMemberDeclaration().fieldDeclaration().fieldModifier().Count; i++)
+                {
+                    fieldString += context.classMemberDeclaration().fieldDeclaration().fieldModifier(i).GetText() + " ";
+                }
+                fieldString += typeRecognition(context.classMemberDeclaration().fieldDeclaration().unannType().GetText()) + " " +
+                                context.classMemberDeclaration().fieldDeclaration().variableDeclaratorList().variableDeclarator(0).GetText();   //assuming only one variable is declared each time.
+                IlCodeStream.WriteLine(fieldString);
+            }
+
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitClassBodyDeclaration(context);
         }
@@ -124,6 +137,31 @@ namespace J2Net
         {
             String msg = String.Format("{0}: {1}", methodName, contextText);
             Debug.WriteLine(msg);
+        }
+
+        public string typeRecognition(string type)
+        {
+            string temp = "";
+            if (type.Equals("int") || type.Equals("float") || type.Equals("unsigned int"))
+            {
+                if (type.Equals("int"))
+                {
+                    temp = "int32";
+                }
+                else if (type.Equals("float"))
+                {
+                    temp = "float32";
+                }
+                else if (type.Equals("unsigned int"))
+                {   //don't think this is ever needed for java
+                    temp = "unsigned int32";
+                }
+            }
+            else
+            {
+                temp = type;
+            }
+            return temp;
         }
     }
 }
