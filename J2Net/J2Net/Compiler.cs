@@ -7,6 +7,7 @@ using J2Net.Grammar;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using System.IO;
+using System.Diagnostics;
 
 namespace J2Net
 {
@@ -20,7 +21,7 @@ namespace J2Net
             JavaParser parser = new JavaParser(tokens);
             ParserRuleContext tree = parser.compilationUnit();
 
-            ParseTreeWalker walker = new ParseTreeWalker(); 
+            //ParseTreeWalker walker = new ParseTreeWalker(); 
             //J2NetCILGenerator listener = new J2NetCILGenerator(parser, "test"); //attach our listener to build CIL
             
             //listener.Start();
