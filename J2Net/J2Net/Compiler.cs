@@ -21,17 +21,20 @@ namespace J2Net
             ParserRuleContext tree = parser.compilationUnit();
 
             ParseTreeWalker walker = new ParseTreeWalker(); 
-            J2NetCILGenerator extractor = new J2NetCILGenerator(parser, "test"); //attach our listener to build CIL
+            //J2NetCILGenerator listener = new J2NetCILGenerator(parser, "test"); //attach our listener to build CIL
             
-            extractor.Start();
-            walker.Walk(extractor, tree); //initiate walk of tree with listener
+            //listener.Start();
+            //walker.Walk(listener, tree); //initiate walk of tree with listener
             
-            extractor.End();
+            //listener.End();
             
             //TODO: output parsed code to text-based CIL (*.il) file.
 
             // Test stringbuilder
-            Console.WriteLine(extractor.printCIL());
+            //Console.WriteLine(listener.printCIL());
+
+            J2NetCILVisitor visitor = new J2NetCILVisitor();
+            Console.WriteLine(visitor.Visit(tree));
             
             return true;
         }
