@@ -21,6 +21,17 @@ namespace J2Net
             JavaParser parser = new JavaParser(tokens);
             ParserRuleContext tree = parser.compilationUnit();
 
+            ////////////////////////////////////////////////////////////////
+            //Just a test - Ignore it
+            //JavaLexer lexer = new JavaLexer(new AntlrInputStream("2+3"));
+            //CommonTokenStream tokens = new CommonTokenStream(lexer);
+            //JavaParser parser = new JavaParser(tokens);
+            //IParseTree tree = parser.expression();
+            //Console.WriteLine(tree.ToStringTree(parser));
+            //MyVisitor visitor = new MyVisitor();
+            //Console.WriteLine(visitor.Visit(tree));
+            ////////////////////////////////////////////////////////////////
+
             //ParseTreeWalker walker = new ParseTreeWalker(); 
             //J2NetCILGenerator listener = new J2NetCILGenerator(parser, "test"); //attach our listener to build CIL
             
