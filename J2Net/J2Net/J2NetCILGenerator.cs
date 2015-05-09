@@ -15,6 +15,7 @@ using System.Collections;
 
 namespace J2Net
 {
+
     [CLSCompliant(false)]
     public partial class J2NetCILGenerator : JavaBaseListener
     {
@@ -273,12 +274,6 @@ namespace J2Net
         }
 
 
-        
-            
-
-
-       
-        
 
         public StringBuilder printCIL()
         {
@@ -303,9 +298,9 @@ namespace J2Net
         }
     }
 
-    /// <summary>
-    /// Keeping this method separate so not to confuse this method with the overrides
-    /// </summary>
+     <summary>
+     Keeping this method separate so not to confuse this method with the overrides
+     </summary>
     public partial class J2NetCILGenerator
     {
         private static void Log(String methodName, String contextText)

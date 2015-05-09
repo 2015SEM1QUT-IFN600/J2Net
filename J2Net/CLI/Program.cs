@@ -30,7 +30,7 @@ namespace CLI
 
             //Read file
             StreamReader inputStream = new StreamReader(fileName);
-            
+
             //Compile
             if (J2Net.Compiler.Compile(inputStream))
             {
@@ -42,7 +42,7 @@ namespace CLI
             }
 
 
-            //Generate execution file
+            ////Generate execution file
             string ilFileName = "test.il";
             generateExecutionFile(ilFileName);
 

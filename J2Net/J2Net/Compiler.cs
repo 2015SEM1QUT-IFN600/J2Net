@@ -15,6 +15,7 @@ namespace J2Net
         public static Boolean Compile(StreamReader javaCode)
         {
             //ref: https://theantlrguy.atlassian.net/wiki/display/ANTLR4/Parse+Tree+Listeners
+
             JavaLexer lexer = new JavaLexer(new AntlrInputStream(javaCode));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             JavaParser parser = new JavaParser(tokens);
@@ -28,9 +29,9 @@ namespace J2Net
             
             extractor.End();
             
-            //TODO: output parsed code to text-based CIL (*.il) file.
+            TODO: output parsed code to text-based CIL (*.il) file.
 
-            // Test stringbuilder
+             Test stringbuilder
             Console.WriteLine(extractor.printCIL());
             
             return true;
