@@ -312,49 +312,49 @@ oderOfOperations1
 	;
 
 oderOfOperations2
-	: oderOfOperations3 (AND oderOfOperations1)?
+	: oderOfOperations3 (AND oderOfOperations2)?
 	;
 
 oderOfOperations3
-	: oderOfOperations4 (BITOR oderOfOperations1)?
+	: oderOfOperations4 (BITOR oderOfOperations3)?
 	;
 
 oderOfOperations4
-	: oderOfOperations5 (CARET oderOfOperations1)?
+	: oderOfOperations5 (CARET oderOfOperations4)?
 	;
 
 oderOfOperations5
-	: oderOfOperations6 (BITAND oderOfOperations1)?
+	: oderOfOperations6 (BITAND oderOfOperations5)?
 	;
 
 oderOfOperations6
-	: oderOfOperations7 (EQUAL oderOfOperations1)?
-	| oderOfOperations7 (NOTEQUAL oderOfOperations1)?
+	: oderOfOperations7 (EQUAL oderOfOperations6)?
+	| oderOfOperations7 (NOTEQUAL oderOfOperations6)?
 	;
 	
 oderOfOperations7
-	: oderOfOperations8 (LT oderOfOperations1)?
-	| oderOfOperations8 (GT oderOfOperations1)?
-	| oderOfOperations8 (LE oderOfOperations1)?
-	| oderOfOperations8 (GE oderOfOperations1)?
-	| oderOfOperations8 (INSTANCEOF oderOfOperations1)?
+	: oderOfOperations8 (LT oderOfOperations7)?
+	| oderOfOperations8 (GT oderOfOperations7)?
+	| oderOfOperations8 (LE oderOfOperations7)?
+	| oderOfOperations8 (GE oderOfOperations7)?
+	| oderOfOperations8 (INSTANCEOF oderOfOperations7)?
 	;
 
 oderOfOperations8
-	: oderOfOperations9 (LEFT_SIGNED oderOfOperations1)?
-	| oderOfOperations9 (RIGHT_SIGNED oderOfOperations1)?
-	| oderOfOperations9 (RIGHT_UNSIGNED oderOfOperations1)?
+	: oderOfOperations9 (LEFT_SIGNED oderOfOperations8)?
+	| oderOfOperations9 (RIGHT_SIGNED oderOfOperations8)?
+	| oderOfOperations9 (RIGHT_UNSIGNED oderOfOperations8)?
 	;
 
 oderOfOperations9
-	: oderOfOperations10 (ADD oderOfOperations1)?
-	| oderOfOperations10 (SUB oderOfOperations1)?
+	: oderOfOperations10 (ADD oderOfOperations9)?
+	| oderOfOperations10 (SUB oderOfOperations9)?
 	;
 
 oderOfOperations10
-	: unaryExpression (MUL oderOfOperations1)?
-	| unaryExpression (DIV oderOfOperations1)?
-	| unaryExpression (MOD oderOfOperations1)?
+	: unaryExpression (MUL oderOfOperations10)?
+	| unaryExpression (DIV oderOfOperations10)?
+	| unaryExpression (MOD oderOfOperations10)?
 	;
 
 
