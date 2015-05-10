@@ -35,8 +35,8 @@ namespace J2Net
         }
 
         StringBuilder sb = new StringBuilder();
-        J2NetNameBinder binder = new J2NetNameBinder();
-        Hashtable Symtable = new Hashtable();
+        //J2NetNameBinder binder = new J2NetNameBinder();
+        //Hashtable Symtable = new Hashtable();
 
         public J2NetCILGenerator(Parser parser, string ilName2)
         {
@@ -97,7 +97,7 @@ namespace J2Net
 //                      + context.normalClassDeclaration().CLASS().GetText() + " "
 //----------------------------------------------------------------------------------
                       + context.normalClassDeclaration().Identifiers().GetText() + "\n{");
-           binder.SymbolTable(context.normalClassDeclaration().Identifiers().GetText(),"-"); 
+          // binder.SymbolTable(context.normalClassDeclaration().Identifiers().GetText(),"-"); 
             //push class name into hashtable
         }
 
@@ -158,7 +158,7 @@ namespace J2Net
                 IlCodeStream.Write(context.methodHeader().GetChild(i).GetText() + " ");
             }
             IlCodeStream.WriteLine("main(string[]args)\n" + TAB + "{"); // Hardcoded until fixed...
-            binder.SymbolTable(context.methodHeader().methodDeclarator().Identifiers().GetText(),"-");
+           // binder.SymbolTable(context.methodHeader().methodDeclarator().Identifiers().GetText(),"-");
             //push method name into hashtable
         }
         public override void EnterMethodBody(JavaParser.MethodBodyContext context)
@@ -192,7 +192,7 @@ namespace J2Net
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             sb.Append(context.GetText());
             sb.Append("\n");
-            binder.SymbolTable(context.variableDeclaratorList().GetText(),context.GetChild(0).GetText());
+           // binder.SymbolTable(context.variableDeclaratorList().GetText(),context.GetChild(0).GetText());
             //push identifeir name into hashtable, this section needs improvement, i am still pushing datatype manually.need help to find out the data type of identifier
             
            
@@ -277,7 +277,7 @@ namespace J2Net
 
         public StringBuilder printCIL()
         {
-            binder.printHash();
+            //binder.printHash();
             return sb;
         }
 

@@ -20,7 +20,7 @@ namespace J2Net
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             JavaParser parser = new JavaParser(tokens);
             ParserRuleContext tree = parser.compilationUnit();
-
+            J2NetNameBinder listener = new J2NetNameBinder(parser,"test");
             ////////////////////////////////////////////////////////////////
             //Just a test - Ignore it
             //JavaLexer lexer = new JavaLexer(new AntlrInputStream("2+3"));
@@ -32,18 +32,18 @@ namespace J2Net
             //Console.WriteLine(visitor.Visit(tree));
             ////////////////////////////////////////////////////////////////
 
-            //ParseTreeWalker walker = new ParseTreeWalker(); 
+            ParseTreeWalker walker = new ParseTreeWalker(); 
             //J2NetCILGenerator listener = new J2NetCILGenerator(parser, "test"); //attach our listener to build CIL
             
             //listener.Start();
-            //walker.Walk(listener, tree); //initiate walk of tree with listener
+            walker.Walk(listener, tree); //initiate walk of tree with listener
             
             //listener.End();
             
             //TODO: output parsed code to text-based CIL (*.il) file.
             
             // Test stringbuilder
-            //Console.WriteLine(listener.printCIL());
+            listener.printHash();
 
             J2NetCILVisitor visitor = new J2NetCILVisitor("test");
             visitor.Start();
