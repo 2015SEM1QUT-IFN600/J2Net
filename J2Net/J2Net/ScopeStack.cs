@@ -18,16 +18,17 @@ namespace J2Net
         {
             public String ident;
             public String Type;
+            public String parent;
             //parent
             //children?
         }
         //!contains then lookup parent if not found error
-        public static void pushScope(String ident)//Scope ScopeItem)
+        public static void pushScope(Scope scopeItem)//Scope ScopeItem)
         {
-            Scope_Stack.Push(ident);//ScopeItem);
+            Scope_Stack.Push(scopeItem);
         }
 
-        public Scope popScope()
+        public static Scope popScope()
         {
             return (Scope)Scope_Stack.Pop();
         }
@@ -36,7 +37,10 @@ namespace J2Net
         {
             while (Scope_Stack.Count > 0)
             {
-                Console.WriteLine(Scope_Stack.Pop().ToString());
+                Scope nextScope = popScope();
+                Console.WriteLine(nextScope.ident);
+                Console.WriteLine(nextScope.Type);
+                Console.WriteLine(nextScope.parent);
             }
         }
 
