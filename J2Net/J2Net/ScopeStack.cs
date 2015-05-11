@@ -18,7 +18,8 @@ namespace J2Net
         {
             public String ident;
             public String Type;
-            public String parent;
+            public Antlr4.Runtime.RuleContext parent;
+            public IList<Antlr4.Runtime.Tree.IParseTree> children;
             //parent
             //children?
         }
@@ -38,9 +39,15 @@ namespace J2Net
             while (Scope_Stack.Count > 0)
             {
                 Scope nextScope = popScope();
-                Console.WriteLine(nextScope.ident);
-                Console.WriteLine(nextScope.Type);
-                Console.WriteLine(nextScope.parent);
+                Console.WriteLine("ident:"+nextScope.ident);
+                Console.WriteLine("type:"+nextScope.Type);
+                Console.WriteLine("parent:"+nextScope.parent.ToString());
+                int i = 0;
+                while(i<nextScope.children.Count){
+                    Console.WriteLine("child " + i + ": " + nextScope.children[i].ToString());
+                    i++;
+                }
+                Console.WriteLine("-----");
             }
         }
 

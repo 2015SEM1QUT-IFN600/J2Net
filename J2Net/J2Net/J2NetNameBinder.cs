@@ -47,7 +47,8 @@ namespace J2Net
            //TODO Push to scope stack
            scopeItem.ident = context.GetChild(0).GetText();
            scopeItem.Type = context.GetChild(1).GetText();
-           scopeItem.parent = context.parent.ToString();
+           scopeItem.parent = context.parent;
+           scopeItem.children = context.children;
            ScopeStack.pushScope(scopeItem);
            //ScopeStack.printScopeStack();
            //TODO parent and children
@@ -60,7 +61,8 @@ namespace J2Net
            //TODO Push to scope stack
            scopeItem.Type = context.GetChild(0).GetChild(1).GetText();
            scopeItem.ident = context.GetChild(0).GetChild(2).GetText();
-           scopeItem.parent = context.parent.ToString();
+           scopeItem.parent = context.Parent;//.parent.ToString();
+           scopeItem.children = context.children;
            ScopeStack.pushScope(scopeItem);
            //ScopeStack.printScopeStack();
        }
@@ -89,7 +91,8 @@ namespace J2Net
            }
            scopeItem.ident = packageName;
            scopeItem.Type = context.GetChild(0).GetText();
-           scopeItem.parent = context.parent.ToString();
+           scopeItem.parent = context.parent;
+           scopeItem.children = context.children;
            ScopeStack.pushScope(scopeItem);
            //ScopeStack.printScopeStack();
        }
@@ -99,7 +102,8 @@ namespace J2Net
            //TODO Push to scope stack
            scopeItem.ident = context.GetChild(0).GetText();
            scopeItem.Type = context.GetChild(1).GetText();
-           scopeItem.parent = context.parent.ToString();
+           scopeItem.parent = context.parent;
+           scopeItem.children = context.children;
            ScopeStack.pushScope(scopeItem);
            //ScopeStack.printScopeStack();
        }
