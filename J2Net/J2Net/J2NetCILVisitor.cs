@@ -15,10 +15,11 @@ namespace J2Net
     {
         static private string TAB = "    ";
         private StreamWriter IlCodeStream;
+        StringBuilder sb = new StringBuilder();
         string ilName;
         private bool exitLocalVariableDeclaration = false;
         private int localVariableDeclarationCounter = 0;
-        private string localVariableDeclarationString = TAB + TAB + ".locals (";
+        private string localVariableDeclarationString = TAB + TAB + ".locals init (";
 
         public J2NetCILVisitor(string ilName2)
         {
@@ -93,8 +94,6 @@ namespace J2Net
             if (exitLocalVariableDeclaration == true)
             {
                 exitLocalVariableDeclaration = false;
-                localVariableDeclarationCounter = 0;
-                localVariableDeclarationString = TAB + TAB + ".locals (";
             }
             //Setting up string for .locals
             if (localVariableDeclarationCounter == 0)
@@ -132,8 +131,8 @@ namespace J2Net
             {
                 if (localVariableDeclarationCounter > 0) { 
                     exitLocalVariableDeclaration = true;
-                    IlCodeStream.WriteLine(localVariableDeclarationString + ")");
-                    IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+                    //IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+                    //IlCodeStream.WriteLine(localVariableDeclarationString + ")");
                 }
             }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
@@ -142,6 +141,10 @@ namespace J2Net
 
         public override string VisitExpression(JavaParser.ExpressionContext context)
         {
+            if (localVariableDeclarationCounter == 1)
+            {
+                sb.Append(TAB + TAB + "ldc.i4.s " + context.GetText());
+            }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitExpression(context);
         }
@@ -161,6 +164,9 @@ namespace J2Net
 
         public void End()
         {
+            IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+            IlCodeStream.WriteLine(localVariableDeclarationString + ")");
+            IlCodeStream.WriteLine(sb);
             IlCodeStream.WriteLine(TAB + TAB + "ret");
             IlCodeStream.WriteLine(TAB + "}");
             IlCodeStream.WriteLine("}");
