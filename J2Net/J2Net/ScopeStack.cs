@@ -34,6 +34,39 @@ namespace J2Net
             return (Scope)Scope_Stack.Pop();
         }
 
+        public static bool inScope(String ident, Scope scope)
+        {
+            Antlr4.Runtime.RuleContext currentNode = scope.parent;
+            while (!currentNode.parent.IsEmpty)
+            {
+                int i = 0;
+                while (i < currentNode.ChildCount)
+                {
+                    Antlr4.Runtime.Tree.IParseTree currentChild = currentNode.GetChild(i);
+                    string test = currentChild.GetText();
+                    if (test == ident)
+                    {
+                        return true;
+                    }
+                    i++;
+                }
+                currentNode = currentNode.parent;
+            }
+            //Breaks out of while for the final node, need to do last check
+            int x = 0;
+            while (x < currentNode.ChildCount)
+            {
+                Antlr4.Runtime.Tree.IParseTree currentChild = currentNode.GetChild(x);
+                string test2 = currentChild.GetText();
+                if (test2 == ident)
+                {
+                    return true;
+                }
+                x++;
+            }
+            return true;
+        }
+
         public static void printScopeStack()
         {
             while (Scope_Stack.Count > 0)
