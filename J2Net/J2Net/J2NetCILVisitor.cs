@@ -15,14 +15,17 @@ namespace J2Net
     {
         static private string TAB = "    ";
         private StreamWriter IlCodeStream;
+        StringBuilder sb = new StringBuilder();
         string ilName;
         private bool exitLocalVariableDeclaration = false;
         private int localVariableDeclarationCounter = 0;
-        private string localVariableDeclarationString = TAB + TAB + ".locals (";
+        private string localVariableDeclarationString = TAB + TAB + ".locals init (";
 
         public J2NetCILVisitor(string ilName2)
         {
             ilName = ilName2;
+
+            this.buildJava2CSTypeMappnigList();
         }
 
         public override string VisitPackageDeclaration(JavaParser.PackageDeclarationContext context)
@@ -67,7 +70,7 @@ namespace J2Net
                 IlCodeStream.Write(context.methodModifier(i).GetText() + " ");
             }
 
-            IlCodeStream.Write(context.methodHeader().GetChild(0).GetText() + " ");
+            IlCodeStream.Write(this.typeRecognition(context.methodHeader().GetChild(0).GetText()) + " ");
 
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitMethodDeclaration(context);
@@ -75,8 +78,10 @@ namespace J2Net
 
         public override string VisitMethodDeclarator(JavaParser.MethodDeclaratorContext context)
         {
-            IlCodeStream.WriteLine(context.GetText() + "\n" + TAB + "{");
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
+            string outContext = this.typeRecognition(context.GetText());
+            IlCodeStream.WriteLine(outContext + "\n" + TAB + "{");
+            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, outContext);
+
             return base.VisitMethodDeclarator(context);
         }
 
@@ -93,8 +98,6 @@ namespace J2Net
             if (exitLocalVariableDeclaration == true)
             {
                 exitLocalVariableDeclaration = false;
-                localVariableDeclarationCounter = 0;
-                localVariableDeclarationString = TAB + TAB + ".locals (";
             }
             //Setting up string for .locals
             if (localVariableDeclarationCounter == 0)
@@ -132,8 +135,8 @@ namespace J2Net
             {
                 if (localVariableDeclarationCounter > 0) { 
                     exitLocalVariableDeclaration = true;
-                    IlCodeStream.WriteLine(localVariableDeclarationString + ")");
-                    IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+                    //IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+                    //IlCodeStream.WriteLine(localVariableDeclarationString + ")");
                 }
             }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
@@ -142,6 +145,10 @@ namespace J2Net
 
         public override string VisitExpression(JavaParser.ExpressionContext context)
         {
+            if (localVariableDeclarationCounter == 1)
+            {
+                sb.Append(TAB + TAB + "ldc.i4.s " + context.GetText());
+            }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitExpression(context);
         }
@@ -161,6 +168,9 @@ namespace J2Net
 
         public void End()
         {
+            IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
+            IlCodeStream.WriteLine(localVariableDeclarationString + ")");
+            IlCodeStream.WriteLine(sb);
             IlCodeStream.WriteLine(TAB + TAB + "ret");
             IlCodeStream.WriteLine(TAB + "}");
             IlCodeStream.WriteLine("}");
@@ -177,29 +187,32 @@ namespace J2Net
             Debug.WriteLine(msg);
         }
 
+        //Name Mapping: If someone needs to add a new type for converting, please just adding it into JavaTypeList and CSType in sequence.
+        Dictionary<string, string> Java2CSTypeMappingList = new Dictionary<string, string>();
+        string[] JavaTypeList = { "int", "float", "unsigned int", "String" };
+        string[] CSType = { "int32", "float32", "unsigned int32", "string" };
+
+        private void buildJava2CSTypeMappnigList()
+        {
+            for (int i = 0; i < JavaTypeList.Length; i++)
+            {
+                this.Java2CSTypeMappingList.Add(JavaTypeList[i], CSType[i]);
+            }
+        }
+
         public string typeRecognition(string type)
         {
-            string temp = "";
-            if (type.Equals("int") || type.Equals("float") || type.Equals("unsigned int"))
+            string rtnType = "";
+            if (!this.Java2CSTypeMappingList.TryGetValue(type, out rtnType))
             {
-                if (type.Equals("int"))
-                {
-                    temp = "int32";
-                }
-                else if (type.Equals("float"))
-                {
-                    temp = "float32";
-                }
-                else if (type.Equals("unsigned int"))
-                {   //don't think this is ever needed for java
-                    temp = "unsigned int32";
-                }
+                //For bug fixing of main function
+                if (type.IndexOf("String[]") > 0)
+                    type = type.Replace("String[]", "string[]");
+
+                return type;
             }
-            else
-            {
-                temp = type;
-            }
-            return temp;
+
+            return rtnType;
         }
     }
 }

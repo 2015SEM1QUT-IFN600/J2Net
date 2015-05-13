@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         int i;
 		i = 42;
-		k = i + 8 / 5;
+		int k = i + 8 / 5;
 		System.out.println(k);
     }
 
