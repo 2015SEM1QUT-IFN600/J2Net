@@ -135,6 +135,9 @@ namespace J2Net
             if (localVariableDeclarationCounter == 1)
             {
                 sb.Append(TAB + TAB + "ldc.i4.s " + context.GetText() + "\n");
+
+                // Hardcode! Needs to be put into logic. Just for testing purposes!
+                sb.Append("stloc.0\n" + "ldloc.0\n" + "ldc.i4.1\n" + "add\n" + "stloc.1\n");
             }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitExpression(context);
@@ -157,8 +160,13 @@ namespace J2Net
         {
             IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
             IlCodeStream.WriteLine(localVariableDeclarationString + ")");
-            //IlCodeStream.WriteLine("stloc.0\n" + "ldloc.0\n" + "ldc.i4.1\n" + "add\n" + "stloc.1"); // Hardcode
             IlCodeStream.WriteLine(sb);
+
+            // Put a Console.ReadKey(); here just to see our output when running exe
+            IlCodeStream.WriteLine(TAB + TAB + "call       valuetype [mscorlib]System.ConsoleKeyInfo [mscorlib]System.Console::ReadKey()");
+            IlCodeStream.WriteLine(TAB + TAB + "pop");
+            // Console.ReadKey(); ends
+
             IlCodeStream.WriteLine(TAB + TAB + "ret");
             IlCodeStream.WriteLine(TAB + "}");
             IlCodeStream.WriteLine("}");
