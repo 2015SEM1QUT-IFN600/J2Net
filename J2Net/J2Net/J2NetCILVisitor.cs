@@ -28,12 +28,6 @@ namespace J2Net
             this.buildJava2CSTypeMappnigList();
         }
 
-        public override string VisitPackageDeclaration(JavaParser.PackageDeclarationContext context)
-        {
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText()); 
-            return base.VisitPackageDeclaration(context);
-        }
-
         public override string VisitClassDeclaration(JavaParser.ClassDeclarationContext context)
         {
             IlCodeStream.WriteLine(".class " + context.normalClassDeclaration().classModifier(0).GetText() + " "
@@ -115,19 +109,6 @@ namespace J2Net
             return base.VisitLocalVariableDeclaration(context);
         }
 
-        public override string VisitVariableDeclarator(JavaParser.VariableDeclaratorContext context)
-        {
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
-            return base.VisitVariableDeclarator(context);
-        }
-
-        public override string VisitVariableDeclaratorList(JavaParser.VariableDeclaratorListContext context)
-        {
-            Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
-            return base.VisitVariableDeclaratorList(context);
-        }
-
-
         public override string VisitStatement(JavaParser.StatementContext context)
         {
             //writes .locals and maxstack before performing statements
@@ -139,6 +120,12 @@ namespace J2Net
                     //IlCodeStream.WriteLine(localVariableDeclarationString + ")");
                 }
             }
+
+            if (context.GetText().Contains("System.out.println"))
+            {
+                writeline();
+            }
+
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitStatement(context);
         }
@@ -147,7 +134,7 @@ namespace J2Net
         {
             if (localVariableDeclarationCounter == 1)
             {
-                sb.Append(TAB + TAB + "ldc.i4.s " + context.GetText());
+                sb.Append(TAB + TAB + "ldc.i4.s " + context.GetText() + "\n");
             }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitExpression(context);
@@ -170,12 +157,21 @@ namespace J2Net
         {
             IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
             IlCodeStream.WriteLine(localVariableDeclarationString + ")");
+            //IlCodeStream.WriteLine("stloc.0\n" + "ldloc.0\n" + "ldc.i4.1\n" + "add\n" + "stloc.1"); // Hardcode
             IlCodeStream.WriteLine(sb);
             IlCodeStream.WriteLine(TAB + TAB + "ret");
             IlCodeStream.WriteLine(TAB + "}");
             IlCodeStream.WriteLine("}");
             IlCodeStream.Flush();
             IlCodeStream.Close();
+        }
+
+        // System.out.println -> Console.Out.WriteLine. ATTN: Hardcode. Should have more logic. e.g. ldloc.1
+        public void writeline()
+        {
+            sb.Append(TAB + TAB + "call       class [mscorlib]System.IO.TextWriter [mscorlib]System.Console::get_Out()\n");
+            sb.Append(TAB + TAB + "ldloc.1\n");
+            sb.Append(TAB + TAB + "callvirt   instance void [mscorlib]System.IO.TextWriter::WriteLine(int32)\n");
         }
 
         /// <summary>
