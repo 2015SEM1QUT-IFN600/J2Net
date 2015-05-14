@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace J2Net
 {
+    [CLSCompliant(false)]
     public class J2NetCILVisitor : JavaBaseVisitor<string>
     {
         static private string TAB = "    ";
