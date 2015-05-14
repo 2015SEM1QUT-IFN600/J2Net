@@ -14,19 +14,28 @@ namespace J2Net
     [CLSCompliant(false)]
     public class J2NetCILVisitor : JavaBaseVisitor<string>
     {
+        private ScopeStack ss;
+
         static private string TAB = "    ";
         private StreamWriter IlCodeStream;
         StringBuilder sb = new StringBuilder();
-        string ilName;
         private bool exitLocalVariableDeclaration = false;
         private int localVariableDeclarationCounter = 0;
         private string localVariableDeclarationString = TAB + TAB + ".locals init (";
 
-        public J2NetCILVisitor(string ilName2)
+        public J2NetCILVisitor(ScopeStack scopeStack)
         {
-            ilName = ilName2;
+            ss = scopeStack;
+            Start("Test");
 
             this.buildJava2CSTypeMappnigList();
+
+        }
+
+        public StringBuilder ToStringBuilder()
+        {
+            End();
+            return new StringBuilder("# # # # # # # # # # # # # # # # # # # # # #\nChange J2NetVisitor: Remove All StreamWriter references and use a StringBuilder instead. That way you can view the output in a console and write to a file.\n# # # # # # # # # # # # # # # # # # # # # #");
         }
 
         public override string VisitClassDeclaration(JavaParser.ClassDeclarationContext context)
@@ -150,14 +159,14 @@ namespace J2Net
             return base.VisitExpressionName(context);
         }
 
-        public void Start()
+        private void Start(string ilName)
         {
             IlCodeStream = new StreamWriter(ilName + ".il", false);
             IlCodeStream.WriteLine(".assembly extern mscorlib\n{\n}\n");
             IlCodeStream.WriteLine(".assembly HelloIFN660\n{\n}\n");
         }
 
-        public void End()
+        private void End()
         {
             IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
             IlCodeStream.WriteLine(localVariableDeclarationString + ")");

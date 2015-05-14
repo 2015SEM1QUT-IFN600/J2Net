@@ -32,27 +32,35 @@ namespace CLI
             StreamReader inputStream = new StreamReader(fileName);
 
             //Compile
-            if (J2Net.Compiler.Compile(inputStream))
+            StringBuilder compiledCode = J2Net.Compiler.Compile(inputStream);
+            if (compiledCode != null)
             {
                 Console.WriteLine("Compilation Successful\n\n");
             }
             else
             {
                 Console.WriteLine("Compilation Failed, see debug output\n\n");
+                Terminate();
             }
 
-
-            ////Generate execution file
+            //Write IL file
             string ilFileName = "test.il";
+            using (StreamWriter outfile = new StreamWriter(ilFileName))
+            {
+                outfile.Write(compiledCode.ToString());
+            }
+            Console.WriteLine(compiledCode.ToString() + "\n\n"); // helpful display of IL output to console
+
+            //Generate EXE from IL
             generateExecutionFile(ilFileName);
 
-
+            //end
             Terminate();
         }
 
         private static void Terminate()
         {
-            Console.WriteLine("Press any key to end the program");
+            Console.WriteLine("\n\nPress any key to end the program");
             Console.ReadKey();
             Environment.Exit(0);
         }
