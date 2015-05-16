@@ -8,17 +8,24 @@ using System.Reflection;
 
 namespace J2Net.IL
 {
-    class MSCorLib
+    public class MSCorLib
     {
         private enum CorLib
         {
             [Description("void [mscorlib]System.Console::WriteLine")]
             WriteLine,
+
+            [Description("[mscorlib]System.Object")]
+            System_Object,
         }
 
 
         private static MSCorLib instance = new MSCorLib();
 
+        public string getSystem_Object()
+        {
+            return this.getDescription(CorLib.System_Object);
+        }
 
         public string getConsoleWriteLine(string data)
         {
