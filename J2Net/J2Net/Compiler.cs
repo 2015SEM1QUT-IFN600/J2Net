@@ -13,14 +13,37 @@ namespace J2Net
 {
     public static class Compiler
     {
-        public static Boolean Compile(StreamReader javaCode)
+        public static StringBuilder Compile(StreamReader javaCode)
         {
-            //ref: https://theantlrguy.atlassian.net/wiki/display/ANTLR4/Parse+Tree+Listeners
+
+            // Antlr Lexer Pass
             JavaLexer lexer = new JavaLexer(new AntlrInputStream(javaCode));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
+            
+
+            // Antlr Parser Pass
             JavaParser parser = new JavaParser(tokens);
             ParserRuleContext tree = parser.compilationUnit();
-            J2NetNameBinder listener = new J2NetNameBinder(parser,"test");
+
+
+            // Semantic Anlaysis Pass
+            ScopeStack scopeStack = new ScopeStack();
+            J2NetNameBinder listener = new J2NetNameBinder(parser, scopeStack);
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.Walk(listener, tree);
+            
+
+            // Generate IL Code Pass
+            J2NetCILVisitor visitor = new J2NetCILVisitor(scopeStack);
+            visitor.Visit(tree);
+
+
+            // return IL Code
+            return visitor.ToStringBuilder();
+        }
+
+        public static void junkCode()
+        {
             ////////////////////////////////////////////////////////////////
             //Just a test - Ignore it
             //JavaLexer lexer = new JavaLexer(new AntlrInputStream("2+3"));
@@ -31,26 +54,6 @@ namespace J2Net
             //MyVisitor visitor = new MyVisitor();
             //Console.WriteLine(visitor.Visit(tree));
             ////////////////////////////////////////////////////////////////
-
-            ParseTreeWalker walker = new ParseTreeWalker(); 
-            //J2NetCILGenerator listener = new J2NetCILGenerator(parser, "test"); //attach our listener to build CIL
-            
-            //listener.Start();
-            walker.Walk(listener, tree); //initiate walk of tree with listener
-            
-            //listener.End();
-            
-            //TODO: output parsed code to text-based CIL (*.il) file.
-            
-            // Test stringbuilder
-            listener.printHash();
-
-            J2NetCILVisitor visitor = new J2NetCILVisitor("test");
-            visitor.Start();
-            Console.WriteLine(visitor.Visit(tree));
-            visitor.End();
-            
-            return true;
         }
 
 

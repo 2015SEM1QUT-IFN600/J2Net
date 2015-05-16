@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="Compiler.cs" />
     <Compile Include="ILCodeGenerator.cs" />
-    <Compile Include="ILInstructionGenerator.cs" />
     <Compile Include="J2NetCILGenerator.cs" />
     <Compile Include="Grammar\Java.g4.lexer.cs">
       <DependentUpon>Java.g4</DependentUpon>
