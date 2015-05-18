@@ -17,7 +17,6 @@ namespace J2Net
         private ScopeStack ss;
 
         static private string TAB = "    ";
-        private StreamWriter IlCodeStream;
         StringBuilder sb = new StringBuilder();
         private bool exitLocalVariableDeclaration = false;
         private int localVariableDeclarationCounter = 0;
@@ -26,7 +25,7 @@ namespace J2Net
         public J2NetCILVisitor(ScopeStack scopeStack)
         {
             ss = scopeStack;
-            Start("Test");
+            Start();
 
             this.buildJava2CSTypeMappnigList();
 
@@ -35,13 +34,14 @@ namespace J2Net
         public StringBuilder ToStringBuilder()
         {
             End();
-            return new StringBuilder("# # # # # # # # # # # # # # # # # # # # # #\nChange J2NetVisitor: Remove All StreamWriter references and use a StringBuilder instead. That way you can view the output in a console and write to a file.\n# # # # # # # # # # # # # # # # # # # # # #");
+            //return new StringBuilder("# # # # # # # # # # # # # # # # # # # # # #\nChange J2NetVisitor: Remove All StreamWriter references and use a StringBuilder instead. That way you can view the output in a console and write to a file.\n# # # # # # # # # # # # # # # # # # # # # #");
+            return sb;
         }
 
         public override string VisitClassDeclaration(JavaParser.ClassDeclarationContext context)
         {
-            IlCodeStream.WriteLine(".class " + context.normalClassDeclaration().classModifier(0).GetText() + " "
-                      + context.normalClassDeclaration().Identifiers().GetText() + "\n{");
+            sb.Append(".class " + context.normalClassDeclaration().classModifier(0).GetText() + " "
+                      + context.normalClassDeclaration().Identifiers().GetText() + "\n{\n");
 
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText()); 
             return base.VisitClassDeclaration(context);
@@ -59,7 +59,7 @@ namespace J2Net
                 }
                 fieldString += typeRecognition(context.classMemberDeclaration().fieldDeclaration().unannType().GetText()) + " " +
                                 context.classMemberDeclaration().fieldDeclaration().variableDeclaratorList().variableDeclarator(0).GetText();   //assuming only one variable is declared each time.
-                IlCodeStream.WriteLine(fieldString);
+                sb.Append(fieldString + "\n");
             }
 
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
@@ -68,13 +68,13 @@ namespace J2Net
 
         public override string VisitMethodDeclaration(JavaParser.MethodDeclarationContext context)
         {
-            IlCodeStream.Write(TAB + ".method ");
+            sb.Append(TAB + ".method ");
             for (int i = 0; i < context.methodModifier().Count; i++)
             {
-                IlCodeStream.Write(context.methodModifier(i).GetText() + " ");
+                sb.Append(context.methodModifier(i).GetText() + " ");
             }
 
-            IlCodeStream.Write(this.typeRecognition(context.methodHeader().GetChild(0).GetText()) + " ");
+            sb.Append(this.typeRecognition(context.methodHeader().GetChild(0).GetText()) + " ");
 
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitMethodDeclaration(context);
@@ -83,7 +83,7 @@ namespace J2Net
         public override string VisitMethodDeclarator(JavaParser.MethodDeclaratorContext context)
         {
             string outContext = this.typeRecognition(context.GetText());
-            IlCodeStream.WriteLine(outContext + "\n" + TAB + "{");
+            sb.Append(outContext + "\n" + TAB + "{\n");
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, outContext);
 
             return base.VisitMethodDeclarator(context);
@@ -91,7 +91,10 @@ namespace J2Net
 
         public override string VisitMethodBody(JavaParser.MethodBodyContext context)
         {
-            IlCodeStream.WriteLine(TAB + TAB + ".entrypoint");
+            sb.Append(TAB + TAB + ".entrypoint\n");
+            //sb.Append(TAB + TAB + ".maxstack " + localVariableDeclarationCounter + "\n");
+            sb.Append(TAB + TAB + ".maxstack " +  ss.Count(ScopeStack.Kind.VARIABLE, "main") + "\n");
+            sb.Append(localVariableDeclarationString + ")\n"); //<-- this needs to be fixed or put somewhere else, no variables in there currently
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitMethodBody(context);
         }
@@ -147,7 +150,7 @@ namespace J2Net
                 sb.Append(TAB + TAB + "ldc.i4.s " + context.GetText() + "\n");
 
                 // Hardcode! Needs to be put into logic. Just for testing purposes!
-                sb.Append("stloc.0\n" + "ldloc.0\n" + "ldc.i4.1\n" + "add\n" + "stloc.1\n");
+                sb.Append(TAB + TAB + "stloc.0\n" + TAB + TAB + "ldloc.0\n" + TAB + TAB + "ldc.i4.1\n" + TAB + TAB + "add\n" + TAB + TAB + "stloc.1\n");
             }
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitExpression(context);
@@ -159,29 +162,22 @@ namespace J2Net
             return base.VisitExpressionName(context);
         }
 
-        private void Start(string ilName)
+        private void Start()
         {
-            IlCodeStream = new StreamWriter(ilName + ".il", false);
-            IlCodeStream.WriteLine(".assembly extern mscorlib\n{\n}\n");
-            IlCodeStream.WriteLine(".assembly HelloIFN660\n{\n}\n");
+            sb.Append(".assembly extern mscorlib\n{\n}\n");
+            sb.Append(".assembly HelloIFN660\n{\n}\n");
         }
 
         private void End()
         {
-            IlCodeStream.WriteLine(TAB + TAB + ".maxstack " + localVariableDeclarationCounter);
-            IlCodeStream.WriteLine(localVariableDeclarationString + ")");
-            IlCodeStream.WriteLine(sb);
-
             // Put a Console.ReadKey(); here just to see our output when running exe
-            IlCodeStream.WriteLine(TAB + TAB + "call       valuetype [mscorlib]System.ConsoleKeyInfo [mscorlib]System.Console::ReadKey()");
-            IlCodeStream.WriteLine(TAB + TAB + "pop");
+            sb.Append(TAB + TAB + "call       valuetype [mscorlib]System.ConsoleKeyInfo [mscorlib]System.Console::ReadKey()\n");
+            sb.Append(TAB + TAB + "pop\n");
             // Console.ReadKey(); ends
 
-            IlCodeStream.WriteLine(TAB + TAB + "ret");
-            IlCodeStream.WriteLine(TAB + "}");
-            IlCodeStream.WriteLine("}");
-            IlCodeStream.Flush();
-            IlCodeStream.Close();
+            sb.Append(TAB + TAB + "ret\n");
+            sb.Append(TAB + "}\n");
+            sb.Append("}");
         }
 
         // System.out.println -> Console.Out.WriteLine. ATTN: Hardcode. Should have more logic. e.g. ldloc.1
