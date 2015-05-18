@@ -21,7 +21,16 @@ namespace J2Net.IL
         {
             StringBuilder sb = new StringBuilder();
 
+            string[] paraTypes  = { "string []" };
+            string[] paras      = { "args" };
 
+            sb.AppendLine(ILInstructionGenerator.Instance.getDeclareMethod("private", "", "void", "Main", paraTypes, paras));
+            sb.AppendLine(ILInstructionGenerator.Instance.getBracketBegin());
+            sb.AppendLine(ILInstructionGenerator.Instance.getEntryPoint());
+
+
+
+            sb.AppendLine(ILInstructionGenerator.Instance.getBracketEnd());
             return sb.ToString();
         }
 

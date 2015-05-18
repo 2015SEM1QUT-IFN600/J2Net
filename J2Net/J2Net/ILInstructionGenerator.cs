@@ -43,59 +43,64 @@ namespace J2Net.IL
             [Description("extends")]        extends,        //Declare extends
 
 
-            [Description("{")]  BracketBegin,
-            [Description("}")]  BracketBnd,
-            [Description("[")]  SquareBracketBegin,
-            [Description("]")]  SquareBracketEnd,
-            [Description("(")]  FunctionBracketBegin,
-            [Description(")")]  FunctionBracketEnd,
-            [Description("<")]  LessThan,
-            [Description(">")]  GreaterThan,
+            [Description("{")]  bracketBegin,
+            [Description("}")]  bracketBnd,
+            [Description("[")]  squareBracketBegin,
+            [Description("]")]  squareBracketEnd,
+            [Description("(")]  functionBracketBegin,
+            [Description(")")]  functionBracketEnd,
+            [Description("<")]  lessThan,
+            [Description(">")]  greaterThan,
         }
 
-        private static const string DEFAULT_EXTENDS = MSCorLib.Instance.getSystem_Object();
+        private string DEFAULT_EXTENDS;
 
 
         private static ILInstructionGenerator instance = new ILInstructionGenerator();
 
+        public ILInstructionGenerator()
+        {
+            DEFAULT_EXTENDS = MSCorLib.Instance.getSystem_Object();
+        }
+
         public string getBracketBegin()
         {
-            return this.getDescription(ILInstruction.BracketBegin);
+            return this.getDescription(ILInstruction.bracketBegin);
         }
 
         public string getBracketEnd()
         {
-            return this.getDescription(ILInstruction.BracketBnd);
+            return this.getDescription(ILInstruction.bracketBnd);
         }
 
         public string getSquareBracketBegin()
         {
-            return this.getDescription(ILInstruction.SquareBracketBegin);
+            return this.getDescription(ILInstruction.squareBracketBegin);
         }
 
         public string getSquareBracketEnd()
         {
-            return this.getDescription(ILInstruction.SquareBracketEnd);
+            return this.getDescription(ILInstruction.squareBracketEnd);
         }
 
         public string getFunctionBracketBegin()
         {
-            return this.getDescription(ILInstruction.FunctionBracketBegin);
+            return this.getDescription(ILInstruction.functionBracketBegin);
         }
 
         public string getFunctionBracketEnd()
         {
-            return this.getDescription(ILInstruction.FunctionBracketEnd);
+            return this.getDescription(ILInstruction.functionBracketEnd);
         }
 
         public string getLessThanBracket()
         {
-            return this.getDescription(ILInstruction.LessThan);
+            return this.getDescription(ILInstruction.lessThan);
         }
 
         public string getGreatThanBracket()
         {
-            return this.getDescription(ILInstruction.GreaterThan);
+            return this.getDescription(ILInstruction.greaterThan);
         }
 
         public string getNoOperation()
@@ -120,7 +125,7 @@ namespace J2Net.IL
             return sb.ToString();
         }
 
-        public string getDeclareMethod(string accessability, string type, string returnType, string name, string args)
+        public string getDeclareMethod(string accessability, string type, string returnType, string name, string[] argType, string[] args)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format("{0} ", this.getDescription(ILInstruction.method)));
@@ -131,7 +136,16 @@ namespace J2Net.IL
 
             sb.Append(string.Format("{0} ", returnType));
             sb.Append(string.Format("{0} ", name));
-            sb.Append(args);
+
+            sb.Append(ILInstructionGenerator.Instance.getBracketBegin());
+
+            string headFormat = "{0} {1}";
+            string connFormat = ", {0} {1}";
+            for (int i = 0; i < argType.Length; i++)
+            {
+                sb.Append(string.Format((i == 0) ? headFormat : connFormat, argType[i], args[i]));
+            }
+            sb.Append(ILInstructionGenerator.Instance.getBracketEnd());
 
             return sb.ToString();
         }
