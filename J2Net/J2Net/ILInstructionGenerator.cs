@@ -125,14 +125,14 @@ namespace J2Net.IL
             return sb.ToString();
         }
 
-        public string getDeclareMethod(string accessability, string type, string returnType, string name, string[] argType, string[] args)
+        public string getDeclareMethod(string accessability, string keywords, string returnType, string name, string[] argType, string[] args)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format("{0} ", this.getDescription(ILInstruction.method)));
             sb.Append(string.Format("{0} ", accessability));
 
-            if (type.Length > 0)
-                sb.Append(string.Format("{0} ", type));
+            if (keywords.Length > 0)
+                sb.Append(string.Format("{0} ", keywords));
 
             sb.Append(string.Format("{0} ", returnType));
             sb.Append(string.Format("{0} ", name));
@@ -230,6 +230,11 @@ namespace J2Net.IL
         public string getExitMethodAndReturnValueToCaller(string value)
         {
             return string.Format("{0} {1}", this.getDescription(ILInstruction.ret), value);
+        }
+
+        public string getExitMethodAndReturnValueToCaller()
+        {
+            return this.getDescription(ILInstruction.ret);
         }
 
         public string getLoadLocalVariableOnTheStack(string variable)
