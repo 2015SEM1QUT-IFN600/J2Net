@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace J2Net
@@ -29,6 +30,17 @@ namespace J2Net
 
             this.buildJava2CSTypeMappnigList();
 
+        }
+
+        public struct matchString {
+            public string matchType;
+            public int matchIndex;
+
+            public matchString(string s, int i)
+            {
+                matchType = s;
+                matchIndex = i;
+            }
         }
 
         public StringBuilder ToStringBuilder()
@@ -92,8 +104,55 @@ namespace J2Net
         public override string VisitMethodBody(JavaParser.MethodBodyContext context)
         {
             sb.Append(TAB + TAB + ".entrypoint\n");
-            //sb.Append(TAB + TAB + ".maxstack " + localVariableDeclarationCounter + "\n");
-            sb.Append(TAB + TAB + ".maxstack " +  ss.Count(ScopeStack.Kind.VARIABLE, "main") + "\n");
+            //sb.Append(TAB + TAB + ".maxstack " +  ss.Count(ScopeStack.Kind.VARIABLE, "main") + "\n"); <- changing back to the old one for now due to .local not recgonizing the scope it is in.
+
+            ///
+            /// Problem with the current .local is that it can't determine which scope it is in, and so, it reads everything from the current method it is in.
+            /// If someone have a better way of doing it, please feel free to fix the code.
+            ///
+            //type array
+            string[] typeArray = new string[] { "int", "double", "byte", "short", "char", "long", "float", "string", "bool" };
+            //holds match type and index position
+            List<matchString> matchString = new List<matchString>();
+            string tempString = String.Join("|", typeArray);
+            //finding types and their index position
+            foreach (Match m in Regex.Matches(context.GetText(), @"\b"+tempString+"\b"))
+            {
+                matchString.Add(new matchString(m.Value,m.Index));
+            }
+            //getting the variable names
+            for (int i = 0; i < matchString.Count; i++)
+            {
+                bool found = false;
+                int size = 0;   //size of the variable name
+                while (!found)
+                {
+                    if (context.GetText()[matchString[i].matchIndex + matchString[i].matchType.Length + size].Equals(';') ||
+                        context.GetText()[matchString[i].matchIndex + matchString[i].matchType.Length + size].Equals('='))
+                    {
+                        found = true;
+                    }
+                    else
+                    {
+                        size++;
+                    }
+                }
+                if (exitLocalVariableDeclaration == true)
+                {
+                    exitLocalVariableDeclaration = false;
+                }
+                //Setting up string for .locals
+                if (localVariableDeclarationCounter == 0)
+                {
+                    localVariableDeclarationString += "[" + localVariableDeclarationCounter + "] " + typeRecognition(matchString[i].matchType) + " " + context.GetText().Substring(matchString[i].matchIndex + matchString[i].matchType.Length, size);
+                }
+                else
+                {
+                    localVariableDeclarationString += ", [" + localVariableDeclarationCounter + "] " + typeRecognition(matchString[i].matchType) + " " + context.GetText().Substring(matchString[i].matchIndex + matchString[i].matchType.Length, size);
+                }
+                localVariableDeclarationCounter++;
+            }
+            sb.Append(TAB + TAB + ".maxstack " + localVariableDeclarationCounter + "\n");   //<- changing back to this for now due to .local not recgonizing the scope it is in.
             sb.Append(localVariableDeclarationString + ")\n"); //<-- this needs to be fixed or put somewhere else, no variables in there currently
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
             return base.VisitMethodBody(context);
@@ -115,7 +174,6 @@ namespace J2Net
             {
                 localVariableDeclarationString += ", [" + localVariableDeclarationCounter + "] " + typeRecognition(context.unannType().GetText()) + " " + context.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().GetText();
             }
-            
             //adds a counter for maxstack usage
             localVariableDeclarationCounter++;
             Log(System.Reflection.MethodBase.GetCurrentMethod().Name, context.GetText());
