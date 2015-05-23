@@ -46,13 +46,13 @@ namespace J2Net
         {
             ////////////////////////////////////////////////////////////////
             //Just a test - Ignore it
-            //JavaLexer lexer = new JavaLexer(new AntlrInputStream("2+3"));
-            //CommonTokenStream tokens = new CommonTokenStream(lexer);
-            //JavaParser parser = new JavaParser(tokens);
-            //IParseTree tree = parser.expression();
-            //Console.WriteLine(tree.ToStringTree(parser));
-            //MyVisitor visitor = new MyVisitor();
-            //Console.WriteLine(visitor.Visit(tree));
+            JavaLexer lexer = new JavaLexer(new AntlrInputStream("2+3"));
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            JavaParser parser = new JavaParser(tokens);
+            IParseTree tree = parser.expression();
+            Console.WriteLine(tree.ToStringTree(parser));
+            MyVisitor visitor = new MyVisitor();
+            Console.WriteLine(visitor.Visit(tree));
             ////////////////////////////////////////////////////////////////
         }
 
