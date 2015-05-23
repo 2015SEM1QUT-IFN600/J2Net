@@ -16,8 +16,8 @@ namespace J2Net.IL
         //Code size is depending on how many bytes used in the stack. Format:IL_000x
 
 
-
-        public string getMainFunction()
+        
+        public string getMainFunction(int maxStackNum)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -27,13 +27,31 @@ namespace J2Net.IL
             sb.AppendLine(ILInstructionGenerator.Instance.getDeclareMethod("private", "", "void", "Main", paraTypes, paras));
             sb.AppendLine(ILInstructionGenerator.Instance.getBracketBegin());
             sb.AppendLine(ILInstructionGenerator.Instance.getEntryPoint());
+            sb.AppendLine(ILInstructionGenerator.Instance.getMaxStack(maxStackNum));
+
+            //Declare local variable if there is.
 
 
+            //Present the input tree
 
+
+            sb.AppendLine(ILInstructionGenerator.Instance.getNoOperation());
+            sb.AppendLine(ILInstructionGenerator.Instance.getExitMethodAndReturnValueToCaller());
             sb.AppendLine(ILInstructionGenerator.Instance.getBracketEnd());
             return sb.ToString();
         }
 
+        public string getFunction(string accesibility, string keywords, string returnType, string name, string[] paraTypes, string[] paras)
+        {
+            return "";
+        }
+
+
+
+        private int getCodeSize()
+        {
+            return 0;
+        }
 
         public static ILCodeGenerator Instance
         {
