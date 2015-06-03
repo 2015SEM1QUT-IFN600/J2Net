@@ -1,0 +1,60 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace J2Net.Tests
+{
+    public class TestCode
+    {
+        #region Fields
+        #endregion
+
+        #region Properties
+        public string InitDirectory { get; set; }
+        public string OutputPath { get; set; }
+        #endregion
+
+        #region Constructors
+        public TestCode(string initDirectory)
+        {
+            InitDirectory = initDirectory;
+            OutputPath = "tests";
+            //RunTest();
+        }
+
+        #endregion
+
+
+        #region Methods
+
+
+
+        public void RunTests()
+        {
+            string [] fileArray = Directory.GetFiles(InitDirectory, "*.java");
+
+            int i = 0;
+            foreach (string fileName in fileArray)
+            {
+               Program compiler = new Program(fileName);
+
+                Console.WriteLine("BEGIN RUN TEST FOR  [{0}]", fileName);
+                compiler.Compile(OutputPath);
+                Console.WriteLine("END RUN TEST FOR  [{0}]", fileName);
+                Console.WriteLine();
+                Console.WriteLine();
+                if (!compiler.HasError)
+                {
+                    i++;
+                }
+            }
+            Console.WriteLine("{0} from {1} completed", i, fileArray.Length);
+
+        }
+
+        #endregion
+    }
+}

@@ -44,7 +44,7 @@ namespace J2Net
 
         public static void junkCode()
         {
-            ////////////////////////////////////////////////////////////////
+            /*////////////////////////////////////////////////////////////////
             //Just a test - Ignore it
             JavaLexer lexer = new JavaLexer(new AntlrInputStream("2+3"));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -53,7 +53,7 @@ namespace J2Net
             Console.WriteLine(tree.ToStringTree(parser));
             MyVisitor visitor = new MyVisitor();
             Console.WriteLine(visitor.Visit(tree));
-            ////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////*/
         }
 
 
