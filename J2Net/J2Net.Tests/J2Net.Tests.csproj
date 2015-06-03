@@ -68,9 +68,15 @@
     <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ArithmeticOperators.il" />
+    <None Include="class.il" />
+    <None Include="DoWhile.il" />
+    <None Include="ForLoop.il" />
+    <None Include="HelloWorld.il" />
     <None Include="lexers.playlist" />
     <None Include="packages.config" />
     <None Include="parsers.playlist" />
+    <None Include="SimpleWhileLoopExample.il" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\J2Net\J2Net.csproj">
